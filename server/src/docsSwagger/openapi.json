@@ -1,0 +1,1755 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API WELLNEST CLINIC.",
+    "description": "This api is in charge of managing the database information and performing the data manipulation tasks requested from the client's side.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://serverwellnestclinic.onrender.com/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Member Clients",
+      "description": "These endpoins manage all the client's information."
+    },
+    {
+      "name": "Plan",
+      "description": "These terminals manage all plan information."
+    },
+    {
+      "name": "Speciality",
+      "description": "These terminals manage all the information on the doctors' specialties."
+    },
+    {
+      "name": "DNI Type",
+      "description": "These terminals manage all the information on the DNI types."
+    },
+    {
+      "name": "Doctor",
+      "description": "These endpoins manage all the Doctors information."
+    }
+  ],
+  "paths": {
+    "/userClient": {
+      "post": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "Inserts information of a member client in the database.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyUserClientPost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkPostUserClient"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissingData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/register": {
+      "post": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "updates a user's information at the registration stage as a new user in the app. Client",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserClientRegister"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkPostRegisterUserClient"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissingData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/validateUser/": {
+      "get": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "validates whether a user name is available or not",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "userName",
+            "in": "query",
+            "description": "username to know your availability",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseValidateUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/login/": {
+      "post": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "validates the user data to proceed to give or deny access to login.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissingData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/isMember/{ID}": {
+      "get": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "Verifies if a user's ID is a member or not.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "ID",
+            "in": "path",
+            "description": "usmember's document to be validated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/isMember"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/": {
+      "get": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "Searches all registered users in the DB as well as allowing query to search a single item by id or name or DNI.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name of the userClient",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "UUID of the userClient to search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DNI",
+            "in": "query",
+            "description": "The legal identification number of the client to search for.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/getClientsUsers"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getClientsUsersName"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getClientsUsersID"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plan/": {
+      "get": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Searches all plans registered in the DB as well as allowing query to search a single item by id and name.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name of the Plan",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "UUID of the userClient to search",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/getPlan"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getPlamId"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getPlamName"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plan/{name}": {
+      "post": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Registers a plan by receiving its name by params",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "name of the plan to be searched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postPlanOk"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "(Conflict)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postPlanDuplicate"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/speciality": {
+      "post": {
+        "tags": [
+          "Speciality"
+        ],
+        "summary": "registers a specialty by receiving its name by body",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodySpecialityPost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postSpecialityOk"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400BodySpecialityPost"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "(Conflict)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/409BodySpecialityPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/speciality/": {
+      "get": {
+        "tags": [
+          "Speciality"
+        ],
+        "summary": "Searches all specialties registered in the DB as well as allowing queries to search for a single item by id and name.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name of the Speciality",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id of the Speciality to search",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/getSpeciality"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getSpecialityId"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getSpecialityName"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dni-type": {
+      "post": {
+        "tags": [
+          "DNI Type"
+        ],
+        "summary": "registers a DNI by receiving its type by body",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyDniType"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postDniTypeOk"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400BodyDniTypePost"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "(Conflict)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/409BodyDniTypePost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dni-type/": {
+      "get": {
+        "tags": [
+          "DNI Type"
+        ],
+        "summary": "search for all DNI types",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name of the Speciality",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id of the Speciality to search",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/getDniType"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getDniTypeId"
+                    },
+                    {
+                      "$ref": "#/components/schemas/getDniTypeType"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctor": {
+      "post": {
+        "tags": [
+          "Doctor"
+        ],
+        "summary": "Inserts information of a doctor in the database.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyUserDoctor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/okBodyUserDoctor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403postDoctor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctor/": {
+      "get": {
+        "tags": [
+          "Doctor"
+        ],
+        "summary": "search for all doctor's records in db",
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/getDoc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctor/{doctorId}": {
+      "get": {
+        "tags": [
+          "Doctor"
+        ],
+        "summary": "search for a doctor by his reference id in db.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "doctorId",
+            "in": "path",
+            "description": "reference id in the doctor's database",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getDocID"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404getDocID"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "(Unauthorized) you are not authorized to call the service"
+      },
+      "NotFound": {
+        "description": "(NotFound) no information found"
+      },
+      "BadRequest": {
+        "description": "Incomplete data sent"
+      },
+      "ServerError": {
+        "description": "Server Error"
+      }
+    },
+    "parameters": {
+      "token": {
+        "in": "header",
+        "name": "Token",
+        "description": "Token autentication.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "BodyUserClientPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the partner client"
+          },
+          "dni": {
+            "type": "string",
+            "description": "partner's legal identification number"
+          },
+          "dniType": {
+            "type": "integer",
+            "description": "type of DNI, only the id associated to the DNI must be sent."
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "Partner's address."
+          },
+          "upToDate": {
+            "type": "string",
+            "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+          },
+          "backupContact": {
+            "type": "string",
+            "description": "User's contact information."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Partner's image URL (Can be a null value)."
+          },
+          "plan": {
+            "type": "integer",
+            "description": "Member's plan, only the plan id must be sent."
+          }
+        }
+      },
+      "OkPostUserClient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type UUID)."
+          },
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the partner client"
+          },
+          "dni": {
+            "type": "string",
+            "description": "partner's legal identification number"
+          },
+          "dniType": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "Type of dni"
+              }
+            }
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "Partner's address."
+          },
+          "upToDate": {
+            "type": "string",
+            "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+          },
+          "backupContact": {
+            "type": "string",
+            "description": "User's contact information."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Partner's image URL (Can be a null value)."
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "plan name"
+              }
+            }
+          }
+        }
+      },
+      "BodyUserDoctor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "First Name of the Doctor"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the Doctor"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Doctor's contact information."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the doctor"
+          },
+          "address": {
+            "type": "string",
+            "description": "Doctor's address."
+          },
+          "specialities": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "arrangement with all of the doctor's specialty id's.",
+            "example": [
+              1,
+              2,
+              3,
+              "...",
+              "n"
+            ]
+          }
+        }
+      },
+      "okBodyUserDoctor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "First Name of the Doctor"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the Doctor"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Doctor's contact information."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the doctor"
+          },
+          "address": {
+            "type": "string",
+            "description": "Doctor's address."
+          },
+          "specialities": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "reference id in the specialty database."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "name of the specialty"
+                }
+              }
+            },
+            "description": "array of objects with all the doctor's specialties."
+          }
+        }
+      },
+      "403postDoctor": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "request not valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "The required specialities do not exist"
+          }
+        }
+      },
+      "MissingData": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "(The end date of the plan cannot be less than the current date) or (this plan is not registered)"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "(error message)"
+          }
+        }
+      },
+      "UserClientRegister": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "UUID of the User client in the BD."
+          },
+          "password": {
+            "type": "string",
+            "description": "password size minimum 8 characters minimum 32 characters maximum"
+          },
+          "email": {
+            "type": "string",
+            "description": "email for user registration"
+          }
+        }
+      },
+      "OkPostRegisterUserClient": {
+        "type": "array",
+        "items": {
+          "example": "integer 0 or 1, 1 is ok  0 is no register"
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "password size minimum 8 characters minimum 32 characters maximum"
+          },
+          "userName": {
+            "type": "string",
+            "description": "email for user registration"
+          },
+          "dni": {
+            "type": "string",
+            "description": "email for user registration"
+          }
+        }
+      },
+      "ResponseLogin": {
+        "type": "object",
+        "properties": {
+          "pass": {
+            "type": "boolean",
+            "description": "true for pass and false for noPass"
+          },
+          "message": {
+            "type": "string",
+            "description": "message"
+          }
+        }
+      },
+      "ResponseValidateUser": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "description": "true for available and false for unavailable"
+          }
+        }
+      },
+      "isMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type UUID)."
+          },
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          }
+        }
+      },
+      "getClientsUsers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id of the DB record (type UUID)."
+            },
+            "name": {
+              "type": "string",
+              "description": "First Name of the partner client"
+            },
+            "lastName": {
+              "type": "string",
+              "description": "Last Name of the partner client"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email Name of the partner client"
+            },
+            "dni": {
+              "type": "string",
+              "description": "partner's legal identification number"
+            },
+            "birthDate": {
+              "type": "string",
+              "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+            },
+            "address": {
+              "type": "string",
+              "description": "Partner's address."
+            },
+            "upToDate": {
+              "type": "string",
+              "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+            },
+            "backupContact": {
+              "type": "string",
+              "description": "User's contact information."
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "Partner's image URL (Can be a null value)."
+            },
+            "plan": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the DB record"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "plan name"
+                }
+              }
+            },
+            "dniType": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the DB record"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Type of DNI"
+                }
+              }
+            }
+          }
+        }
+      },
+      "getClientsUsersID": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type UUID)."
+          },
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the partner client"
+          },
+          "dni": {
+            "type": "string",
+            "description": "partner's legal identification number"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "Partner's address."
+          },
+          "upToDate": {
+            "type": "string",
+            "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+          },
+          "backupContact": {
+            "type": "string",
+            "description": "User's contact information."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Partner's image URL (Can be a null value)."
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "plan name"
+              }
+            }
+          },
+          "dniType": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "Type of DNI"
+              }
+            }
+          }
+        }
+      },
+      "getClientsUsersName": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type UUID)."
+          },
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the partner client"
+          },
+          "dni": {
+            "type": "string",
+            "description": "partner's legal identification number"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "Partner's address."
+          },
+          "upToDate": {
+            "type": "string",
+            "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+          },
+          "backupContact": {
+            "type": "string",
+            "description": "User's contact information."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Partner's image URL (Can be a null value)."
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "plan name"
+              }
+            }
+          },
+          "dniType": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "Type of DNI"
+              }
+            }
+          }
+        }
+      },
+      "getDoc": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "First Name of the Doctor"
+            },
+            "lastName": {
+              "type": "string",
+              "description": "Last Name of the Doctor"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Doctor's contact information."
+            },
+            "email": {
+              "type": "string",
+              "description": "Email Name of the doctor"
+            },
+            "address": {
+              "type": "string",
+              "description": "Doctor's address."
+            },
+            "specialities": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "reference id in the specialty database."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of the specialty"
+                  }
+                }
+              },
+              "description": "array of objects with all the doctor's specialties."
+            }
+          }
+        }
+      },
+      "getDocID": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "First Name of the Doctor"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the Doctor"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Doctor's contact information."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the doctor"
+          },
+          "address": {
+            "type": "string",
+            "description": "Doctor's address."
+          },
+          "specialities": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "reference id in the specialty database."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "name of the specialty"
+                }
+              }
+            },
+            "description": "array of objects with all the doctor's specialties."
+          }
+        }
+      },
+      "404getDocID": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Doctor not found"
+          }
+        }
+      },
+      "getPlan": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id or primary key of reference in the DB of the plan to search for."
+            },
+            "name": {
+              "type": "string",
+              "description": "name of the plan to search"
+            }
+          }
+        }
+      },
+      "getPlamId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the plan to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan to search"
+          }
+        }
+      },
+      "getPlamName": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the plan to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan to search"
+          }
+        }
+      },
+      "postPlanOk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the plan to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan to search"
+          }
+        }
+      },
+      "postPlanDuplicate": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "request not valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "Plan {name:} {name}, is not allowed to be registered"
+          }
+        }
+      },
+      "BodySpecialityPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of the speciality to be registered"
+          }
+        }
+      },
+      "400BodySpecialityPost": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "request not valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message error"
+          }
+        }
+      },
+      "409BodySpecialityPost": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "request not valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "Speciality {name:} ${name}, already exist"
+          }
+        }
+      },
+      "postSpecialityOk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the speciality."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the speciality to search"
+          }
+        }
+      },
+      "getSpeciality": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id or primary key of reference in the DB of the speciality to search for."
+            },
+            "name": {
+              "type": "string",
+              "description": "name of the speciality to search"
+            }
+          }
+        }
+      },
+      "getSpecialityId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the speciality to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the speciality to search"
+          }
+        }
+      },
+      "getSpecialityName": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the speciality to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the speciality to search"
+          }
+        }
+      },
+      "BodyDniType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of the DNI type to be registered"
+          }
+        }
+      },
+      "postDniTypeOk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the dni."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the DNI"
+          }
+        }
+      },
+      "409BodyDniTypePost": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "request not valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "Type DNI {type:} ${type}, already exist"
+          }
+        }
+      },
+      "400BodyDniTypePost": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "request not valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message error"
+          }
+        }
+      },
+      "getDniType": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id or primary key of reference in the DB of the DNI to search for."
+            },
+            "name": {
+              "type": "string",
+              "description": "name of the DNI to search"
+            }
+          }
+        }
+      },
+      "getDniTypeId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the DNI to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the DNI to search"
+          }
+        }
+      },
+      "getDniTypeType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id or primary key of reference in the DB of the DNI to search for."
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the DNI to search"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,717 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API WELLNEST CLINIC.",
+    "description": "This api is in charge of managing the database information and performing the data manipulation tasks requested from the client's side.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3002/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Member Clients",
+      "description": "These endpoins manage all the client's information."
+    },
+    {
+      "name": "Plan",
+      "description": "These endpoins manage all the plans information."
+    }
+  ],
+  "paths": {
+    "/userClient": {
+      "post": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "Inserts information of a member client in the database.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BodyUserClientPost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkPostUserClient"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissingData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/register": {
+      "post": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "updates a user's information at the registration stage as a new user in the app. Client",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserClientRegister"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkPostRegisterUserClient"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissingData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/validateUser/": {
+      "get": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "validates whether a user name is available or not",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "userName",
+            "in": "query",
+            "description": "username to know your availability",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseValidateUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/login/": {
+      "post": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "validates the user data to proceed to give or deny access to login.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissingData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/isMember/{ID}": {
+      "get": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "Verifies if a user's ID is a member or not.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "ID",
+            "in": "path",
+            "description": "usmember's document to be validated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/isMember"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userClient/": {
+      "get": {
+        "tags": [
+          "Member Clients"
+        ],
+        "summary": "searches for all users registered in the DB.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getClientsUsers"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },    
+    "/plan":{
+      "get": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Returns an array of objects with the information of all the plans or an empty array if no plans are available.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id (primary Key) of plan",
+            "require": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name of plan",
+            "require": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(ok)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/getClientsUsers"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ServerError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ResponseLogin"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+
+
+
+
+  "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "(Unauthorized) you are not authorized to call the service"
+      },
+      "NotFound": {
+        "description": "(NotFound) no information found"
+      },
+      "BadRequest": {
+        "description": "Incomplete data sent"
+      },
+      "ServerError": {
+        "description": "Server Error"
+      }
+    },
+    "parameters": {
+      "token": {
+        "in": "header",
+        "name": "Token",
+        "description": "Token autentication.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "BodyUserClientPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the partner client"
+          },
+          "dni": {
+            "type": "string",
+            "description": "partner's legal identification number"
+          },
+          "dniType": {
+            "type": "string",
+            "description": "Type of partner's legal ID"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "Partner's address."
+          },
+          "upToDate": {
+            "type": "string",
+            "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+          },
+          "backupContact": {
+            "type": "string",
+            "description": "User's contact information."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Partner's image URL (Can be a null value)."
+          },
+          "plan": {
+            "type": "integer",
+            "description": "Member's plan, only the plan ID must be sent."
+          }
+        }
+      },
+      "OkPostUserClient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type UUID)."
+          },
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email Name of the partner client"
+          },
+          "dni": {
+            "type": "string",
+            "description": "partner's legal identification number"
+          },
+          "dniType": {
+            "type": "string",
+            "description": "Type of partner's legal ID"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "Partner's address."
+          },
+          "upToDate": {
+            "type": "string",
+            "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+          },
+          "backupContact": {
+            "type": "string",
+            "description": "User's contact information."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Partner's image URL (Can be a null value)."
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "id of the DB record"
+              },
+              "name": {
+                "type": "string",
+                "description": "plan name"
+              }
+            }
+          }
+        }
+      },
+      "MissingData": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "(The end date of the plan cannot be less than the current date) or (this plan is not registered)"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "(error message)"
+          }
+        }
+      },
+      "UserClientRegister": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "UUID of the User client in the BD."
+          },
+          "password": {
+            "type": "string",
+            "description": "password size minimum 8 characters minimum 32 characters maximum"
+          },
+          "email": {
+            "type": "string",
+            "description": "email for user registration"
+          }
+        }
+      },
+      "OkPostRegisterUserClient": {
+        "type": "array",
+        "items": {
+          "example": "integer 0 or 1, 1 is ok  0 is no register"
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "password size minimum 8 characters minimum 32 characters maximum"
+          },
+          "userName": {
+            "type": "string",
+            "description": "email for user registration"
+          },
+          "dni": {
+            "type": "string",
+            "description": "email for user registration"
+          }
+        }
+      },
+      "ResponseLogin": {
+        "type": "object",
+        "properties": {
+          "pass": {
+            "type": "boolean",
+            "description": "true for pass and false for noPass"
+          },
+          "message": {
+            "type": "string",
+            "description": "message"
+          }
+        }
+      },
+      "ResponseValidateUser": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "description": "true for available and false for unavailable"
+          }
+        }
+      },
+      "isMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type UUID)."
+          },
+          "name": {
+            "type": "string",
+            "description": "First Name of the partner client"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name of the partner client"
+          }
+        }
+      },
+      "getClientsUsers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id of the DB record (type UUID)."
+            },
+            "name": {
+              "type": "string",
+              "description": "First Name of the partner client"
+            },
+            "lastName": {
+              "type": "string",
+              "description": "Last Name of the partner client"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email Name of the partner client"
+            },
+            "dni": {
+              "type": "string",
+              "description": "partner's legal identification number"
+            },
+            "dniType": {
+              "type": "string",
+              "description": "Type of partner's legal ID"
+            },
+            "birthDate": {
+              "type": "string",
+              "description": "Partner's date of birth in the format \"YYYYY-MM-DD\"."
+            },
+            "address": {
+              "type": "string",
+              "description": "Partner's address."
+            },
+            "upToDate": {
+              "type": "string",
+              "description": "Member's plan expiration date, this must be greater than the current date of registration in Argentina/Buenos Aires in the format \"YYYYY-MM-DD\"."
+            },
+            "backupContact": {
+              "type": "string",
+              "description": "User's contact information."
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "Partner's image URL (Can be a null value)."
+            },
+            "plan": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "id of the DB record"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "plan name"
+                }
+              }
+            }
+          }
+        }
+      },
+      "getPlanId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the DB record (type INT)."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the plan"
+          }          
+        }
+      },
+      "getPlan":{
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id":{
+              "type":"integer",
+              "description": "id of the DB record (type INT)."
+              },            
+            "name": {
+                "type": "string",
+                "description": "Name of the plan"
+              }
+          }     
+        }
+      },
+      "getPlanVacio": {
+        "type": "object",
+        "properties": {}
+      }          
+    }
+  }
+
+}
