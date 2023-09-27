@@ -11,10 +11,7 @@ const updateUser = async (req, res) => {
             return res.status(404).json({error: "The id provided doesn't match any user"})
         }
         if(user.name === name && user.email === email && user.password === password && user.accessLevel === accessLevel && user.location === location) {
-            let equal = false
-            if(equal) {
-                return res.status(403).json({error: "At least one change must be made to update a user"})
-            }
+            return res.status(403).json({error: "At least one change must be made to update a user"})
         }
 
         const newUser = {
@@ -25,9 +22,6 @@ const updateUser = async (req, res) => {
             location
         }
 
-        if(name && name !== "") {
-            newUser.name = name
-        }
         await user.update(newUser)
         return res.status(200).json(user)
     } catch (error) {
