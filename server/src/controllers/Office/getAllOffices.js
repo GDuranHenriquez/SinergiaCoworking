@@ -1,7 +1,6 @@
-const {Office, Service} = require('../../db')
+const {Category, City, Office, OfficeImage, Province, Service, Unavailability} = require('../../db')
 
-
-const getAllOffices = async (res, res) => {
+const getAllOffices = async (req, res) => {
     try {
         const offices = await Office.findAll({
             include: [

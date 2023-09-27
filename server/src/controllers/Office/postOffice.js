@@ -1,6 +1,6 @@
 const {Office} = require('../../db')
 
-const postOffice = async (res, res)=> {
+const postOffice = async (req, res)=> {
     const {name, area, capacity, price, address, ratingAverage} = req.body
     try {
         if(!name || !area || !capacity || !price || !address || !ratingAverage){
