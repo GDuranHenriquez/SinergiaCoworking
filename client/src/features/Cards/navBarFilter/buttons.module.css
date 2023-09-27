@@ -1,0 +1,13 @@
+.BottonFilter{
+  background-color: #C1BEBE !important;
+  color: black !important;
+  width: 180px !important;
+  height: 45px !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+.BottonFilter:hover{
+  background-color: rgba(193, 190, 190, 0.5) !important;
+  border: 2px solid #C1BEBE !important;
+  border-color:#C1BEBE !important;
+}
