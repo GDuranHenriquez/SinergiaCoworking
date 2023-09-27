@@ -1,7 +1,7 @@
 const {Office, Service} = require('../../db')
 
 
-const getOfficeById = async (res, res) => {
+const getOfficeById = async (req, res) => {
     try {
         const { id } = req.params
         const office = await Office.findOne({where: {id}, 

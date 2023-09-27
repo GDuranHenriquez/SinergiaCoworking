@@ -1,9 +1,13 @@
 const {Router} = require('express')
+const postProvince = require('../controllers/province/postProvince')
+const getProvinces = require('../controllers/province/getProvinces')
+const deleteProvince = require('../controllers/province/deleteProvince')
+
 
 const routerProvince = Router()
 
-routerProvince.get("/", )
-routerProvince.post("/", )
-routerProvince.delete("/", )
+routerProvince.get("/", getProvinces)
+routerProvince.post("/", postProvince)
+routerProvince.delete("/", deleteProvince)
 
 module.exports = routerProvince

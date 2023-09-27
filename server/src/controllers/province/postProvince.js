@@ -16,4 +16,4 @@ const postProvince = async (req, res) => {
     }
 }
 
-module.export = postProvince
+module.exports = postProvince

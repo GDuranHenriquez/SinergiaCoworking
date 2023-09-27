@@ -16,4 +16,4 @@ const postCategory = async (req, res) => {
     }
 }
 
-module.export = postCategory
+module.exports = postCategory
