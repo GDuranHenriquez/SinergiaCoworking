@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "@react-oauth/google": "^0.11.1",
+    "antd": "^5.9.3",
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
     "google-auth-library": "^9.0.0",
