@@ -12,7 +12,16 @@ const swaggerDocument = require('./docsSwagger/openapi.json');
 //const { authenticate } = require('./auth/athenticate');
 
 //Import All Routes.
-const tokenRouter = require('./routes/routerToken');
+const routerCart = require('./routes/routerCart')
+const routerCategory = require('./routes/routerCategory')
+const routerCity = require('./routes/routerCity')
+const routerOffice = require('./routes/routerOffice')
+const routerProvince = require('./routes/routerProvince')
+const routerPurchase = require('./routes/routerPurchase')
+const routerScore = require('./routes/routerScore')
+const routerService = require('./routes/routerService')
+const routerToken = require('./routes/routerToken');
+const routerUser = require('./routes/routerUser')
 
 
 require('./db.js');
@@ -41,7 +50,16 @@ server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 
 //tokens
-server.use('/token', tokenRouter);
+server.use('/cart', routerCart);
+server.use('/category', routerCategory);
+server.use('/city', routerCity);
+server.use('/office', routerOffice);
+server.use('/province', routerProvince);
+server.use('/purchase', routerPurchase);
+server.use('/score', routerScore);
+server.use('/service', routerService);
+server.use('/token', routerToken);
+server.use('/user', routerUser);
 
 
 server.use((err, req, res, next) => {
