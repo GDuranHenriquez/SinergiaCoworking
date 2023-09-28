@@ -6,7 +6,7 @@ const getUserById = async (req, res) => {
         const user = await User.findOne({where: {id: userId}});
 
         if(!user || user.deleted) {
-            return res.status(404).json({error: "Product not found"});
+            return res.status(404).json({error: "User not found"});
         }
         return res.status(200).json(user);
     } catch (error) {
