@@ -7,7 +7,8 @@ const getOfficeById = require('../controllers/Office/getOfficeById')
 
 const routerOffice = Router()
 
-routerOffice.get("/", getAllOffices, getOfficeById)
+routerOffice.get("/", getAllOffices)
+routerOffice.get("/:id", getOfficeById)
 routerOffice.post("/", postOffice)
 routerOffice.delete("/", deleteOffice)
 

@@ -1,9 +1,13 @@
 const {Router} = require('express')
 
+const {getService} = require("../controllers/service/getService");
+const {postServices} = require("../controllers/service/postService");
+const {deleteService} = require("../controllers/service/deleteService");
+
 const routerService = Router()
 
-routerService.get("/", )
-routerService.post("/", )
-routerService.delete("/", )
+routerService.get("/", getService)
+routerService.post("/", postServices)
+routerService.delete("/", deleteService)
 
 module.exports = routerService
