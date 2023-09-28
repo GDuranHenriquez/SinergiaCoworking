@@ -8,6 +8,6 @@ const routerService = Router()
 
 routerService.get("/", getService)
 routerService.post("/", postServices)
-routerService.delete("/", deleteService)
+routerService.delete("/:id", deleteService)
 
 module.exports = routerService

@@ -8,6 +8,6 @@ const {deleteCity} = require("../controllers/city/deleteCity")
 
 routerCity.get("/", getCity);
 routerCity.post("/", postCity);
-routerCity.delete("/", deleteCity);
+routerCity.delete("/:id", deleteCity);
 
 module.exports = routerCity

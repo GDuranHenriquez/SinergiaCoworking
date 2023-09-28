@@ -8,6 +8,6 @@ const routerProvince = Router()
 
 routerProvince.get("/", getProvinces)
 routerProvince.post("/", postProvince)
-routerProvince.delete("/", deleteProvince)
+routerProvince.delete("/:id", deleteProvince)
 
 module.exports = routerProvince

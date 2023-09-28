@@ -7,6 +7,6 @@ const routerCategory = Router()
 
 routerCategory.get("/", getCategories)
 routerCategory.post("/", postCategory)
-routerCategory.delete("/", deleteCategory)
+routerCategory.delete("/:id", deleteCategory)
 
 module.exports = routerCategory

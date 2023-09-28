@@ -10,6 +10,6 @@ const routerOffice = Router()
 routerOffice.get("/", getAllOffices)
 routerOffice.get("/:id", getOfficeById)
 routerOffice.post("/", postOffice)
-routerOffice.delete("/", deleteOffice)
+routerOffice.delete("/:id", deleteOffice)
 
 module.exports = routerOffice
