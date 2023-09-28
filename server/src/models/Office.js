@@ -32,6 +32,11 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false,
             defaultValue: 0.0
+        },
+        deleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     },
     {
