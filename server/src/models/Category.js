@@ -3,15 +3,15 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
     sequelize.define("category", {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4
+            autoIncremental: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
     },
     {
         timestamps: false,

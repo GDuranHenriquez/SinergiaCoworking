@@ -1,15 +1,24 @@
-const { City } = require("../../db");
+const { City, Province } = require("../../db");
 
 const postCity = async (req, res) => {
     try {
 
-        const {name} = req.body;
+        const {name, province} = req.body;
 
         if(!name) {
-            return res.status(404).json({error: "Mandatory data is missing"})
+            return res.status(401).json({error: "No se indicó el nombre"})
         }
-
-        const city = await City.create({name});
+        if(!province){
+            return res.status(401).json({error: 'No se indicó la provincia'})
+        }
+        const checkProvince = await Province.findByPk(province)
+        if(!checkProvince){
+            return res.status(401).json({error: 'La provincia provista no está registrada'})
+        }
+        const [city, created] = await City.findOrCreate({where:{name, province}});
+        if(!created){
+            return res.status(401).json({error: 'La ciudad ya esta registrada'})
+        }
         return res.status(200).json(city);
 
     } catch (error) {

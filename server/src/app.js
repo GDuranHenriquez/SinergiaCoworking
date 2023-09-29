@@ -15,6 +15,7 @@ const swaggerDocument = require('./docsSwagger/openapi.json');
 const routerCart = require('./routes/routerCart')
 const routerCategory = require('./routes/routerCategory')
 const routerCity = require('./routes/routerCity')
+const routerBuilding = require('./routes/routerBuilding')
 const routerOffice = require('./routes/routerOffice')
 const routerProvince = require('./routes/routerProvince')
 const routerPurchase = require('./routes/routerPurchase')
@@ -53,6 +54,7 @@ server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 server.use('/cart', routerCart);
 server.use('/category', routerCategory);
 server.use('/city', routerCity);
+server.use('/building', routerBuilding)
 server.use('/office', routerOffice);
 server.use('/province', routerProvince);
 server.use('/purchase', routerPurchase);

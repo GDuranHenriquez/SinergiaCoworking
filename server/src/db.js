@@ -39,13 +39,14 @@ const {
   Category,
   City,
   DetailPurchase,
+  Building,
   Office,
   OfficeImage,
   Province,
   Purchase,
   Score,
   Service,
-  Unavailability,
+  Reservation,
   User
 } = sequelize.models;
 
@@ -56,9 +57,10 @@ User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
 Score.belongsTo(User, {as: 'user_score', foreignKey: 'user'})
 Score.belongsTo(Office, {as: 'office_score', foreignKey: 'office'})
 Office.hasMany(OfficeImage, {as: 'office_officeImage', foreignKey: 'office'})
-Office.hasMany(Unavailability, {as: 'office_unavailability', foreignKey: 'office'})
+Office.hasMany(Reservation, {as: 'office_reservation', foreignKey: 'office'})
 Office.belongsTo(Category, {as: 'office_category', foreignKey: 'category'})
-Office.belongsTo(City, {as: 'office_city', foreignKey: 'city'})
+Building.belongsTo(Office, {as: 'office_building', foreignKey: 'office'})
+Building.belongsTo(City, {as: 'building_city', foreignKey: 'city'})
 City.belongsTo(Province, {as: 'city_province', foreignKey: 'province'})
 Cart.belongsToMany(Office, {through: 'cart_office', foreignKey: 'cart'})
 Office.belongsToMany(Cart, {through: 'cart_office', foreignKey: 'office'})

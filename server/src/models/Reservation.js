@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-    sequelize.define("unavailability", {
+    sequelize.define("reservation", {
         id: {
             type: DataTypes.UUID,
             allowNull: false,
@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
     },
     {
         timestamps: false,
-        tableName: 'Unavailability'
+        tableName: 'Reservation'
     }
     );
 };

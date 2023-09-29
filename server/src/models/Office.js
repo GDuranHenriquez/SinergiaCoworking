@@ -24,10 +24,6 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false
         },
-        address: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         ratingAverage: {
             type: DataTypes.FLOAT,
             allowNull: false,
