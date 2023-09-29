@@ -1,38 +1,41 @@
-const {DataTypes} = require('sequelize')
+const {DataTypes} = require("sequelize")
 
 module.exports = (sequelize) => {
-    sequelize.define('user', {
+    sequelize.define('building', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        accessLevel: {
+        address: {
             type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: 'user'
+            allowNull: false
+        },
+        lat: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        lng: {
+            type: DataTypes.STRING,
+            allowNull: false
         },
         deleted: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
+        },
+        imageUrl: {
+            type: DataTypes.TEXT,
+            allowNull: false
         }
     },
     {
         timestamps: false,
-        tableName: 'User'
+        tableName: 'Building'
     })
 }

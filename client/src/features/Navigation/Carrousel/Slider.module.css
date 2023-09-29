@@ -1,0 +1,15 @@
+.container{
+    width: 100%;
+    max-height: 500px;
+    background-color: rgb(228, 127, 54);
+}
+
+
+.title{
+    font-size: 60px;
+}
+
+.itemSlider{
+    width: 100%;
+    height: calc(100vh * 0.5);
+}

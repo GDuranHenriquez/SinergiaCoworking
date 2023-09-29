@@ -5,6 +5,8 @@ import { AuthProvider } from './Authenticator/AuthPro.jsx';
 import ProtectedRoute from './components/protecterRoute/ProtectedRoute.jsx';
 import HomePages from "./pages/Home/Home.jsx";
 import Prueba from './pages/Prueba.tsx'
+import PruebaDos from "./pages/PruebaDos.tsx";
+import Detail from "../src/pages/Detail.tsx"
 
 import './App.css'
 
@@ -18,6 +20,14 @@ function App() {
     {
       path: "/prueba",
       element: <Prueba></Prueba>,
+    },
+    {
+      path: "/pruebados",
+      element: <PruebaDos></PruebaDos>,
+    },
+    {
+      path: "/detail",
+      element: <Detail></Detail>,
     },
     {
       path: "/",
