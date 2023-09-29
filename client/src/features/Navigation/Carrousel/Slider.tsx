@@ -40,16 +40,32 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({
 
 const item = (image: string, text: string, imageName: string) => {
     return <StyleItem>
-        <img src={image} alt={imageName} />
-        <h1>{text}</h1>
+        <div className="text">
+            <h1>{text}</h1>
+        </div>
+        <div className="img">
+            <img src={image} alt={imageName} />
+        </div>        
     </StyleItem>
 }
 
 const StyleItem = styled.div`
-display: flex;
-flex-wrap: nowrap; 
-width: 100%;
-.img{width: 50%; height: 500px}
+    display: flex;
+    flex-wrap: nowrap; 
+    width: 100%;
+    .img{
+        width: 50%; 
+        height: 100%;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    }
+    .text{
+        width: 50%;
+    }
 `
 
 export default SliderCarousel;

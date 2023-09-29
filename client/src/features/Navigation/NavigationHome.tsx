@@ -12,8 +12,8 @@ function NavigationHome(){
 
   return(
   <div className={style.container}>
-  <NavBarNavigation></NavBarNavigation> 
-  <SliderCarousel imageOne={portada} imageTwo={notebook} imageThree={oficina}></SliderCarousel>
+    <NavBarNavigation></NavBarNavigation> 
+    <SliderCarousel imageOne={portada} imageTwo={notebook} imageThree={oficina}></SliderCarousel>
   </div>
 )
 }
