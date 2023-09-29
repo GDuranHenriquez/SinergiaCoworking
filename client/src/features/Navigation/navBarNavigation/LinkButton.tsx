@@ -1,4 +1,4 @@
-import style from './LinkBotton.module.css'
+
 import { Button } from 'antd';
 
 interface Props{
@@ -7,7 +7,7 @@ interface Props{
 }
 
 function LinkBotton({text, path} : Props){
-  return  <Button type='link' className={style.LinkBotton} href={path} >{text}</Button> 
+  return  <Button type='link' style={{ marginLeft: '70px', color:"#FFFF" }} href={path} >{text}</Button> 
 }
 
 

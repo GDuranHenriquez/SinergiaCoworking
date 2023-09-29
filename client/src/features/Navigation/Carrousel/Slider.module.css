@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 500px;
+}
+
+/* .itemSlider{
+   display: flex;
+   flex-wrap: nowrap; 
+} */
+
+.title{
+    font-size: 60px;
+}
+
+.image {
+    width: 50%;
+    height: 500px;
+    object-fit: cover;
+  }
