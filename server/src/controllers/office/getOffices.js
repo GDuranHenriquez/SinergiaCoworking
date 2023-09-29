@@ -1,10 +1,10 @@
-const {Category, Office, OfficeImage, Score, Service, Reservation} = require('../../db')
+const {Category, Office, OfficeImage, Score, Service, Reservation, Building} = require('../../db')
 
 const getAllOffices = async (req, res) => {
     try {
         const {building, category} = req.body
         const isAdmin = false //Aplicar validacion por token
-        const filters = {basic: {building}}
+        const filters = {basic: {}}
         if(!isAdmin){
             filters.basic.deleted = false
         }
@@ -15,6 +15,13 @@ const getAllOffices = async (req, res) => {
             }
             filters.basic.category = category
         }
+        if(building){
+            const checkBuilding = await Building.findByPk(building)
+            if(!checkBuilding){
+                return res.status(401).json({error: 'Edificio no registrado'})
+            }
+            filters.basic.building = building
+        }
         const offices = await Office.findAll({
             where: filters.basic,
             include:[
@@ -22,10 +29,11 @@ const getAllOffices = async (req, res) => {
                 {model: Service, through: {attributes: []}},
                 // {model: Score, as: 'office_score'},
                 {model: OfficeImage, as: 'office_officeImage'},
-                {model: Reservation, as:'office_reservation'}
+                {model: Reservation, as:'office_reservation'},
+                {model: Building, as: 'office_building'}
             ]
         })
-        return res.status(200).json({offices})
+        return res.status(200).json(offices)
     } catch (error) {
         return res.status(500).json({error: error.message});
     }

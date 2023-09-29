@@ -35,14 +35,13 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 const {
-  Cart,
+  // Cart,
   Category,
   City,
-  DetailPurchase,
   Building,
   Office,
   OfficeImage,
-  Province,
+  // Province,
   Purchase,
   Score,
   Service,
@@ -53,17 +52,18 @@ const {
 Purchase.belongsTo(User, {as: 'user_purchase', foreignKey: 'user'})
 Purchase.hasMany(Reservation, {as: 'purchase_reservation', foreignKey: 'purchase'})
 Reservation.belongsTo(Office, {as: 'reservation_office', foreignKey:'office'})
-User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
+// User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
 Score.belongsTo(User, {as: 'user_score', foreignKey: 'user'})
 Score.belongsTo(Office, {as: 'office_score', foreignKey: 'office'})
 Office.hasMany(OfficeImage, {as: 'office_officeImage', foreignKey: 'office'})
 Office.hasMany(Reservation, {as: 'office_reservation', foreignKey: 'office'})
 Office.belongsTo(Category, {as: 'office_category', foreignKey: 'category'})
-Building.belongsTo(Office, {as: 'office_building', foreignKey: 'office'})
+Office.belongsTo(Building, {as: 'office_building', foreignKey: 'building'})
+Building.hasMany(Office, {as: 'office_building', foreignKey: 'building'})
 Building.belongsTo(City, {as: 'building_city', foreignKey: 'city'})
-City.belongsTo(Province, {as: 'city_province', foreignKey: 'province'})
-Cart.belongsToMany(Office, {through: 'cart_office', foreignKey: 'cart'})
-Office.belongsToMany(Cart, {through: 'cart_office', foreignKey: 'office'})
+// City.belongsTo(Province, {as: 'city_province', foreignKey: 'province'})
+// Cart.belongsToMany(Office, {through: 'cart_office', foreignKey: 'cart'})
+// Office.belongsToMany(Cart, {through: 'cart_office', foreignKey: 'office'})
 Office.belongsToMany(Service, {through: 'office_service', foreignKey: 'office'})
 Service.belongsToMany(Office, {through: 'office_service', foreignKey: 'service'})
 

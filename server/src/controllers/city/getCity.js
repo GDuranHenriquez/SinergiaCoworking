@@ -2,13 +2,7 @@ const {City, Province} = require("../../db");
 
 const getCity = async (req, res) => {
     try {
-        const cities = await City.findAll({
-            include: [{
-                model: Province,
-                as: "city_province",
-                attributes: ["id", "name"]
-            }]
-        });
+        const cities = await City.findAll();
 
         return res.status(200).json(cities);   
     } catch (error) {
