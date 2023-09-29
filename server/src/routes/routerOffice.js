@@ -1,8 +1,8 @@
 const {Router} = require('express')
-const deleteOffice = require('../controllers/Office/deleteOffice')
-const getOffices = require('../controllers/Office/getOffices')
-const postOffice = require('../controllers/Office/postOffice')
-const getOfficeById = require('../controllers/Office/getOfficeById')
+const deleteOffice = require('../controllers/office/deleteOffice')
+const getOffices = require('../controllers/office/getOffices')
+const postOffice = require('../controllers/office/postOffice')
+const getOfficeById = require('../controllers/office/getOfficeById')
 
 
 const routerOffice = Router()
