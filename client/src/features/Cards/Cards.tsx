@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Card from './CardBuilding';
-// import styles from './Cards.module.css';
+import styles from './Cards.module.css';
 import { useSelector } from 'react-redux';
 import CardBuilding from './CardBuilding';
 
@@ -12,7 +12,7 @@ function Cards() {
 //   })
 
 return (
-    <div>
+    <div className={styles.cardsContainer}>
       {/* {allOffices.map((office) => (
         <Card key={office.id} office ={ office } />
       ))} */}

@@ -70,7 +70,7 @@ function NavbarFilter() {
         className={style.search}
         placeholder="input search text"
         onSearch={onSearch}
-        style={{ width: 200 }}
+        style={{ width: "200px" }}
       />
     </div>
   );
