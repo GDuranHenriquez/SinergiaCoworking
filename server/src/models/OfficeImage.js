@@ -3,10 +3,10 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
     sequelize.define("officeImage", {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4
+            autoIncrement: true
         },
         imageUrl: {
             type: DataTypes.STRING,
