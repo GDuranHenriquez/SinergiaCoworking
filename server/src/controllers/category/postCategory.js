@@ -4,11 +4,11 @@ const postCategory = async (req, res) => {
     try {
         const {name} = req.body
         if(!name){
-            return res.status(401).json({error: 'A name must be provided'})
+            return res.status(401).json({error: 'No se indicó el nombre'})
         }
-        const [category, created] = await Category.findOrCreate({where: {name: name.toLowerCase()}})
-        if(created) {
-            return res.status(401).json({error: 'The category is already registered'})
+        const [category, created] = await Category.findOrCreate({where: {name}})
+        if(!created) {
+            return res.status(401).json({error: 'La categoria ya está registrada'})
         }
         return res.status(200).json(category)
     } catch (error) {

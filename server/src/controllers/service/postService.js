@@ -7,7 +7,7 @@ const postServices = async (req, res) => {
             return res.status(401).json({error: 'The name must be provided'})
         }
         const [service, created] = await Service.findOrCreate({where: {name}})
-        if(created){
+        if(!created){
             return res.status(403).json({error: 'The service provided is already registered'})
         }
         return res.status(200).json(service)

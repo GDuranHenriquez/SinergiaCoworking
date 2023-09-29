@@ -41,11 +41,13 @@ const postOffice = async (req, res)=> {
             return res.status(401).json({error: 'La oficina ya está registrada'})
         }
         await office.addServices(services)
-        await office.addOfficeImage(images)
+        const imagesArray = images.map(image => ({imageUrl: image, office: office.id}))
+        await OfficeImage.bulkCreate(imagesArray)
         const response = await Office.findOne({where: {id: office.id}, include: [
             {model: Category, as: "office_category"},
             {model: Building, as: "office_building"},
-            {model: Service, through: {attributes: []}}
+            {model: Service, through: {attributes: []}},
+            {model: OfficeImage, as: 'office_officeImage'}
         ]})
         return res.status(200).json(response)
         

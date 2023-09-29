@@ -1,8 +1,11 @@
 const {Building, City} = require('../../db')
 
 const postBuilding = async (req, res)=> {
-    const {address, lat, lng, city, imageUrl} = req.body
+    const {name, address, lat, lng, city, imageUrl} = req.body
     try {
+        if(!name){
+            return res.status(401).json({error: 'No se indicó el nombre'})
+        }
         if(!address){
             return res.status(401).json({error: 'No se indicó la dirección'})
         }
@@ -12,12 +15,15 @@ const postBuilding = async (req, res)=> {
         if(!city){
             return res.status(401).json({error: 'No se indicó la ciudad'})
         }
+        if(!imageUrl){
+            return res.status(401).json({error: 'No se proporciono la imagen'})
+        }
         const checkCity = await City.findByPk(city)
         if(!checkCity){
             return res.status(404).json({error: 'El id de ciudad provisto no está registrado'})
         }
 
-        const [building, created] = await Building.findOrCreate({where: {address, city, lat, lng}})
+        const [building, created] = await Building.findOrCreate({where: {name, address, city, lat, lng}, defaults: {imageUrl}})
         if(!created) {
             return res.status(401).json({error: 'El edificio ya está registrada'})
         }
