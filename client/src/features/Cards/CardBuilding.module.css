@@ -1,0 +1,9 @@
+.container {
+  margin: 10px;
+  display: inline-block !important;
+  /* flex-direction: row; */
+  /* width: 100%;
+  height: 60px; */
+  /* border: 2px !important; */
+  height: 60px;
+}

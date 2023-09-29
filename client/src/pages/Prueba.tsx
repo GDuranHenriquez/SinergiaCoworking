@@ -1,6 +1,10 @@
 import BackGroundGlobal from "../components/backgrounds/BackgroundGlobal";
 import  { styled } from 'styled-components'
-import ButtonFilter from "../features/Cards/navBarFilter/BottonFilter";
+import ButtonFilter from "../features/Cards/NavbarFilter/BottonFilter";
+import NavbarFilter from "../features/Cards/NavbarFilter/NavbarFilter";
+import CardBuilding from "../features/Cards/CardBuilding";
+import Cards from "../features/Cards/Cards";
+
 
 
 function Prueba(){
@@ -8,7 +12,8 @@ function Prueba(){
   return <ContinerHomePage>
     <h1>hola</h1>
     <BackGroundGlobal></BackGroundGlobal> 
-    <ButtonFilter text="hola" ></ButtonFilter>
+    <NavbarFilter></NavbarFilter>
+    <Cards></Cards>    
   </ContinerHomePage>
 }
 
