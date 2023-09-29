@@ -12,10 +12,10 @@ interface Props {
 function CardBuilding({ image, title, description }: Props) {
   return (
     <div className={styles.container}>
-    <Card hoverable  className={styles.cardContainer} cover={<img style={{ width: '100%', height: '70%' }} className={styles.imgCard} alt="example" src={image} />} >
-    {/* <img id={styles.imgCard} alt="example" src={image} /> */}
-      <Meta title={title} description={description} />
-    </Card>
+      <Card hoverable  className={styles.cardContainer} cover={  <img className={styles.imgCard} alt="example" src={image} />} >
+      {/* <img id={styles.imgCard} alt="example" src={image} /> */}
+        <Meta title={title} description={description} />
+      </Card>
     </div>
   );
 }

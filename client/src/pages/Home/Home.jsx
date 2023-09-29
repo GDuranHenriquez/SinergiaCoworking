@@ -1,5 +1,9 @@
+import React,{useEffect} from "react";
 import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import { styled } from "styled-components";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import SliderCarousel from "../../features/Navigation/Carrousel/Slider";
 
@@ -10,18 +14,23 @@ import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
 import Cards from "../../features/Cards/Cards";
 
 function HomePages() {
+
+  useEffect(() => {
+    AOS.init({delay: 250, duration: 1000,});
+  },[])
+
   return (
     <ContinerHomePage>
       <BackGroundGlobal></BackGroundGlobal>
       <NavBarNavigation></NavBarNavigation>
-      <div className="firstPage">
+      <div data-aos="fade-up" data-aos-duration="1000" className="firstPage">
         <SliderCarousel
           imageOne={portada}
           imageTwo={notebook}
           imageThree={oficina}
         ></SliderCarousel>
       </div>
-      <div className="secondPage">
+      <div data-aos="fade-up" className="secondPage">
         <NavbarFilter></NavbarFilter>
         <Cards></Cards>   
       </div>

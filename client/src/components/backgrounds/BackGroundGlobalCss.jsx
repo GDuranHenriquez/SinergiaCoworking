@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const BackgrounContainer = styled.div`
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   position: fixed;
   top: 0;
   left: 0;
