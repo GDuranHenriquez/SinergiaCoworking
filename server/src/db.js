@@ -51,8 +51,8 @@ const {
 } = sequelize.models;
 
 Purchase.belongsTo(User, {as: 'user_purchase', foreignKey: 'user'})
-Purchase.hasMany(DetailPurchase, {as: 'purchase_detailPurchase', foreignKey: 'purchase'})
-DetailPurchase.belongsTo(Office, {as: 'detailPurchase_office', foreignKey:'office'})
+Purchase.hasMany(Reservation, {as: 'purchase_reservation', foreignKey: 'purchase'})
+Reservation.belongsTo(Office, {as: 'reservation_office', foreignKey:'office'})
 User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
 Score.belongsTo(User, {as: 'user_score', foreignKey: 'user'})
 Score.belongsTo(Office, {as: 'office_score', foreignKey: 'office'})
