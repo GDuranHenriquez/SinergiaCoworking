@@ -54,7 +54,7 @@ Purchase.hasMany(Reservation, {as: 'purchase_reservation', foreignKey: 'purchase
 Reservation.belongsTo(Office, {as: 'reservation_office', foreignKey:'office'})
 // User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
 Score.belongsTo(User, {as: 'user_score', foreignKey: 'user'})
-Score.belongsTo(Office, {as: 'office_score', foreignKey: 'office'})
+Office.hasMany(Score, {as: 'office_score', foreignKey: 'office'})
 Office.hasMany(OfficeImage, {as: 'office_officeImage', foreignKey: 'office'})
 Office.hasMany(Reservation, {as: 'office_reservation', foreignKey: 'office'})
 Office.belongsTo(Category, {as: 'office_category', foreignKey: 'category'})
