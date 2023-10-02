@@ -3,11 +3,11 @@ import { Button } from 'antd';
 
 interface Props{
   text: string,
-  path: string
+  click: any
 }
 
-function AccesButton({text, path} : Props){
-  return  <Button type='primary' style={{ marginLeft: '70px', background: '#E47F36', color:"black" }} href={path} >{text}</Button> 
+function AccesButton({text, click} : Props){
+  return  <Button type='primary' style={{ marginLeft: '10px', background: '#E47F36', color:"black" }} onClick={click}>{text}</Button> 
 }
 
 

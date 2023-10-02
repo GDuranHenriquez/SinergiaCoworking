@@ -3,9 +3,16 @@ import LinkButton from "./LinkButton";
 import AccesButton from "./AccesButton";
 import { Layout, Menu } from 'antd';
 import { styled } from 'styled-components';
+import { useModal } from "../../../utils/useModal";
+import ModalRegister from "../../../components/login/modalStatusRegister/register";
+import ModalLogin from "../../../components/login/modalStatusRegister/Login";
+
 const { Header } = Layout;
 
 const NavBarNavigation: React.FC = () => {
+    const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
+    const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);   
+
     return (
         <StyleContainerNav>
             <Layout style={{width:'100%', height:'10%', position:'fixed', top: 0, left:0, zIndex:9999, margin:0, padding: 0, minHeight: '63px'}}>
@@ -18,12 +25,13 @@ const NavBarNavigation: React.FC = () => {
                         <LinkButton text='Oficinas' path='/oficinas' />
                         <LinkButton text='Nosotros' path='/nosotros' />
                         <LinkButton text='Ubicaciones' path='/ubicaciones' /></div>
-                        <div> <AccesButton text='ACCEDER' path='/login'/></div>
-                      
-                       
+                        <div className="accesLogin"> <AccesButton text='REGISTRO' click={openModalRegister}/>
+                        <AccesButton text='ACCEDER' click={openModalLogin}/></div>                      
                     </Menu>
                 </Header>
             </Layout>
+            <ModalRegister isOpen={isOpenModalRegister} closeModal={closeModalRegister}></ModalRegister>
+            <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin}></ModalLogin>
         </StyleContainerNav>
     );
 };
