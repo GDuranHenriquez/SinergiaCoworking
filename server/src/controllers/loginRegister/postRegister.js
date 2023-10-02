@@ -3,6 +3,8 @@ const { encrypPass } = require('../../utils/crypPass');
 const { verify } = require('../../auth/verifyGLTK');
 const { generatePassword } = require('../../auth/generatePassword');
 const { VerifyIsRoot } = require('../../auth/verifyIsUserRoot');
+const { createRefreshToken, createAccessToken } = require('../../auth/createTokens');
+const { generateInfo } = require('../../auth/generateTokens');
 
 async function postRegisterAcountUser(req, res){
   try {
@@ -38,11 +40,33 @@ async function postRegisterAcountUser(req, res){
       if(isRoot){
         const registerAcountUser = await User.create({password: passCrypt,
           email: email, name: nameUser + lastName, accessLevel: 'root'});
-        return res.status(200).json(registerAcountUser);
+        
+        var data = registerAcountUser.dataValues;
+        const accessToken = createAccessToken(data);
+        const refreshToken = await createRefreshToken(data);
+
+        return res.status(200).json({
+          pass: true, 
+          message: 'Correct username and password', 
+          user: generateInfo(data),
+          accessToken,
+          refreshToken
+        });
       }else{
         const registerAcountUser = await User.create({password: passCrypt,
         email: email, name: nameUser + lastName});
-        return res.status(200).json(registerAcountUser);
+
+        var data = registerAcountUser.dataValues;
+        const accessToken = createAccessToken(data);
+        const refreshToken = await createRefreshToken(data);
+
+        return res.status(200).json({
+          pass: true, 
+          message: 'Correct username and password', 
+          user: generateInfo(data),
+          accessToken,
+          refreshToken
+        });
       }      
     }
     
