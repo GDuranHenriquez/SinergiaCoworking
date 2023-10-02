@@ -9,7 +9,7 @@ const {REQUEST_URL} = process.env
 //swagger
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocument = require('./docsSwagger/openapi.json');
-//const { authenticate } = require('./auth/athenticate');
+const { authenticate } = require('./auth/athenticate');
 
 //Import All Routes.
 const routerCart = require('./routes/routerCart')
@@ -24,6 +24,7 @@ const routerService = require('./routes/routerService')
 const routerToken = require('./routes/routerToken');
 const routerUser = require('./routes/routerUser')
 const routerLoginRegister = require('./routes/routerLoginRegister');
+const routerDataUserClient = require('./routes/routerProtecteDateUser');
 
 require('./db.js');
 
@@ -49,6 +50,7 @@ server.use(express.json());
 //server.use('/', routes);
 server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
+server.use('/data-user', authenticate, routerDataUserClient);
 
 //tokens
 server.use('/cart', routerCart);

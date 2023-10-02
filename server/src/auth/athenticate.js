@@ -10,10 +10,10 @@ function authenticate(req, res, next){
       req.user = {...decoded.user};
       next();      
     }else{
-      res.status(401).json({error: 'No token provided'});
+      return res.status(401).json({error: 'No token provided'});
     }
   }else{
-    res.status(401).json({error: 'No token provided'});
+   return res.status(401).json({error: 'No token provided'});
   }
 
 };
