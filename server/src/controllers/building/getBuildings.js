@@ -3,7 +3,7 @@ const {Op} = require('sequelize')
 
 const getBuildings = async (req, res) => {
     try {
-        const {name, city, category} = req.body
+        const {name, city, category} = req.query
         const buildingFilters = {}
         const isAdmin = false // Aplicar validacion por token
         if(!isAdmin){
