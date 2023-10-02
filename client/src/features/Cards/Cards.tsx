@@ -31,9 +31,9 @@ function Cards() {
       });
   }, []);
 
-  const getBuildingsToShow = (buildings: { name: string; address: string; imageUrl: string }[], page: number, pageSize: number) => {
-    let var1 = page -1;
-    let var2 = page + pageSize - 1;
+  const getBuildingsToShow = (buildings: { name: string; address: string; imageUrl: string }[], page: number, size: number) => {
+    let var1 = page * size - size;
+    let var2 = page * size;
    return buildings.slice(var1, var2);
   }
 

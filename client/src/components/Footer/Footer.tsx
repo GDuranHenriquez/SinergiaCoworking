@@ -17,11 +17,11 @@ const FooterSection: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
           <FooterColumn>
-            <h3>Direcciones</h3>
+            <h3>Ubicaciones</h3>
             <ul>
-              <li>Dirección 1</li>
-              <li>Dirección 2</li>
-              <li>Dirección 3</li>
+              <li>Buenos Aires</li>
+              <li>Rosario </li>
+              <li>Mendoza</li>
             </ul>
           </FooterColumn>
         </Col>
