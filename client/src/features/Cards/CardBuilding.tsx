@@ -1,5 +1,8 @@
 import { Card } from "antd";
-import styles from "./CardBuilding.module.css"
+import styles from "./CardBuilding.module.css";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Meta } = Card;
 

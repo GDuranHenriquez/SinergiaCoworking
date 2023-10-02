@@ -3,19 +3,38 @@ import { Select, Input } from "antd";
 import { Option } from "antd/es/mentions";
 import { useEffect, useState } from "react";
 import ButtonFilter from "./BottonFilter";
+import axios from "axios";
 
 function NavbarFilter() {
   const { Search } = Input;
 
-  const [locations, setLocations] = useState<string[]>([]);
-  const [oficinas, setOficinas] = useState<string[]>([]);
+  const [category, setCategory] =useState<
+  { id: string; name: string }[]
+>([]);
+  const [locations, setLocations] =useState<
+  { id: string; name: string }[]
+>([]);
+  // const [oficinas, setOficinas] = useState<string[]>([]);
 
-  useEffect(() => {
+
     // ir al back a buscar locations, y nutrir la variable locations
-    const loc = ["Punta", "Paloma"];
-    setLocations(loc);
-    const cat = ["Open space", "Oficina privada", "Sala de reuniones"];
-    setOficinas(cat);
+    useEffect(() => {
+      axios
+        .get(`http://localhost:3001/city`)
+        .then((response) => {
+       setLocations(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al cargar las ciudades:", error);
+        });
+        axios
+        .get(`http://localhost:3001/category`)
+        .then((response) => {
+       setCategory(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al cargar las categorias:", error);
+        });
   }, []);
 
   const onClick = (value: string) => {
@@ -46,7 +65,7 @@ function NavbarFilter() {
         defaultValue={"Ubicación"}
       >
         {locations.map((l) => (
-          <Option value={l}>{l}</Option>
+          <Option value={l.id}>{l.name}</Option>
         ))}
       </Select>
 
@@ -56,15 +75,15 @@ function NavbarFilter() {
         onChange={handleOficinasChange}
         defaultValue={"Oficinas"}
       >
-        {oficinas.map((o) => (
-          <Option value={o}>{o}</Option>
+        {category.map((c) => (
+          <Option value={c.id}>{c.name}</Option>
         ))}
       </Select>
-
+{/* 
       <ButtonFilter
         text="Capacidad (min-max)"
         myFunction={onClick}
-      ></ButtonFilter>
+      ></ButtonFilter> */}
 
       <Search
         className={style.search}

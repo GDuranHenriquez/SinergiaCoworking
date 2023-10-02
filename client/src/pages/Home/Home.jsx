@@ -12,6 +12,8 @@ import notebook from "../../assets/notebook.jpg";
 import oficina from "../../assets/oficina.jpg";
 import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
 import Cards from "../../features/Cards/Cards";
+import FooterSection from "../../components/Footer/Footer";
+
 
 function HomePages() {
 
@@ -28,12 +30,15 @@ function HomePages() {
           imageOne={portada}
           imageTwo={notebook}
           imageThree={oficina}
-        ></SliderCarousel>
+          ></SliderCarousel>
       </div>
       <div data-aos="fade-up" className="secondPage">
         <NavbarFilter></NavbarFilter>
         <Cards></Cards>   
       </div>
+      <Footer>
+     <FooterSection></FooterSection>
+     </Footer>  
     </ContinerHomePage>
   );
 }
@@ -59,5 +64,14 @@ const ContinerHomePage = styled.div`
   
   }
 `;
+
+const Footer = styled.div`
+
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  `
 
 export default HomePages;
