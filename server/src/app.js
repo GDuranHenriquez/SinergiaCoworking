@@ -23,7 +23,7 @@ const routerScore = require('./routes/routerScore')
 const routerService = require('./routes/routerService')
 const routerToken = require('./routes/routerToken');
 const routerUser = require('./routes/routerUser')
-
+const routerLoginRegister = require('./routes/routerLoginRegister');
 
 require('./db.js');
 
@@ -62,7 +62,7 @@ server.use('/score', routerScore);
 server.use('/service', routerService);
 server.use('/token', routerToken);
 server.use('/user', routerUser);
-
+server.use('/sign-in-out', routerLoginRegister);
 
 server.use((err, req, res, next) => {
   const status = err.status || 500;
