@@ -112,7 +112,7 @@ function AuthProvider({ children }) {
   }
 
   function saveUser(AuthResponse) {
-    saveSessionInfo(AuthResponse.data.user, AuthResponse.data.accessToken, AuthResponse.data.refreshToken);
+    saveSessionInfo(AuthResponse.user, AuthResponse.accessToken, AuthResponse.refreshToken);
   }
 
   function getAccess() {
@@ -129,7 +129,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken, checkAuth, signOut, user }}>
+      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken, checkAuth, signOut, user, getAccess }}>
       {isLoading? <Loading/> : children}
     </AuthContext.Provider>
   );

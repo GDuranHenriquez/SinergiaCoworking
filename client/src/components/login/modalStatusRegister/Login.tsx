@@ -27,12 +27,19 @@ function ModalLogin({ isOpen, closeModal}: Props) {
   const googleResponse = async (credentialResponse: CredentialResponse) => {
     setIsLoading(true);
     try {
-      const loginResponse = await loginGoogleUser(credentialResponse.credential);
-      if (loginResponse.data.pass) {
-        if (loginResponse.data.accessToken && loginResponse.data.refreshToken) {
+      const data = {
+        token: credentialResponse.credential
+      }
+      const loginResponse = await loginGoogleUser(data);      
+      if (loginResponse.pass) {
+        if (loginResponse.accessToken && loginResponse.refreshToken) {
           auth.saveUser(loginResponse);
         }
+        messageSuccess("Inicio de sesión exitoso")
         auth.getAccess();
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
       } else if (loginResponse.status === 403) {
         if (loginResponse.data.message) {
           messageError(loginResponse.data.message);
