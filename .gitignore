@@ -14,6 +14,7 @@ client/dist
 client/dist-ssr
 client/.local
 client/.env.local
+client/.env
 
 # Editor directories and files
 client/.vscode/
@@ -30,3 +31,5 @@ client/*.sw?
 # Ignorar la carpeta build en el directorio server
 server/node_modules/
 server/.env
+client/.env.local
+client/.env.local
