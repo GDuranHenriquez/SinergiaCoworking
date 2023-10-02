@@ -1,0 +1,96 @@
+import React from "react";
+import { Layout, Row, Col, } from "antd";
+import { styled } from "styled-components";
+import {
+  MailOutlined,
+  PhoneOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  InstagramOutlined,
+} from "@ant-design/icons";
+
+const { Footer } = Layout;
+
+const FooterSection: React.FC = () => {
+  return (
+    <StyledFooter>
+      <Row gutter={[16, 16]}>
+        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          <FooterColumn>
+            <h3>Direcciones</h3>
+            <ul>
+              <li>Dirección 1</li>
+              <li>Dirección 2</li>
+              <li>Dirección 3</li>
+            </ul>
+          </FooterColumn>
+        </Col>
+        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          <FooterColumn>
+            <h3>Contacto</h3>
+            <ul>
+              <li>
+                <MailOutlined /> Correo Electrónico: correo@ejemplo.com
+              </li>
+              <li>
+                <PhoneOutlined /> Teléfono: +123456789
+              </li>
+            </ul>
+          </FooterColumn>
+        </Col>
+        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          <FooterColumn>
+            <h3>Redes Sociales</h3>
+            <SocialIcons>
+              <a href="#">
+                <FacebookOutlined />
+              </a>
+              <a href="#">
+                <TwitterOutlined />
+              </a>
+              <a href="#">
+                <InstagramOutlined />
+              </a>
+            </SocialIcons>
+          </FooterColumn>
+        </Col>
+      </Row>
+    </StyledFooter>
+  );
+};
+
+const StyledFooter = styled(Footer)`
+  background: #1f2551;
+  color: white;
+  padding: 24px 0;
+`;
+
+const FooterColumn = styled.div`
+  text-align: center;
+  h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+  }
+`;
+
+const SocialIcons = styled.div`
+  font-size: 24px;
+  a {
+    color: white;
+    margin-right: 16px;
+    transition: color 0.3s;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+`;
+
+export default FooterSection;

@@ -1,10 +1,10 @@
-import NavigationHome from "../features/Navigation/NavigationHome";
+import FooterSection from "../components/Footer/Footer";
 
 function PruebaDos() {
 
     return (
         <div>
-            <NavigationHome></NavigationHome>
+            <FooterSection></FooterSection>
         </div>
     )
 }

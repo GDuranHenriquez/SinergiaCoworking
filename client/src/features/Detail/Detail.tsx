@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
-import style from './Detail.module.css';
+import { Descriptions, DatePicker } from "antd";
+import ButtonConfirm from "./ButtonConfirm";
 import ImageZoom from "../../components/Image/Image";
-import { DatePicker } from "antd";
-import ButtonConfirm from './ButtonConfirm'
+import style from './Detail.module.css'
 
 interface OfficeDetailProps {
   name: string;
@@ -15,41 +14,38 @@ interface OfficeDetailProps {
 }
 
 function OfficeDetail() {
-  const { id } = useParams<{ id: string }>(); 
+  const { id } = useParams<{ id: string }>();
 
-  const [officeData, setOfficeData] = useState<OfficeDetailProps>({
-    name: "OFICINA BLAS PARERA",
+  // Supongamos que obtienes los datos de la oficina desde algún servicio o API
+  const officeData: OfficeDetailProps = {
+    name: "Open Space Blas Parera",
     address: "Blas Parera 1555, Buenos Aires",
-    imageUrl: "https://services-admin.stationwe.com.br/bucket/1680525943194-44fd8d03-04da-4ff6-b838-b496fbfa3cfbWeWorkCorrientes800foto4.jpeg",
-    category:"Open Space"
-  });
-
-//   useEffect(() => {
-//     axios
-//       .get(`/api/getOfficeById/${id}`)
-//       .then((response) => {
-//         const { name, address, imageUrl } = response.data;
-//         setOfficeData({ name, address, imageUrl });
-//       })
-//       .catch((error) => {
-//         console.error("Error al cargar los detalles de la oficina", error);
-//       });
-//   }, [id]);
+    imageUrl:
+      "https://services-admin.stationwe.com.br/bucket/1680525943194-44fd8d03-04da-4ff6-b838-b496fbfa3cfbWeWorkCorrientes800foto4.jpeg",
+    category: "Open Space",
+  };
 
   return (
-      <div>
-        <NavBarNavigation></NavBarNavigation>
-    <div className={style.container}>
-    <div  className={style.descripcion}>
-      <h2 className={style.title}>{officeData.name}</h2>
-      <p className={style.subtitle}> {officeData.address}</p>
-      <p className={style.subtitle}>{officeData.category}</p>
-      <span className={style.span}> Comprueba la disponibilidad:<DatePicker></DatePicker></span>
-      <br />
-      <ButtonConfirm text='Confirmar compra' path='/login'></ButtonConfirm>
+    <div>
+      <NavBarNavigation />
+      <div className={style.container}>
+        <ImageZoom img={officeData.imageUrl} />
+        <div className={style.descripcion}>
+          <h2 className={style.title}>{officeData.name}</h2>
+          <Descriptions layout="vertical" column={1}>
+            <Descriptions.Item label="Dirección">
+              {officeData.address}
+            </Descriptions.Item>
+            <Descriptions.Item label="Categoría">
+              {officeData.category}
+            </Descriptions.Item>
+            <Descriptions.Item label="Comprueba la disponibilidad">
+              <DatePicker />
+            </Descriptions.Item>
+          </Descriptions>
+          <ButtonConfirm text="Confirmar compra" path="/login" />
+        </div>
       </div>
-      <ImageZoom img={officeData.imageUrl}></ImageZoom>
-    </div>
     </div>
   );
 }

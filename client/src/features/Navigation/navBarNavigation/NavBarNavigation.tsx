@@ -12,13 +12,15 @@ const NavBarNavigation: React.FC = () => {
                 <Header style={{ background: '#1F2551', width: '100%', height: '100%', margin:0, padding: 0}}>
                     <Menu 
                      mode="inline"
-                    style={{ background: '#1F2551', height: '100%', display:'flex', flexWrap:'nowrap' , alignItems:'center', justifyContent:'center'}}>
-                        <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span>
-                        <LinkButton text='Inicio' path='/' />
+                    style={{ background: '#1F2551', height: '100%', display:'flex', flexWrap:'nowrap' , alignItems:'center', justifyContent:'space-between'}}>
+                        <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div>
+                        <div>  <LinkButton text='Inicio' path='/' />
                         <LinkButton text='Oficinas' path='/oficinas' />
                         <LinkButton text='Nosotros' path='/nosotros' />
-                        <LinkButton text='Ubicaciones' path='/ubicaciones' />
-                        <AccesButton text='ACCEDER' path='/login'/>
+                        <LinkButton text='Ubicaciones' path='/ubicaciones' /></div>
+                        <div> <AccesButton text='ACCEDER' path='/login'/></div>
+                      
+                       
                     </Menu>
                 </Header>
             </Layout>
