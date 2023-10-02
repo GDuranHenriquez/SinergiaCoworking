@@ -13,6 +13,7 @@ client/lerna-debug.log*
 client/dist
 client/dist-ssr
 client/.local
+client/.env.local
 
 # Editor directories and files
 client/.vscode/
