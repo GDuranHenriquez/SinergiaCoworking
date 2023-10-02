@@ -6,7 +6,8 @@ import ProtectedRoute from './components/protecterRoute/ProtectedRoute.jsx';
 import HomePages from "./pages/Home/Home.jsx";
 import Prueba from './pages/Prueba.tsx'
 import PruebaDos from "./pages/PruebaDos.tsx";
-import Detail from "../src/pages/Detail.tsx"
+import Detail from "../src/pages/Detail.tsx";
+import Nosotros from "./pages/Nosotros/Nosotros.tsx";
 
 import './App.css'
 
@@ -16,6 +17,10 @@ function App() {
     {
       path: "/",
       element: <HomePages></HomePages>,
+    },
+    {
+      path: "/nosotros",
+      element: <Nosotros></Nosotros>,
     },
     {
       path: "/prueba",

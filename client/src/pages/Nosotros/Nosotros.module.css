@@ -1,0 +1,51 @@
+.contenedor{
+    background-size: 100%;
+    background-attachment: fixed;
+    overflow: scroll;
+    /* background-color: rgb(255, 255, 255); */
+    background-image: url(https://www.theofficegroup.com/sites/default/files/styles/hero_homepage_large_/public/acquiadam-assets/Euston_rd_ent_office_4.jpg?itok=ySXb5jOC);
+ 
+}
+    
+
+
+.containerNosotros {
+    margin-left: 5%;
+    margin-top: 80px;
+    text-align: center;
+}
+.parrafos1{
+    text-align: left;
+    margin-left: 8%;
+    background-color: rgba(255, 255, 255, 0.945);
+    font: bold;
+    margin-top: 50px;
+    
+
+}
+.parrafos2{
+    text-align: left;
+    margin-left: 55%;
+    background-color: rgba(255, 255, 255, 0.945);
+    font: bold;
+    
+
+}
+.parrafos3{
+    text-align: left;
+    margin-left: 8%;
+    background-color: rgba(255, 255, 255, 0.945);
+    font: bold;
+
+}
+
+/* #1F2551 */
+
+.containerQuienes{
+    margin-left: 30%;
+    margin-top: 20px;
+    width: 100%;
+
+
+}
+

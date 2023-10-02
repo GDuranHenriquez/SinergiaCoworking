@@ -8,14 +8,14 @@ function NavbarFilter() {
   const { Search } = Input;
 
   const [locations, setLocations] = useState<string[]>([]);
-  const [category, setCategory] = useState<string[]>([]);
+  const [oficinas, setOficinas] = useState<string[]>([]);
 
   useEffect(() => {
     // ir al back a buscar locations, y nutrir la variable locations
     const loc = ["Punta", "Paloma"];
     setLocations(loc);
     const cat = ["Open space", "Oficina privada", "Sala de reuniones"];
-    setCategory(cat);
+    setOficinas(cat);
   }, []);
 
   const onClick = (value: string) => {
@@ -28,7 +28,7 @@ function NavbarFilter() {
     //filtrar por ubicacion pegada al backend
   };
 
-  const handleCategoryChange = (value: string) => {
+  const handleOficinasChange = (value: string) => {
     console.log(`selected ${value}`);
     //filtrar por ubicacion pegada al backend
   };
@@ -53,22 +53,22 @@ function NavbarFilter() {
       <Select
         className={style.filter}
         style={{ width: 120 }}
-        onChange={handleCategoryChange}
-        defaultValue={"Categoría"}
+        onChange={handleOficinasChange}
+        defaultValue={"Oficinas"}
       >
-        {category.map((c) => (
-          <Option value={c}>{c}</Option>
+        {oficinas.map((o) => (
+          <Option value={o}>{o}</Option>
         ))}
       </Select>
 
       <ButtonFilter
-        text="Puntuación (min-max)"
+        text="Capacidad (min-max)"
         myFunction={onClick}
       ></ButtonFilter>
 
       <Search
         className={style.search}
-        placeholder="input search text"
+        placeholder="Búsqueda"
         onSearch={onSearch}
         style={{ width: "200px" }}
       />
