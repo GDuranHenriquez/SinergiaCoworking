@@ -9,7 +9,8 @@ const getOfficeById = async (req, res) => {
                 {model: Service, through: {attributes: []}},
                 {model: Category, as: 'office_category'},
                 {model: OfficeImage, as: 'office_officeImage'},
-                {model: Reservation, as: 'office_reservation'}
+                {model: Reservation, as: 'office_reservation'},
+                {model: Score, as: 'office_score'}
             ]});
 
         if(!office) {
