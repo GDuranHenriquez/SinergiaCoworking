@@ -19,17 +19,32 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({
     return (
         <div className={style.container}>
             <Carousel autoplaySpeed={6000} autoplay={true} dotPosition="bottom"
-                style={{ width: '100%', height: '100%' }}>
+                style={{ width: '100%', height: '100%', fontSize: '13px'}}>
                     
-                <div className={style.itemSlider}>
-                    {item(imageOne, "TRABAJANDO EN EQUIPO", "Imagen1")}
+                    <div className={style.itemSlider}>
+                    {item(imageOne, (
+                        <>
+                            TRABAJANDO EN EQUIPO <br />
+                            <br />
+                            El coworking es el espacio donde la colaboración y la creatividad se unen para impulsar el éxito conjunto. La diversidad de talentos en un espacio unido enriquece las oportunidades de colaboración
+                        </>
+                    ), "Imagen1")}
                 </div>
                 <div className={style.itemSlider}>
-                    {item(imageTwo, "CRECIENDO EN GRANDE", "Imagen1")}
+                    {item(imageTwo, (
+                        <>
+                            CRECIENDO EN GRANDE <br />  <br />
+                            La colaboración en equipo multiplica la creatividad y la innovación. El coworking transforma el trabajo individual en una experiencia colaborativa que impulsa el crecimiento profesional y empresarial.
+                        </>
+                    ), "Imagen2")}
                 </div>
                 <div className={style.itemSlider}>
-                    {item(imageThree, "CONOCENOS", "Imagen1")}
-
+                    {item(imageThree, (
+                        <>
+                            CONOCENOS <br />  <br />
+                            El coworking promueve la sinergia entre profesionales independientes, creando un ambiente de apoyo mutuo. Es el lugar donde las ideas fluyen libremente y las conexiones se forman naturalmente."
+                        </>
+                    ), "Imagen3")}
                 </div>
             </Carousel>
         </div>
@@ -38,7 +53,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({
 
 
 
-const item = (image: string, text: string, imageName: string) => {
+const item = (image: string, text: JSX.Element, imageName: string) => {
     return <StyleItem>
         <div className="text">
             <h1>{text}</h1>
