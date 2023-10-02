@@ -1,4 +1,4 @@
-const {City, Province} = require("../../db");
+const {City} = require("../../db");
 
 const getCity = async (req, res) => {
     try {
