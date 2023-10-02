@@ -5,17 +5,10 @@ import AOS from "aos";
 import 'aos/dist/aos.css';
 
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
-import SliderCarousel from "../../features/Navigation/Carrousel/Slider";
-
-import portada from "../../assets/portada.jpg";
-import notebook from "../../assets/notebook.jpg";
-import oficina from "../../assets/oficina.jpg";
-import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
-import Cards from "../../features/Cards/Cards";
 import FooterSection from "../../components/Footer/Footer";
 
 
-function HomePages() {
+function HomeAdmin() {
 
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});
@@ -25,17 +18,8 @@ function HomePages() {
     <ContinerHomePage>
       <BackGroundGlobal></BackGroundGlobal>
       <NavBarNavigation></NavBarNavigation>
-      <div data-aos="fade-up" data-aos-duration="1000" className="firstPage">
-        <SliderCarousel
-          imageOne={portada}
-          imageTwo={notebook}
-          imageThree={oficina}
-          ></SliderCarousel>
-      </div>
-      <div data-aos="fade-up" className="secondPage">
-        <NavbarFilter></NavbarFilter>
-        <Cards></Cards>   
-      </div>
+      
+
       <Footer>
      <FooterSection></FooterSection>
      </Footer>  
@@ -74,4 +58,4 @@ const Footer = styled.div`
   margin-top: 50px;
   `
 
-export default HomePages;
+export default HomeAdmin;

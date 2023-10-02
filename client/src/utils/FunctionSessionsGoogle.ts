@@ -27,6 +27,16 @@ export async  function loginGoogleUser(token:any) {
     return error;
   }
 }
+export async  function loginUser(data: any) {
+  try {
+    const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/sign-in-out/login`;
+    const response = await axios.post(endpoint, data);
+    const apiResponse = response.data;
+    return apiResponse;
+  } catch (error: any) {
+    return error;
+  }
+}
 
 export async function logoutUser(refreshToken: string, signOut: () => void){
   try {

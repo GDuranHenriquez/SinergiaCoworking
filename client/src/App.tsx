@@ -8,8 +8,9 @@ import Prueba from './pages/Prueba.tsx'
 import PruebaDos from "./pages/PruebaDos.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
-
+import HomeAdmin from "./pagesAdmin/Home/Home.jsx";
 import './App.css'
+
 
 function App() {
   
@@ -39,8 +40,8 @@ function App() {
       element: <ProtectedRoute></ProtectedRoute>,
       children: [
         {
-          path: "/protected",
-          element: <></>,
+          path: "/homeAdmin",
+          element: <HomeAdmin></HomeAdmin>,
         }
       ],
     },

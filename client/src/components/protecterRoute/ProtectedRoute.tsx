@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-//import NavBar from "./NavBar/NavBar";
 import { useAuth } from "../../Authenticator/AuthPro";
 
 interface Props {
@@ -11,11 +10,13 @@ interface Props {
 }
 
 const ProtectedRoute = () => {
-  const isAuth = useAuth(); 
+  const isAuth = useAuth();
+  const typeUser = isAuth.getTypeUser();
+
   return (
     <>
       {/* {isAuth.isAuthenticated && <NavBar />} */}
-      {isAuth.isAuthenticated ? (
+      {isAuth.isAuthenticated && typeUser === 'root' ? (
         <Outlet></Outlet>
       ) : (
         <Navigate to="/"></Navigate>
