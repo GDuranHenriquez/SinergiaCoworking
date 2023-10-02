@@ -1,4 +1,5 @@
 const {Building, Category, City, Office, Service, Score} = require('../../db')
+const {Op} = require('sequelize')
 
 const getBuildings = async (req, res) => {
     try {
