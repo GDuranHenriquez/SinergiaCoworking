@@ -18,7 +18,7 @@ async function postRegisterAcountUser(req, res){
       const userRegister = await User.findOne({ where: { email: email } });
       
       if(!(userRegister === null)){
-        return res.status(403).json({error: 'This user is already registered'});
+        return res.status(403).json({error: 'El email ya se encuentra registrado'});
       };
 
       let nameEmail = payload.name;
@@ -54,7 +54,7 @@ async function postRegisterAcountUser(req, res){
         });
       }else{
         const registerAcountUser = await User.create({password: passCrypt,
-        email: email, name: nameUser + lastName});
+        email, name});
 
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
@@ -70,18 +70,24 @@ async function postRegisterAcountUser(req, res){
       }      
     }
     
-    if( !name || !email || !password){
-      return res.status(403).json({error: 'Mandatory data is missing'})
+    if(!name){
+      return res.status(403).json({error: 'No se indicó el nombre'})
+    };
+    if(!email){
+      return res.status(403).json({error: 'No se indicó el email'})
+    };
+    if(!password){
+      return res.status(403).json({error: 'No se indicó la contraseña'})
     };
 
     const userRegister = await User.findOne({ where: { email: email } });
 
     if(!(userRegister === null)){
-      return res.status(403).json({error: 'This user is already registered'});
+      return res.status(403).json({error: 'El email ya esta registrado'});
     };
 
     if(!(password.length >= 8 && password.length <= 32) ){
-      return res.status(403).json({error: 'The password must be between 8 and 32 characters'});
+      return res.status(403).json({error: 'La contraseña debe contener entre 8 y 32 caracteres'});
     };
 
     const passCrypt = await encrypPass(password);
@@ -94,7 +100,7 @@ async function postRegisterAcountUser(req, res){
       return res.status(200).json(registerAcountUser);
     }else{
       const registerAcountUser = await User.create({password: passCrypt,
-      email: email, name: nameUser + lastName})
+      email, name})
       return res.status(200).json(registerAcountUser);
     }
   } catch (error) {

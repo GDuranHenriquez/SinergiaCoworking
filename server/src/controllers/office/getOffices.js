@@ -1,9 +1,15 @@
 const {Category, Office, OfficeImage, Score, Service, Reservation, Building} = require('../../db')
+const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
+const {verifyAdmin} = require('../../auth/verifyAdmin')
 
 const getAllOffices = async (req, res) => {
     try {
         const {building, category, capacity, order, sort} = req.body
-        const isAdmin = false //Aplicar validacion por token
+        let isAdmin = false
+        const token = getTokenFromHeader(req.headers)
+        if(token !== null){
+            isAdmin = await verifyAdmin(token)
+        }
         const filters = {basic: {}}
         if(!isAdmin){
             filters.basic.deleted = false
