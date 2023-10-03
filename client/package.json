@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "@react-oauth/google": "^0.11.1",
+    "@reduxjs/toolkit": "^1.9.6",
     "antd": "^5.9.3",
     "aos": "^3.0.0-beta.6",
     "axios": "^1.5.0",
@@ -33,6 +34,9 @@
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@types/react-redux": "^7.1.27",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",

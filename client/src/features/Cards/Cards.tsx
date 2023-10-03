@@ -14,6 +14,7 @@ function Cards() {
     { name: string; address: string; imageUrl: string }[]
   >([]);
 
+
   const [buildingsToShow, setBuildingsToShow] = useState<
   { name: string; address: string; imageUrl: string }[]
 >([]);
@@ -43,6 +44,7 @@ function Cards() {
 
   return (
     <div>
+      
       <Pagination style={{marginTop: '10px'}} defaultCurrent={1} total={buildings.length} defaultPageSize={DEFAULT_PAGE_SIZE} onChange={onChange} />
       <div className={styles.cardsContainer}>
         {buildingsToShow.map((building) => (

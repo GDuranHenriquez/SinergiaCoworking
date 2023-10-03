@@ -13,12 +13,17 @@ import oficina from "../../assets/oficina.jpg";
 import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
 import Cards from "../../features/Cards/Cards";
 import FooterSection from "../../components/Footer/Footer";
+import { getAllBuildings } from "../../redux/action/actions";
+import { useDispatch } from "react-redux";
 
 
 function HomePages() {
 
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});
+    dispatch(getAllBuildings())
   },[])
 
   return (
