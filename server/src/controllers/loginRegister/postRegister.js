@@ -90,12 +90,35 @@ async function postRegisterAcountUser(req, res){
     const isRoot = VerifyIsRoot(email);
     if(isRoot){
       const registerAcountUser = await User.create({password: passCrypt,
-        email: email, name: nameUser + lastName, accessLevel: 'root'})
-      return res.status(200).json(registerAcountUser);
+        email: email, name: name , accessLevel: 'root'})
+
+      var data = registerAcountUser.dataValues;
+      const accessToken = createAccessToken(data);
+      const refreshToken = await createRefreshToken(data);
+
+      return res.status(200).json({
+        pass: true, 
+        message: 'Correct username and password', 
+        user: generateInfo(data),
+        accessToken,
+        refreshToken
+      });
+      
     }else{
       const registerAcountUser = await User.create({password: passCrypt,
-      email: email, name: nameUser + lastName})
-      return res.status(200).json(registerAcountUser);
+      email: email, name: nameUser + name})
+      
+      var data = registerAcountUser.dataValues;
+      const accessToken = createAccessToken(data);
+      const refreshToken = await createRefreshToken(data);
+
+      return res.status(200).json({
+        pass: true, 
+        message: 'Correct username and password', 
+        user: generateInfo(data),
+        accessToken,
+        refreshToken
+      });
     }
   } catch (error) {
     return res.status(400).json({error: error.message});
