@@ -1,14 +1,14 @@
 import axios from "axios";
-import { setAllBuilding } from ".";
+import { setDetailOffice } from ".";
 import { Dispatch } from "../../store/store";
 
 
-export const getAllBuildings = async (dispatch: Dispatch) => {
+export const getDetailOffice = async (dispatch: Dispatch, id: string) => {
   try {
-    const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/building`;
-    const { data } = await axios.get(endpoint); 
-    
-    dispatch(setAllBuilding(data));
+    const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/${id}`;
+    const { data } = await axios.get(endpoint);
+
+    dispatch(setDetailOffice(data));
 
   } catch (error) {
     if (typeof error === "string") {

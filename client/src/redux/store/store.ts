@@ -2,12 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 
 
 //import Slices
-import buildingReducer from '../slices/building'
-
+import buildingReducer from '../slices/building';
+import officeReducer from '../slices/offices';
 
 const store = configureStore({
   reducer: {
-    buildin: buildingReducer
+    buildin: buildingReducer,
+    office: officeReducer,
   }
 });
 
