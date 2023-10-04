@@ -37,7 +37,7 @@ function App() {
       element: <PruebaDos/>,
     },
     {
-      path: "/detail",
+      path: "/detail/:id",
       element: <Detail/>,
     },
     {

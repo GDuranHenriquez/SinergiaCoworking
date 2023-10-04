@@ -26,7 +26,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({
                         <>
                             TRABAJANDO EN EQUIPO <br />
                             <br />
-                            El coworking es el espacio donde la colaboración y la creatividad se unen para impulsar el éxito conjunto. La diversidad de talentos en un espacio unido enriquece las oportunidades de colaboración
+                            El coworking es el espacio donde la colaboración y la creatividad se unen para impulsar el éxito conjunto. La diversidad de talentos en un espacio unido enriquece las oportunidades de colaboración.
                         </>
                     ), "Imagen1")}
                 </div>
@@ -42,7 +42,7 @@ const SliderCarousel: React.FC<SliderCarouselProps> = ({
                     {item(imageThree, (
                         <>
                             CONOCENOS <br />  <br />
-                            El coworking promueve la sinergia entre profesionales independientes, creando un ambiente de apoyo mutuo. Es el lugar donde las ideas fluyen libremente y las conexiones se forman naturalmente."
+                            El coworking promueve la sinergia entre profesionales independientes, creando un ambiente de apoyo mutuo. Es el lugar donde las ideas fluyen libremente y las conexiones se forman naturalmente.
                         </>
                     ), "Imagen3")}
                 </div>
