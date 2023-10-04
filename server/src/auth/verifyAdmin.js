@@ -1,14 +1,16 @@
 const { verifyRefreshToken } = require('./verifyTokens');
-const {UserAdmin} = require('../db')
+const {User} = require('../db')
 
 async function verifyAdmin(token){
     const decoded = verifyRefreshToken(token);
     if(decoded){
       const user = decoded.user
-      const found = await UserAdmin.findOne({where: {id: user.id, email: user.email}})
-      if(found) {
-        return true
-      }
+      if(user.type === 'admin' || user.type === 'root'){
+        const found = await User.findOne({where: {email: user.email}})
+        if(found && found.accessLevel === user.type) {
+          return true
+        }
+      }  
     }
   return false
 };

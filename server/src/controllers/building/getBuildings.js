@@ -1,11 +1,17 @@
 const {Building, Category, City, Office, Service, Score} = require('../../db')
 const {Op} = require('sequelize')
+const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
+const {verifyAdmin} = require('../../auth/verifyAdmin')
 
 const getBuildings = async (req, res) => {
     try {
         const {name, city, category} = req.query
+        let isAdmin = false
+        const token = getTokenFromHeader(req.headers)
+        if(token !== null){
+            isAdmin = await verifyAdmin(token)
+        }
         const buildingFilters = {}
-        const isAdmin = false // Aplicar validacion por token
         if(!isAdmin){
             buildingFilters.deleted = false
         }
