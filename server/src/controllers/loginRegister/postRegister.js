@@ -7,8 +7,7 @@ const { createRefreshToken, createAccessToken } = require('../../auth/createToke
 const { generateInfo } = require('../../auth/generateTokens');
 
 async function postRegisterAcountUser(req, res){
-  try {
-    
+  try {    
     const { email, password, name, token } = req.body;
 
     if(token){
@@ -18,7 +17,6 @@ async function postRegisterAcountUser(req, res){
       const userRegister = await User.findOne({ where: { email: email } });
       
       if(!(userRegister === null)){
-        return res.status(403).json({error: 'El email ya se encuentra registrado'});
         return res.status(403).json({error: 'El email ya se encuentra registrado'});
       };
 
@@ -56,7 +54,6 @@ async function postRegisterAcountUser(req, res){
       }else{
         const registerAcountUser = await User.create({password: passCrypt,
         email, name});
-        email, name});
 
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
@@ -80,25 +77,15 @@ async function postRegisterAcountUser(req, res){
     };
     if(!password){
       return res.status(403).json({error: 'No se indicó la contraseña'})
-    if(!name){
-      return res.status(403).json({error: 'No se indicó el nombre'})
-    };
-    if(!email){
-      return res.status(403).json({error: 'No se indicó el email'})
-    };
-    if(!password){
-      return res.status(403).json({error: 'No se indicó la contraseña'})
-    };
+    }
 
     const userRegister = await User.findOne({ where: { email: email } });
 
     if(!(userRegister === null)){
       return res.status(403).json({error: 'El email ya esta registrado'});
-      return res.status(403).json({error: 'El email ya esta registrado'});
     };
 
     if(!(password.length >= 8 && password.length <= 32) ){
-      return res.status(403).json({error: 'La contraseña debe contener entre 8 y 32 caracteres'});
       return res.status(403).json({error: 'La contraseña debe contener entre 8 y 32 caracteres'});
     };
 
