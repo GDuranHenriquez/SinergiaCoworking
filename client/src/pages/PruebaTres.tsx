@@ -6,7 +6,7 @@ const PruebaTres = () => {
         valoraciones: number[];
       }
       
-      // función para calcular el promedio de valoraciones de un producto
+      
       const calcularPromedioValoracionesOficina = (producto: Producto): number => {
         if (producto.valoraciones.length === 0) {
           return 0; 
@@ -17,7 +17,7 @@ const PruebaTres = () => {
         return promedio;
       };
       
-      // ejemplo
+      
       const productoEjemplo: Producto = {
         id: 1,
         nombre: "oficina",
