@@ -1,4 +1,0 @@
-export enum ActionType {
-  GET_ALL_BUILDINGS = "GET_ALL_BUILDINGS",
-  FILTER_BY_CITY = "FILTER_BY_CITY",
-};
