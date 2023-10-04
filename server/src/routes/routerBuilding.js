@@ -2,7 +2,7 @@ const {Router} = require('express')
 const postBuilding = require('../controllers/building/postBuilding')
 const getBuildings = require('../controllers/building/getBuildings')
 const deleteBuilding = require('../controllers/building/deleteBuilding')
-const getBuildingById = require("../controllers/building/getBuildingById");
+const getBuildingById = require("../controllers/building/getBuildingById")
 
 const routerBuilding = Router()
 

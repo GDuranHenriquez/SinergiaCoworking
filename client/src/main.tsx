@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from "react-redux";
-import store from './redux/store/store.ts';
+import store from "./redux/store/store";
 import ReactDOM from 'react-dom/client'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import App from './App.tsx'
