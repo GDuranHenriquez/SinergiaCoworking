@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import Card from "./CardBuilding";
 import styles from "./Cards.module.css";
-import { useSelector } from "react-redux";
 import CardBuilding from "./CardBuilding";
 import axios from "axios";
 import React from "react";
 import { Pagination } from "antd";
+import { useCustomSelector } from "../../hooks/redux";
 
 function Cards() {
-
+  const { allBuildings } = useCustomSelector((state) => state.buildin);
+ 
   const DEFAULT_PAGE_SIZE = 4;
   const [buildings, setBuildings] = useState<
     { name: string; address: string; imageUrl: string }[]
   >([]);
 
+
   const [buildingsToShow, setBuildingsToShow] = useState<
   { name: string; address: string; imageUrl: string }[]
->([]);
+  >([]);
 
-  useEffect(() => {
+  
+  /* useEffect(() => {
     axios
       .get(`http://localhost:3001/building`)
       .then((response) => {
@@ -29,7 +32,7 @@ function Cards() {
       .catch((error) => {
         console.error("Error al cargar los edificios:", error);
       });
-  }, []);
+  }, []); */
 
   const getBuildingsToShow = (buildings: { name: string; address: string; imageUrl: string }[], page: number, size: number) => {
     let var1 = page * size - size;
@@ -43,6 +46,7 @@ function Cards() {
 
   return (
     <div>
+      
       <Pagination style={{marginTop: '10px'}} defaultCurrent={1} total={buildings.length} defaultPageSize={DEFAULT_PAGE_SIZE} onChange={onChange} />
       <div className={styles.cardsContainer}>
         {buildingsToShow.map((building) => (

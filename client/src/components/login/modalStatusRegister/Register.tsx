@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Modal } from '../modalLogin/ModalStyle';
-import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from '../../../Authenticator/AuthPro';
-import axios from 'axios';
 import Loading from "../../Loading/Loading";
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -18,8 +16,7 @@ interface Props {
 
 function ModalRegister({ isOpen, closeModal}: Props) {
   const auth = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  
+  const [isLoading, setIsLoading] = useState(false);  
   const handleModalContainerClick = (e) => e.stopPropagation();
 
   const googleResponse = async (credentialResponse: CredentialResponse) => {

@@ -1,7 +1,4 @@
 import axios from "axios";
-import { useAuth } from "../Authenticator/AuthPro";
-
-
 
 export async function registerGoogleUser(token:any) {
   try {

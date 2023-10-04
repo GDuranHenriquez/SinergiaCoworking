@@ -1,30 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../Authenticator/AuthPro";
+import Loading from "../Loading/Loading";
 
-interface Props {
-  children: {
-    path: string,
-    element: React.ReactNode,
-  }
+
+function ProtectedRoute(){
+  const auth = useAuth();
+    
+  return (auth.isAuthenticated && auth.isRoot) ? <Outlet/> : <Navigate to="/"></Navigate>
+
 }
-
-const ProtectedRoute = () => {
-  const isAuth = useAuth();
-  const typeUser = isAuth.getTypeUser();
-
-  return (
-    <>
-      {/* {isAuth.isAuthenticated && <NavBar />} */}
-      {isAuth.isAuthenticated && typeUser === 'root' ? (
-        <Outlet></Outlet>
-      ) : (
-        <Navigate to="/"></Navigate>
-      )}
-    </>
-  );
-};
-
-
 
 export default ProtectedRoute;

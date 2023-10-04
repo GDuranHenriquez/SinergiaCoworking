@@ -1,29 +1,49 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import Loading from "../components/Loading/Loading";
 import axios from "axios";
+import { UserInfo, AuthResponse } from "../components/protecterRoute/typesProtecterRoute"; 
 
 
+/* type AuthContextType = {
+  isAuthenticated: boolean;
+  isRoot: boolean;
+  user: UserInfo;
+  getAccessToken: () => string;
+  getRefreshToken: () => string | null;
+  checkAuth: () => Promise<void>;
+  saveUser: (authResponse: AuthResponse) => void;
+  getAccess: () => void;
+  signOut: () => void;
+}; */
+
+interface AuthProviderProps{
+  children: React.ReactNode;
+}
 const AuthContext = createContext({
   isAuthenticated: false,
-  getAccess: () => {},
+  isRoot: false,
   getAccessToken: () => {},
-  saveUser: (AuthResponse) => {},
+  saveUser: (authResponse: AuthResponse) => {},
   getRefreshToken: () => {},
-  signOut: () => {},
-  getTypeUser: () => null
+  getUser: () => ({} as UserInfo | undefined),
+  getAccess: () => {},
+  signOut: () => {}
 });
 
-function AuthProvider({ children }) {
+// Crear el contexto con los tipos definidos
+/* const AuthContext = React.createContext<AuthContextType | undefined>(undefined); */
+
+export function AuthProvider({ children }: AuthProviderProps) {
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isRoot, setIsRoot] = useState(false);
+  const [user, setUser] = useState<UserInfo>()
+  const [accessToken, setAccessToken] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true); 
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  
 
-  async function requestNewAccessToken(refreshToken) {
+  async function requestNewAccessToken(refreshToken: string) {
     try {
       const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + "/token/refresh-token";
       
@@ -49,16 +69,18 @@ function AuthProvider({ children }) {
       //This user is autenticated
       const  userInfo = await getUserInfo(accessToken);
       if(userInfo){
-        saveSessionInfo(userInfo, accessToken, getRefreshToken());
+        saveSessionInfo(userInfo, accessToken, getRefreshToken() ?? '');
         setIsLoading(false);
         return;
       }
     } else {
       const token = getRefreshToken();
+
       if (token) {
         const newAccessToken = await requestNewAccessToken(token)
         if (newAccessToken) {
           const  userInfo = await getUserInfo(newAccessToken);
+          
           if(userInfo){
             saveSessionInfo(userInfo, newAccessToken, token);
             setIsLoading(false);
@@ -70,21 +92,22 @@ function AuthProvider({ children }) {
     setIsLoading(false);
   }
 
-  function saveSessionInfo(userInfo, accessToken, refreshToken){
+  function saveSessionInfo(userInfo: UserInfo, accessToken:string, refreshToken:string){
     setAccessToken(accessToken);
     setUser(userInfo);
-    localStorage.setItem("token", refreshToken);
+    localStorage.setItem("token", refreshToken); 
+    if(userInfo.type === 'root'){
+      setIsRoot(true);
+    }
     setIsAuthenticated(true);
+    /* console.log(userInfo)
+    console.log(isAuthenticated) */   
   }
 
-  function getTypeUser(){
-    return user.type;
-  }
-
-  async function getUserInfo(accessToken){
+  async function getUserInfo(accessToken:string){
     try {
       const endpoint =
-        import.meta.env.VITE_BASENDPOINT_BACK + "/data-userClient/";
+        import.meta.env.VITE_BASENDPOINT_BACK + "/data-user";
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -107,7 +130,7 @@ function AuthProvider({ children }) {
     return accessToken;
   }
 
-  function getRefreshToken() {
+  function getRefreshToken():string|null {
     const token = localStorage.getItem("token");
     if (token) {
       return token;
@@ -115,8 +138,8 @@ function AuthProvider({ children }) {
     return null;
   }
 
-  function saveUser(AuthResponse) {
-    saveSessionInfo(AuthResponse.user, AuthResponse.accessToken, AuthResponse.refreshToken);
+  function saveUser(authResponse: AuthResponse) {
+    saveSessionInfo(authResponse.user, authResponse.accessToken, authResponse.refreshToken);
   }
 
   function getAccess() {
@@ -125,20 +148,30 @@ function AuthProvider({ children }) {
 
   function signOut(){
     setAccessToken('');
-    setUser('');
+    setUser(undefined);
     localStorage.removeItem("token");
     setIsAuthenticated(false);
   }
 
+  function getUser(){
+    return user;
+  }
 
+  
+  useEffect(() => {    
+    checkAuth();
+  }, []);
+
+  /* useEffect(() => {    
+    console.log(isRoot)
+  }, [isRoot]); */
+  
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken, checkAuth, signOut, user, getAccess, getTypeUser }}>
+      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken, signOut, getUser, getAccess, isRoot }}>
       {isLoading? <Loading/> : children}
     </AuthContext.Provider>
   );
 }
 
-const useAuth = () => useContext(AuthContext);
-
-export { AuthProvider, useAuth }
+export const useAuth = () => useContext(AuthContext)

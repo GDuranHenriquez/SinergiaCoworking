@@ -17,31 +17,31 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePages></HomePages>,
+      element: <HomePages/>,
     },
     {
       path: "/nosotros",
-      element: <Nosotros></Nosotros>,
+      element: <Nosotros/>,
     },
     {
       path: "/prueba",
-      element: <Prueba></Prueba>,
+      element: <Prueba/>,
     },
     {
       path: "/pruebados",
-      element: <PruebaDos></PruebaDos>,
+      element: <PruebaDos/>,
     },
     {
       path: "/detail",
-      element: <Detail></Detail>,
+      element: <Detail/>,
     },
     {
       path: "/",
-      element: <ProtectedRoute></ProtectedRoute>,
+      element: <ProtectedRoute/>,
       children: [
         {
           path: "/homeAdmin",
-          element: <HomeAdmin></HomeAdmin>,
+          element: <HomeAdmin/>,
         }
       ],
     },
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router}/> 
     </AuthProvider>    
   )
 }

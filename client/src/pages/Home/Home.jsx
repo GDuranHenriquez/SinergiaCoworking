@@ -3,22 +3,24 @@ import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import { styled } from "styled-components";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import SliderCarousel from "../../features/Navigation/Carrousel/Slider";
-
 import portada from "../../assets/portada.jpg";
 import notebook from "../../assets/notebook.jpg";
 import oficina from "../../assets/oficina.jpg";
 import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
 import Cards from "../../features/Cards/Cards";
 import FooterSection from "../../components/Footer/Footer";
-
+import { useCustomDispatch } from "../../hooks/redux";
+import { getAllBuildings } from "../../redux/slices/building/actionsBuilding";
 
 function HomePages() {
 
+  const dispatch = useCustomDispatch();
+  
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});
+    getAllBuildings(dispatch)
   },[])
 
   return (

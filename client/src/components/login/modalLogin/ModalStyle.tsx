@@ -32,10 +32,27 @@ export const Modal = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: center;
-      color: white;
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+      justify-items: center;
+      width: 100%;
       font-weight: bold;
       width: 80%;
       height: 100%;
+      gap: 30px;
+      font-size: 16px;
+      #normal_login{
+        width: 100%;
+        margin: 0 auto;
+                  
+      }
+      h3{
+          font-size: 24px;
+          color: black;
+          padding: 0;
+          margin-bottom: 20px;
+      }
       #btnCloseModal{
         position: absolute;
         top: 5px;
@@ -52,17 +69,7 @@ export const Modal = styled.div`
           cursor: pointer;
         }
       }
-      form{
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        color: white;
-        font-weight: bold;      
-      }
+      
     }
   } 
   
