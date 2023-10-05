@@ -112,7 +112,7 @@ async function postRegisterAcountUser(req, res){
       
     }else{
       const registerAcountUser = await User.create({password: passCrypt,
-      email: email, name: nameUser + name})
+      email: email, name: nameUser ? (nameUser + name): name})
       
       var data = registerAcountUser.dataValues;
       const accessToken = createAccessToken(data);
