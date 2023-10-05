@@ -1,4 +1,4 @@
-const {Building, Category, City, Office, Service, Score} = require('../../db')
+const {Building, Category, City, Office, Service, Score, OfficeImage} = require('../../db')
 const {Op} = require('sequelize')
 const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
 const {verifyAdmin} = require('../../auth/verifyAdmin')
