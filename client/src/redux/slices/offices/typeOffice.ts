@@ -4,6 +4,7 @@ export interface OfficeState{
 }
 
 export type Office = {
+  id: string,
   name: string,
   area: number,
   capacity: number,
@@ -11,6 +12,8 @@ export type Office = {
   category: number,
   building: string,
   services: Array<number>,
-  images: string
+  office_officeImage:  Array<object>,
+  office_reservation: Array<object>,
+  office_score: Array<object>
 }
   
