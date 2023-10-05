@@ -1,3 +1,4 @@
+import NavBarAdmin from "../components/NavBarAdmin/NavBarAdmin";
 
 
 function PruebaDos() {
@@ -6,7 +7,7 @@ function PruebaDos() {
     
     return (
         <div>
-
+            <NavBarAdmin></NavBarAdmin>
         </div>
     )
 }
