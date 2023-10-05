@@ -1,4 +1,4 @@
-const {Building, Category, City, Office, Service, Score} = require('../../db')
+const {Building, Category, City, Office, Service, Score, OfficeImage} = require('../../db')
 const {Op} = require('sequelize')
 const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
 const {verifyAdmin} = require('../../auth/verifyAdmin')
@@ -43,7 +43,7 @@ const getBuildings = async (req, res) => {
             where: {...buildingFilters, id: buildingIdsFiltered},
             include:[
                 {model: City, as: 'building_city'},
-                {model: Office, as: 'office_building', attributes: ['category'], include: [{model: Category, as:'office_category'} ]}
+                {model: Office, as: 'office_building', attributes: ['category'], include: [{model: Category, as:'office_category'}, {model: OfficeImage, as: 'office_officeImage'} ]}
             ]
         })
         return res.status(200).json(buildings)
