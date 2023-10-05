@@ -1,15 +1,17 @@
 import { postReviews } from "../../redux/slices/reviews/actionReviews";
 import { getDetailOffice } from "../../redux/slices/offices/actionOffice";
 import { useCustomDispatch } from "../../hooks/redux";
-import React,{useEffect} from "react";
-import { useState } from "react";
+import {useEffect} from "react";
 import AOS from 'aos';
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { useAuth } from "../../Authenticator/AuthPro";
+import React, { useState } from 'react';
+import { Rate } from 'antd';
 
-const PruebaTres = () => {
-  const { id } = useParams();
+const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+
+const Review = () => {
+
+  const [value, setValue] = useState(0);
   
 const auth = useAuth()
 
@@ -20,8 +22,8 @@ type FORM = {
   office: string
 }
 
-
   const dispatch = useCustomDispatch();
+  
   
   const [form, setForm] = useState<FORM>({
     stars: 0,
@@ -29,24 +31,24 @@ type FORM = {
     user: auth.getUser().id,
     office:'',
   });
+
+  const handleStarsChange = (value: number) => {
+    setForm({ ...form, stars: value });
+  };
   
   const handleSubmit = (e) => {
     e.preventDefault();
     postReviews(dispatch, form); 
   };
 
-    
+
     return (
       <div>
         <form onSubmit={handleSubmit}>
-          <label>
-            Stars:
-            <input
-              type="number"
-              value={form.stars}
-              onChange={(e) => setForm({ ...form, stars: e.target.value })}
-            />
-          </label>
+        <span>
+      <Rate tooltips={desc} onChange={handleStarsChange} value={form.stars} />
+      {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
+    </span>
           <label>
             Comment:
             <textarea
@@ -76,4 +78,4 @@ type FORM = {
     );
   };
   
-  export default PruebaTres
+  export default Review
