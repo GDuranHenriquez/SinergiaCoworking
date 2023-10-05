@@ -18,9 +18,11 @@ function generateRefreshToken(user){
 
 function generateInfo(data){
   const dataUser = {
+      id: data.id,
       name: data.name,
       email: data.email,
       type: data.accessLevel,
+      imgUrl: data.imgUrl
   }
   return dataUser
 };
