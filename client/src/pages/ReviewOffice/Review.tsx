@@ -1,15 +1,17 @@
 import { postReviews } from "../../redux/slices/reviews/actionReviews";
 import { getDetailOffice } from "../../redux/slices/offices/actionOffice";
 import { useCustomDispatch } from "../../hooks/redux";
-import React,{useEffect} from "react";
-import { useState } from "react";
+import {useEffect} from "react";
 import AOS from 'aos';
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { useAuth } from "../../Authenticator/AuthPro";
+import React, { useState } from 'react';
+import { Rate } from 'antd';
 
-const PruebaTres = () => {
-  const { id } = useParams();
+const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+
+const Review = () => {
+
+  const [value, setValue] = useState(0);
   
 const auth = useAuth()
 
@@ -20,13 +22,8 @@ type FORM = {
   office: string
 }
 
-
   const dispatch = useCustomDispatch();
   
-  // useEffect(() => {
-  //   const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/${id}`;
-  //   getDetailOffice(dispatch, endpoint);
-  // }, [dispatch, id]);
   
   const [form, setForm] = useState<FORM>({
     stars: 0,
@@ -34,50 +31,24 @@ type FORM = {
     user: auth.getUser().id,
     office:'',
   });
+
+  const handleStarsChange = (value: number) => {
+    setForm({ ...form, stars: value });
+  };
   
   const handleSubmit = (e) => {
     e.preventDefault();
     postReviews(dispatch, form); 
   };
 
-    // interface Producto {
-    //     id: number;
-    //     nombre: string;
-    //     valoraciones: number[];
-    //   }
-      
-      
-    //   const calcularPromedioValoracionesOficina = (producto: Producto): number => {
-    //     if (producto.valoraciones.length === 0) {
-    //       return 0; 
-    //     }
-        
-    //     const totalValoraciones = producto.valoraciones.reduce((total, valoracion) => total + valoracion, 0);
-    //     const promedio = totalValoraciones / producto.valoraciones.length;
-    //     return promedio;
-    //   };
-      
-      
-    //   const productoEjemplo: Producto = {
-    //     id: 1,
-    //     nombre: "oficina",
-    //     valoraciones: [5, 4, 3, 5, 2] 
-    //   };
-      
-    //   const promedioValoracionesProducto = calcularPromedioValoracionesOficina(productoEjemplo);
-    //   console.log(`El promedio de las valoraciones para ${productoEjemplo.nombre} es: ${promedioValoracionesProducto}`);
 
     return (
       <div>
         <form onSubmit={handleSubmit}>
-          <label>
-            Stars:
-            <input
-              type="number"
-              value={form.stars}
-              onChange={(e) => setForm({ ...form, stars: e.target.value })}
-            />
-          </label>
+        <span>
+      <Rate tooltips={desc} onChange={handleStarsChange} value={form.stars} />
+      {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
+    </span>
           <label>
             Comment:
             <textarea
@@ -107,4 +78,4 @@ type FORM = {
     );
   };
   
-  export default PruebaTres
+  export default Review
