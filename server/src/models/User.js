@@ -29,6 +29,11 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
+        },
+        imgUrl: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            defaultValue: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaaNaTC8W_ygKLZxLFWpHOerfIYQiVlsuyrw&usqp=CAU"
         }
     },
     {
