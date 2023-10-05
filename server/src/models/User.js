@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
         },
         imgUrl: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
             defaultValue: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaaNaTC8W_ygKLZxLFWpHOerfIYQiVlsuyrw&usqp=CAU"
         }
     },

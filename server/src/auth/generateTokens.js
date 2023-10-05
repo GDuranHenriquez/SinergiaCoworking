@@ -22,6 +22,7 @@ function generateInfo(data){
       name: data.name,
       email: data.email,
       type: data.accessLevel,
+      imgUrl: data.imgUrl
   }
   return dataUser
 };
