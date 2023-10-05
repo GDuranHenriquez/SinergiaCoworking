@@ -6,7 +6,7 @@ import AOS from 'aos';
 
 const PruebaTres = () => {
   const [form, setForm] = useState({
-    stars:'',
+    stars: 0,
     comment: '',
     user:'',
     office:'',
@@ -17,7 +17,7 @@ const PruebaTres = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    postReviews(dispatch, form); // Envía la reseña al backend
+    postReviews(dispatch, form); 
   };
 
   useEffect(() => {
