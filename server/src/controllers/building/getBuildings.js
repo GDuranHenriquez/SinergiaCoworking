@@ -43,7 +43,7 @@ const getBuildings = async (req, res) => {
             where: {...buildingFilters, id: buildingIdsFiltered},
             include:[
                 {model: City, as: 'building_city'},
-                {model: Office, as: 'office_building', attributes: ['category'], include: [{model: Category, as:'office_category'}, {model: OfficeImage, as: 'office_officeImage'} ]}
+                {model: Office, as: 'office_building', attributes: ['category'], include: [{model: Category, as:'office_category'} ]}
             ]
         })
         return res.status(200).json(buildings)
