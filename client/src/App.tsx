@@ -6,10 +6,11 @@ import ProtectedRoute from './components/protecterRoute/ProtectedRoute.jsx';
 import HomePages from "./pages/Home/Home.jsx";
 import Prueba from './pages/Prueba.tsx'
 import PruebaDos from "./pages/PruebaDos.tsx";
-import PruebaTres from "./pages/PruebaTres.tsx";
+import Review from "./pages/ReviewOffice/Review.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
 import HomeAdmin from "./pagesAdmin/Home/Home.jsx";
+import OfficeDetail from "./features/Detail/Detail2.tsx";
 import './App.css'
 
 
@@ -29,8 +30,8 @@ function App() {
       element: <Prueba/>,
     },
     {
-      path: "/prueba3",
-      element: <PruebaTres></PruebaTres>,
+      path: "/review",
+      element: <Review></Review>,
     },
     {
       path: "/pruebados",
@@ -39,6 +40,10 @@ function App() {
     {
       path: "/detail/:id",
       element: <Detail/>,
+    },
+    {
+      path: "/office/:id",
+      element: <OfficeDetail/>
     },
     {
       path: "/",
