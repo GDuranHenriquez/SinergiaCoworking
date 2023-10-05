@@ -1,4 +1,4 @@
-import { getReviews, postReviews } from "../redux/slices/reviews/actionReviews";
+import { postReviews } from "../redux/slices/reviews/actionReviews";
 import { useCustomDispatch } from "../hooks/redux";
 import React,{useEffect} from "react";
 import { useState } from "react";
@@ -19,11 +19,6 @@ const PruebaTres = () => {
     e.preventDefault();
     postReviews(dispatch, form); 
   };
-
-  useEffect(() => {
-    AOS.init({ delay: 250, duration: 1000 });
-    getReviews(dispatch);
-  }, []);
 
     interface Producto {
         id: number;
@@ -55,14 +50,24 @@ const PruebaTres = () => {
       return (
         <div>
           <form onSubmit={handleSubmit}>
-            <label>
               Stars:
-              <input
-                type="number"
-                value={form.stars}
-                onChange={(e) => setForm({ ...form, stars: e.target.value })}
-              />
-            </label>
+              <div>
+          <select
+          name="stars"
+          onChange={handleSubmit}
+          required
+          >
+            <option value="">select</option>
+            <option value={1}>⭐</option>
+            <option value={2}>⭐⭐</option>
+            <option value={3}>⭐⭐⭐</option>
+            <option value={4}>⭐⭐⭐⭐</option>
+            <option value={5}>⭐⭐⭐⭐⭐</option>
+            </select>
+          <br />
+        </div>
+            
+            <br />
             <label>
               Comment:
               <textarea
@@ -70,6 +75,7 @@ const PruebaTres = () => {
                 onChange={(e) => setForm({ ...form, comment: e.target.value })}
               />
             </label>
+            <br />
             <label>
               User:
               <input
@@ -78,6 +84,7 @@ const PruebaTres = () => {
                 onChange={(e) => setForm({ ...form, user: e.target.value })}
               />
             </label>
+            <br />
             <label>
               Office:
               <input
@@ -86,6 +93,7 @@ const PruebaTres = () => {
                 onChange={(e) => setForm({ ...form, office: e.target.value })}
               />
             </label>
+            <br />
             <button type="submit">Submit Review</button>
           </form>
         </div>
