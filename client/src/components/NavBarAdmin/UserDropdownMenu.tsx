@@ -18,7 +18,7 @@ interface UserDropdownMenuProps {
 const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], LogoutFunction }) => {
  
   const menu = (
-    <Menu style={{ backgroundColor: '#1F2551', cursor: 'pointer' }}>
+    <Menu style={{ paddingTop: '20px' ,backgroundColor: '#1F2551', cursor: 'pointer' }}>
       {menuItems.map((item, index) => (
         <Menu.Item key={index}>
           {item.text === 'Cerrar sesión'? <CloseSeionButton LogoutFunction = {LogoutFunction} text={item.text} path={item.path}></CloseSeionButton>: <LinkButton text={item.text} path={item.path} />}          
