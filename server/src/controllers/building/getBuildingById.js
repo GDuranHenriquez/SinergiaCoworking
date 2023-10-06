@@ -20,10 +20,10 @@ const getBuildingById = async (req, res) => {
                 {model: Office, as: "office_building", where: {deleted: false}, include: [{model: OfficeImage, as: 'office_officeImage'}], required: false}
             ]});
 
-        // if(!building) {
-        //     return res.status(404).json({message: "No se encontro el edificio"})
-        // }
-        return res.status(200).json(building || {});
+        if(!building) {
+            return res.status(404).json({message: "No se encontro el edificio"})
+        }
+        return res.status(200).json(building);
     } catch (error) {
         return res.status(500).json({error: error.message});
     }
