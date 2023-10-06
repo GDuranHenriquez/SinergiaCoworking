@@ -44,7 +44,7 @@ function Cards() {
         ))}
        
         </div>
-        {buildingsToShow.length == 0 && <div className={styles.msj}> No se encontraron resultados para esta búsqueda. </div>}
+        {buildingsToShow.length == 0 && <div className={styles.msj}> No se han encontrado resultados para esta búsqueda. </div>}
     </div>
   );
 }

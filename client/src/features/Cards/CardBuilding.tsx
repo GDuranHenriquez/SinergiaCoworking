@@ -29,4 +29,3 @@ function CardBuilding({ id, image, title, description }: Props) {
 export default CardBuilding;
 
 
-// 

@@ -1,10 +1,20 @@
 const {Category, Office, OfficeImage, Score, Service, Reservation, User} = require('../../db')
-
+const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
+const {verifyAdmin} = require('../../auth/verifyAdmin')
 
 const getOfficeById = async (req, res) => {
     try {
         const { id } = req.params
-        const office = await Office.findOne({where: {id}, 
+        let isAdmin = false
+        const token = getTokenFromHeader(req.headers)
+        if(token !== null){
+            isAdmin = await verifyAdmin(token)
+        }
+        const filters = {id}
+        if(!isAdmin){
+            filters.deleted = false
+        }
+        const office = await Office.findOne({where: filters, 
             include: [
                 {model: Service, through: {attributes: []}},
                 {model: Category, as: 'office_category'},
