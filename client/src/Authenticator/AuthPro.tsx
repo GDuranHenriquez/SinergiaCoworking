@@ -4,18 +4,6 @@ import axios from "axios";
 import { UserInfo, AuthResponse } from "../components/protecterRoute/typesProtecterRoute"; 
 
 
-/* type AuthContextType = {
-  isAuthenticated: boolean;
-  isRoot: boolean;
-  user: UserInfo;
-  getAccessToken: () => string;
-  getRefreshToken: () => string | null;
-  checkAuth: () => Promise<void>;
-  saveUser: (authResponse: AuthResponse) => void;
-  getAccess: () => void;
-  signOut: () => void;
-}; */
-
 interface AuthProviderProps{
   children: React.ReactNode;
 }
