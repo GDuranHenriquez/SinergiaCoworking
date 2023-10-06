@@ -77,7 +77,8 @@ async function postRegisterAcountUser(req, res){
     };
     if(!password){
       return res.status(403).json({error: 'No se indicó la contraseña'})
-    };
+    };    
+    const userRegister = await User.findOne({ where: { email: email } });
 
     if(!(userRegister === null)){
       return res.status(403).json({error: 'El email ya esta registrado'});
