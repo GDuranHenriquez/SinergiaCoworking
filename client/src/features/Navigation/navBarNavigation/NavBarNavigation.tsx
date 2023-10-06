@@ -13,16 +13,29 @@ const { Header } = Layout;
 
 const NavBarNavigation: React.FC = () => {
     const auth = useAuth()
+    const isRoot = auth.getUser()?.type
     const authenticated = auth.isAuthenticated;
     const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
     const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);
 
-
-    const menuItems = [
-        { text: 'Perfil', path: '/perfil' },
-        { text: 'Mis reservas', path: '/reservas' },
-        { text: 'Cerrar sesión', path: '/logout' },
-      ];
+    const getItemMenu = (typeRoot : string | undefined) => {
+        if(typeRoot === 'root' || typeRoot === 'admin' ){
+            return  [
+                { text: 'Perfil', path: '/perfil' },
+                { text: 'Mis reservas', path: '/reservas' },
+                { text: 'Crear oficina', path: '/crear-oficina' },
+                { text: 'Crear Edificio', path: '/crear-edificio' },
+                { text: 'Cerrar sesión', path: '/logout' }
+            ]
+        }else{
+            return [
+                { text: 'Perfil', path: '/perfil' },
+                { text: 'Mis reservas', path: '/reservas' },
+                { text: 'Cerrar sesión', path: '/logout' },
+            ]
+        }
+    }
+    
    
 
     return (
@@ -42,7 +55,7 @@ const NavBarNavigation: React.FC = () => {
                         <AccesButton text='ACCEDER' click={openModalLogin}/></div>:
 
                         <div className="accesLogin">
-                            <UserDropdownMenu menuItems={menuItems}></UserDropdownMenu>
+                            <UserDropdownMenu menuItems={getItemMenu(isRoot)}></UserDropdownMenu>
                         </div>}
 
                     </Menu>
@@ -61,7 +74,7 @@ const StyleContainerNav = styled.div`
     position: fixed;
     top: 0;
     left:0;
-    z-index:9999
+    z-index: 9999
 `
 
 export default NavBarNavigation;

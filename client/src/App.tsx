@@ -9,9 +9,11 @@ import PruebaDos from "./pages/PruebaDos.tsx";
 import Review from "./pages/ReviewOffice/Review.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
-import HomeAdmin from "./pagesAdmin/Home/Home.jsx";
 import OfficeDetail from "./features/Detail/Detail2.tsx";
 import './App.css'
+import CreateBuilding from "./pagesAdmin/createBuilding/CreateBuildingPage.tsx";
+import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
+
 
 
 function App() {
@@ -50,8 +52,12 @@ function App() {
       element: <ProtectedRoute/>,
       children: [
         {
-          path: "/homeAdmin",
-          element: <HomeAdmin/>,
+          path:'/crear-edificio',
+          element: <CreateBuilding/>
+        },
+        {
+          path: '/crear-oficina',
+          element: <CreateOfficePage/>
         }
       ],
     },

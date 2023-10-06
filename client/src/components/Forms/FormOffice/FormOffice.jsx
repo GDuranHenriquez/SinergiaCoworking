@@ -28,25 +28,19 @@ const FormOffice = () => {
   const priceOptions = ['Precio 1', 'Precio 2', 'Precio 3']; // Reemplaza con tus precios
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#1F2551',
-      }}
-    >
       <Form
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         style={{
-          width: '400px',
+          width: '50%',
           padding: '20px',
           background: 'white',
           borderRadius: '8px',
+          border: '1px solid rgba(0,0,0,0.3)',
+          boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
+          
         }}
         onFinish={handleSubmit}
       >
@@ -138,7 +132,6 @@ const FormOffice = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
   );
 };
 

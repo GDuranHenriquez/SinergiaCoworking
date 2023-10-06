@@ -30,15 +30,6 @@ const FormBuilding = () => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#1F2551',
-      }}
-    >
       <Form
         form={form}
         labelCol={{ span: 4 }}
@@ -49,6 +40,8 @@ const FormBuilding = () => {
           padding: '20px',
           background: 'white',
           borderRadius: '8px',
+          border: '1px solid rgba(0,0,0,0.3)',
+          boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
         }}
 
         onChange={handleChange}
@@ -120,7 +113,6 @@ const FormBuilding = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
   );
 };
 
