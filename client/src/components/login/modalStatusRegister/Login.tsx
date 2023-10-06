@@ -2,19 +2,18 @@ import { useEffect, useState } from 'react';
 import { Modal } from '../modalLogin/ModalStyle';
 import { useAuth } from '../../../Authenticator/AuthPro';
 import Loading from "../../Loading/Loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 //Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { loginGoogleUser, loginUser } from '../../../utils/FunctionSessionsGoogle';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { validation } from '../utils/validations';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { AuthResponse } from '../../protecterRoute/typesProtecterRoute';
 
 interface Props {
-  isOpen: any;
+  isOpen: boolean | (() => void);
   closeModal: any;
 }
 
@@ -30,18 +29,14 @@ function ModalLogin({ isOpen, closeModal }: Props) {
   const [error, setError] = useState<{ email?: string; password?: string }>({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleModalContainerClick = (e) => e.stopPropagation();
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleModalContainerClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
   useEffect(() =>{
@@ -53,7 +48,7 @@ function ModalLogin({ isOpen, closeModal }: Props) {
     }
   }, [email, password])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     /* e.preventDefault(); */
     setIsLoading(true);
     try {
@@ -65,13 +60,18 @@ function ModalLogin({ isOpen, closeModal }: Props) {
 
       if (loginResponse.pass) {
         if (loginResponse.accessToken && loginResponse.refreshToken) {
-          auth.saveUser(loginResponse);
+          const userInfo: AuthResponse = {
+            user: loginResponse.user,
+            accessToken: loginResponse.accessToken,
+            refreshToken: loginResponse.refreshToken
+          }
+          auth.saveUser(userInfo);
         }
         messageSuccess("Inicio de sesión exitoso")
         setTimeout(() => {
           auth.getAccess();
           closeModal();
-        }, 1000);
+        }, 0.5);
       } else if (loginResponse.status === 403) {
         if (loginResponse.data.message) {
           messageError(loginResponse.data.message);
@@ -179,7 +179,7 @@ function ModalLogin({ isOpen, closeModal }: Props) {
     });
   };
 
-  const onFinishFailed = (value: any) => {
+  const onFinishFailed = () => {
     console.log('Ha ocurrido un error')
   }
 

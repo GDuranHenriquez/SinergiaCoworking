@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, Dropdown, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import LinkButton from './LinkButton'; // Asegúrate de importar el componente LinkButton
+import CloseSeionButton from '../../features/Navigation/navBarNavigation/CloseSesionButton';
 import { useAuth } from '../../Authenticator/AuthPro';
 
 interface MenuItem {
@@ -11,15 +12,16 @@ interface MenuItem {
 
 interface UserDropdownMenuProps {
   menuItems?: MenuItem[];
+  LogoutFunction: () => Promise<void>;
 }
 
-const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [] }) => {
+const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], LogoutFunction }) => {
  
   const menu = (
     <Menu style={{ backgroundColor: '#1F2551', cursor: 'pointer' }}>
       {menuItems.map((item, index) => (
         <Menu.Item key={index}>
-          <LinkButton text={item.text} path={item.path} />
+          {item.text === 'Cerrar sesión'? <CloseSeionButton LogoutFunction = {LogoutFunction} text={item.text} path={item.path}></CloseSeionButton>: <LinkButton text={item.text} path={item.path} />}          
         </Menu.Item>
       ))}
     </Menu>
