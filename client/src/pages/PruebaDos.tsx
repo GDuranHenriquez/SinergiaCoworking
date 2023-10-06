@@ -1,3 +1,4 @@
+import CityTable from "../components/City/CityTable";
 import NavBarAdmin from "../components/NavBarAdmin/NavBarAdmin";
 
 
@@ -7,7 +8,7 @@ function PruebaDos() {
     
     return (
         <div>
-            <NavBarAdmin></NavBarAdmin>
+            <CityTable/>
         </div>
     )
 }
