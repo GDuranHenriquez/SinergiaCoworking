@@ -1,4 +1,4 @@
-const {Building, Category, City, Office, Service, Score, OfficeImage} = require('../../db')
+const {Building, Category, City, Office} = require('../../db')
 const {Op} = require('sequelize')
 const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
 const {verifyAdmin} = require('../../auth/verifyAdmin')
@@ -12,8 +12,10 @@ const getBuildings = async (req, res) => {
             isAdmin = await verifyAdmin(token)
         }
         const buildingFilters = {}
+        const officeFilters = {};
         if(!isAdmin){
             buildingFilters.deleted = false
+            // officeFilters.deleted = false
         }
         if(name){
             buildingFilters.name = {
@@ -27,23 +29,23 @@ const getBuildings = async (req, res) => {
             }
             buildingFilters.city = city
         }
-        const officeFilters = {};
+        
         if (category) {
             const checkCategory = await Category.findByPk(category);
             if (!checkCategory) {
                 return res.status(401).json({ error: 'Categoría no registrada' });
             }
-            officeFilters.category = category;
+            const filteredOffices = await Office.findAll({
+                where: {category}
+            });
+            const buildingIdsFiltered = filteredOffices.map(office => office.building)
+            buildingFilters.id = buildingIdsFiltered
         }
-        const filteredOffices = await Office.findAll({
-            where: officeFilters
-        });
-        const buildingIdsFiltered = filteredOffices.map(office => office.building)
         const buildings = await Building.findAll({
-            where: {...buildingFilters, id: buildingIdsFiltered},
+            where: buildingFilters,
             include:[
                 {model: City, as: 'building_city'},
-                {model: Office, as: 'office_building', attributes: ['category'], include: [{model: Category, as:'office_category'} ]}
+                {model: Office, as: 'office_building', where:{deleted: false}, attributes: ['category'], include: [{model: Category, as:'office_category'} ], required: false}
             ]
         })
         return res.status(200).json(buildings)
