@@ -7,6 +7,8 @@ const CityTable = () => {
   const dispatch = useDispatch();
   const cities = useSelector((state) => state.city.allCities);
 
+  console.log(cities)
+
   useEffect(() => {
     getAllCities(dispatch);
   }, [dispatch]);

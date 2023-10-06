@@ -5,7 +5,7 @@ import { Dispatch } from "../../store/store";
 
 export const getAllCities = async (dispatch: Dispatch) => {
   try {
-    const endpoint = import.meta.env.VITE_BASENDPOINT_BACK_RES + "/city";
+    const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + "/city";
     const { data } = await axios.get(endpoint);
 
     dispatch(setAllCities(data));
