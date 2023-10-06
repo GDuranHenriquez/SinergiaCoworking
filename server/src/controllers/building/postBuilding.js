@@ -22,11 +22,15 @@ const postBuilding = async (req, res)=> {
         if(!checkCity){
             return res.status(404).json({error: 'El id de ciudad provisto no está registrado'})
         }
-
-        const [building, created] = await Building.findOrCreate({where: {name, address, city, lat, lng}, defaults: {imageUrl}})
-        if(!created) {
-            return res.status(401).json({error: 'El edificio ya está registrada'})
+        const checkName = await Building.findOne({where: {name, city}})
+        if(checkName){
+            return res.status(401).json({error: 'El nombre del espacio ya esta registrado en la misma ciudad'})
         }
+        const checkLocation = await Building.findOne({where:{address, city}})
+        if(checkLocation){
+            return res.status(401).json({error: `La dirección ya esta registrada para el espacio: ${checkLocation.name}`})
+        }
+        const building = await Building.create({name, address, city, lat, lng, imageUrl})
         return res.status(200).json(building)
         
     } catch (error) {
