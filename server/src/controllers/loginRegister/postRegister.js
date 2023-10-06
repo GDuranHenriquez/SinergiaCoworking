@@ -7,7 +7,8 @@ const { createRefreshToken, createAccessToken } = require('../../auth/createToke
 const { generateInfo } = require('../../auth/generateTokens');
 
 async function postRegisterAcountUser(req, res){
-  try {    
+  try {
+    
     const { email, password, name, token } = req.body;
 
     if(token){
@@ -53,7 +54,8 @@ async function postRegisterAcountUser(req, res){
           refreshToken
         });
       }else{
-        const registerAcountUser = await User.create({password: passCrypt, email, name});
+        const registerAcountUser = await User.create({password: passCrypt,
+        email, name, imgUrl:imgUrl});
 
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
@@ -78,6 +80,8 @@ async function postRegisterAcountUser(req, res){
     if(!password){
       return res.status(403).json({error: 'No se indicó la contraseña'})
     };
+
+    const userRegister = await User.findOne({ where: { email: email } });
 
     if(!(userRegister === null)){
       return res.status(403).json({error: 'El email ya esta registrado'});
