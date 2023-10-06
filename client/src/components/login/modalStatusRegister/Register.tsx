@@ -23,45 +23,54 @@ function ModalRegister({ isOpen, closeModal}: Props) {
     setIsLoading(true);
     try {
       const registerResponse = await registerGoogleUser(credentialResponse.credential)
-      
-      if (registerResponse.status == 200 && registerResponse.data.pass) {
-        if (registerResponse.data.accessToken && registerResponse.data.refreshToken) {
+      console.log(registerResponse)
+      if (registerResponse.pass) {
+        if (registerResponse.accessToken && registerResponse.refreshToken) {
+          messageSuccess("Su cuenta ha sido creada correctamente!");
           auth.saveUser(registerResponse);
         }
-        messageSuccess("Su cuenta ha sido creada correctamente!");
         setTimeout(() => {
           closeModal();
-        }, 2000);        
+        }, 800);        
         
-      } else if (registerResponse.status == 403) {
-          messageError(registerResponse.data.error);
-          setTimeout(() => {
-            closeModal();
-          }, 2000);
+      } else if (registerResponse.response.status == 403) {
+        const message = registerResponse.response.data.error;
+        messageError(message);
+        setTimeout(() => {
+          closeModal();
+        }, 800);
       } else {
-        const message = registerResponse.data.message;
+        const message = registerResponse.response.data.error;
         if (!message) {
-          messageError(registerResponse.data.error);
+          messageError('Ha ocurrido un error interno');
           setTimeout(() => {
             closeModal();
-          }, 2000);
+          }, 800);
         }else{
           messageError(message);
           setTimeout(() => {
             closeModal();
-          }, 2000);
+          }, 800);
         }        
       }
       setIsLoading(false);
-    } catch (error: any) {
+    } catch (error) {
+      if(typeof error === 'string'){
+        messageError(error)
+      }else if(error instanceof Error){
+        console.log(error)
+        const message = error.message
+        messageError(message)
+      } else {
+        console.log(error)
+      }         
       setIsLoading(false);
-      messageError(error);
-      setTimeout(() => {
-        closeModal();
-      }, 2000);
+      
     } finally {
       setIsLoading(false);
-      closeModal();
+      setTimeout(() => {
+        closeModal();
+      }, 800);
     }
   }
   
