@@ -6,12 +6,37 @@ import { styled } from 'styled-components';
 import { useModal } from "../../../utils/useModal";
 import ModalRegister from "../../../components/login/modalStatusRegister/register";
 import ModalLogin from "../../../components/login/modalStatusRegister/Login";
+import UserDropdownMenu from "../../../components/NavBarAdmin/UserDropdownMenu";
+import { useAuth } from "../../../Authenticator/AuthPro";
 
 const { Header } = Layout;
 
 const NavBarNavigation: React.FC = () => {
+    const auth = useAuth()
+    const isRoot = auth.getUser()?.type
+    const authenticated = auth.isAuthenticated;
     const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
-    const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);   
+    const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);
+
+    const getItemMenu = (typeRoot : string | undefined) => {
+        if(typeRoot === 'root' || typeRoot === 'admin' ){
+            return  [
+                { text: 'Perfil', path: '/perfil' },
+                { text: 'Mis reservas', path: '/reservas' },
+                { text: 'Crear oficina', path: '/crear-oficina' },
+                { text: 'Crear Edificio', path: '/crear-edificio' },
+                { text: 'Cerrar sesión', path: '/logout' }
+            ]
+        }else{
+            return [
+                { text: 'Perfil', path: '/perfil' },
+                { text: 'Mis reservas', path: '/reservas' },
+                { text: 'Cerrar sesión', path: '/logout' },
+            ]
+        }
+    }
+    
+   
 
     return (
         <StyleContainerNav>
@@ -25,8 +50,14 @@ const NavBarNavigation: React.FC = () => {
                         <LinkButton text='Oficinas' path='/oficinas' />
                         <LinkButton text='Nosotros' path='/nosotros' />
                         <LinkButton text='Ubicaciones' path='/ubicaciones' /></div>
-                        <div className="accesLogin"> <AccesButton text='REGISTRO' click={openModalRegister}/>
-                        <AccesButton text='ACCEDER' click={openModalLogin}/></div>                      
+                        
+                        {!authenticated? <div className="accesLogin"> <AccesButton text='REGISTRO' click={openModalRegister}/>
+                        <AccesButton text='ACCEDER' click={openModalLogin}/></div>:
+
+                        <div className="accesLogin">
+                            <UserDropdownMenu menuItems={getItemMenu(isRoot)}></UserDropdownMenu>
+                        </div>}
+
                     </Menu>
                 </Header>
             </Layout>
@@ -43,7 +74,7 @@ const StyleContainerNav = styled.div`
     position: fixed;
     top: 0;
     left:0;
-    z-index:9999
+    z-index: 9999
 `
 
 export default NavBarNavigation;

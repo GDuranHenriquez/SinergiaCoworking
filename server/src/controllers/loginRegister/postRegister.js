@@ -13,7 +13,8 @@ async function postRegisterAcountUser(req, res){
     if(token){
       const payload = await verify(token);
       const email = payload.email;
-      const name = payload.name;      
+      const name = payload.name;
+      const imgUrl = payload.picture;      
       const userRegister = await User.findOne({ where: { email: email } });
       
       if(!(userRegister === null)){
@@ -38,7 +39,7 @@ async function postRegisterAcountUser(req, res){
       const isRoot = VerifyIsRoot(email);
       if(isRoot){
         const registerAcountUser = await User.create({password: passCrypt,
-          email: email, name: nameUser + lastName, accessLevel: 'root'});
+          email: email, name: nameUser + lastName, accessLevel: 'root', imgUrl:imgUrl});
         
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
@@ -52,8 +53,7 @@ async function postRegisterAcountUser(req, res){
           refreshToken
         });
       }else{
-        const registerAcountUser = await User.create({password: passCrypt,
-        email, name});
+        const registerAcountUser = await User.create({password: passCrypt, email, name});
 
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
@@ -77,9 +77,7 @@ async function postRegisterAcountUser(req, res){
     };
     if(!password){
       return res.status(403).json({error: 'No se indicó la contraseña'})
-    }
-
-    const userRegister = await User.findOne({ where: { email: email } });
+    };
 
     if(!(userRegister === null)){
       return res.status(403).json({error: 'El email ya esta registrado'});
@@ -111,7 +109,7 @@ async function postRegisterAcountUser(req, res){
       
     }else{
       const registerAcountUser = await User.create({password: passCrypt,
-      email: email, name: nameUser + name})
+      email: email, name: nameUser ? (nameUser + name): name})
       
       var data = registerAcountUser.dataValues;
       const accessToken = createAccessToken(data);

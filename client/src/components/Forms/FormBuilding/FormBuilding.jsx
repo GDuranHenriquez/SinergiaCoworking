@@ -12,6 +12,12 @@ const normFile = (e) => {
 
 const FormBuilding = () => {
   const [form] = Form.useForm();
+  const [error, setError] = useState(false)
+
+
+  const handleChange = (value)=>{
+    console.log(value)
+  }
 
   const handleSubmit = async (values) => {
     try {
@@ -24,26 +30,21 @@ const FormBuilding = () => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#1F2551',
-      }}
-    >
       <Form
         form={form}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         style={{
-          width: '400px',
+          width: '50%',
           padding: '20px',
           background: 'white',
           borderRadius: '8px',
+          border: '1px solid rgba(0,0,0,0.3)',
+          boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
         }}
+
+        onChange={handleChange}
         onFinish={handleSubmit}
       >
         <Form.Item
@@ -81,7 +82,11 @@ const FormBuilding = () => {
           getValueFromEvent={normFile}
           rules={[{ required: true, message: 'Por favor sube una imagen' }]}
         >
-          <Upload action="/upload.do" listType="picture-card">
+          <Upload
+            action="/upload.do"
+            listType="picture-card"
+            maxCount={1} // Establece el máximo de archivos permitidos a 1
+          >
             <div>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Subir imagen</div>
@@ -108,7 +113,6 @@ const FormBuilding = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
   );
 };
 

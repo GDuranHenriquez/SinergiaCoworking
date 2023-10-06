@@ -1,4 +1,4 @@
-const { Building, City, Office } = require("../../db");
+const { Building, City, Office, OfficeImage } = require("../../db");
 
 
 const getBuildingById = async (req, res) => {
@@ -7,7 +7,7 @@ const getBuildingById = async (req, res) => {
         const building = await Building.findOne({where: {id},
             include: [
                 {model: City, as: "building_city"},
-                {model: Office, as: "office_building"}
+                {model: Office, as: "office_building", include: [{model: OfficeImage, as: 'office_officeImage'}]}
             ]});
 
         if(!building) {

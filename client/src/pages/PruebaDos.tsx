@@ -1,11 +1,13 @@
-import FooterSection from "../components/Footer/Footer";
-import FormBuilding from "../components/FormBuilding/FormBuilding";
+import NavBarAdmin from "../components/NavBarAdmin/NavBarAdmin";
+
 
 function PruebaDos() {
 
+
+    
     return (
         <div>
-<FormBuilding></FormBuilding>
+            <NavBarAdmin></NavBarAdmin>
         </div>
     )
 }

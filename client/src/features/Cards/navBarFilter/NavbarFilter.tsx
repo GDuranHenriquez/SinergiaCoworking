@@ -4,9 +4,16 @@ import { Option } from "antd/es/mentions";
 import { useEffect, useState } from "react";
 import ButtonFilter from "./BottonFilter";
 import axios from "axios";
+import { getBuildingFilters } from "../../../redux/slices/building/actionsBuilding";
+import { useCustomDispatch } from "../../../hooks/redux";
 
 function NavbarFilter() {
+
+  const dispatch = useCustomDispatch();
   const { Search } = Input;
+const [filterCity, setFilterCity] = useState<string>("");
+const [filterCategory, setFilterCategory] = useState<string>("");
+const [filterName, setFilterName] = useState<string>("");
 
   const [category, setCategory] =useState<
   { id: string; name: string }[]
@@ -14,13 +21,10 @@ function NavbarFilter() {
   const [locations, setLocations] =useState<
   { id: string; name: string }[]
 >([]);
-  // const [oficinas, setOficinas] = useState<string[]>([]);
 
-
-    // ir al back a buscar locations, y nutrir la variable locations
     useEffect(() => {
       axios
-        .get(`http://localhost:3001/city`)
+        .get(import.meta.env.VITE_BASENDPOINT_BACK + `/city`)
         .then((response) => {
        setLocations(response.data);
         })
@@ -28,7 +32,7 @@ function NavbarFilter() {
           console.error("Error al cargar las ciudades:", error);
         });
         axios
-        .get(`http://localhost:3001/category`)
+        .get(import.meta.env.VITE_BASENDPOINT_BACK + `/category`)
         .then((response) => {
        setCategory(response.data);
         })
@@ -37,24 +41,19 @@ function NavbarFilter() {
         });
   }, []);
 
-  const onClick = (value: string) => {
-    console.log(`selected ${value}`);
-    //filtrar por ubicacion pegada al backend
-  };
-
   const onSearch = (value: string) => {
-    console.log(`selected ${value}`);
-    //filtrar por ubicacion pegada al backend
+    setFilterName(value)
+    getBuildingFilters(dispatch, filterCity, filterCategory, value)
   };
 
   const handleOficinasChange = (value: string) => {
-    console.log(`selected ${value}`);
-    //filtrar por ubicacion pegada al backend
+    setFilterCategory(value)
+    getBuildingFilters(dispatch, filterCity, value, filterName)
   };
 
   const handleLocationChange = (value: string) => {
-    console.log(`selected ${value}`);
-    //filtrar por ubicacion pegada al backend
+    setFilterCity(value)
+    getBuildingFilters(dispatch, value, filterCategory, filterName)
   };
   return (
     <div className={style.container}>
@@ -79,11 +78,6 @@ function NavbarFilter() {
           <Option value={c.id}>{c.name}</Option>
         ))}
       </Select>
-{/* 
-      <ButtonFilter
-        text="Capacidad (min-max)"
-        myFunction={onClick}
-      ></ButtonFilter> */}
 
       <Search
         className={style.search}

@@ -1,4 +1,24 @@
+import { postReviews } from "../redux/slices/reviews/actionReviews";
+import { useCustomDispatch } from "../hooks/redux";
+import React,{useEffect} from "react";
+import { useState } from "react";
+import AOS from 'aos';
+
 const PruebaTres = () => {
+  const [form, setForm] = useState({
+    stars: 0,
+    comment: '',
+    user:'',
+    office:'',
+  });
+
+
+  const dispatch = useCustomDispatch();
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postReviews(dispatch, form); 
+  };
 
     interface Producto {
         id: number;
@@ -27,13 +47,57 @@ const PruebaTres = () => {
       const promedioValoracionesProducto = calcularPromedioValoracionesOficina(productoEjemplo);
       console.log(`El promedio de las valoraciones para ${productoEjemplo.nombre} es: ${promedioValoracionesProducto}`);
 
-    return (
-      <div>
-            <p>{productoEjemplo.nombre}</p>
-            <p>{productoEjemplo.valoraciones}</p>
-            <p>{promedioValoracionesProducto}</p>
-      </div>
-    )
-  }
+      return (
+        <div>
+          <form onSubmit={handleSubmit}>
+              Stars:
+              <div>
+          <select
+          name="stars"
+          onChange={handleSubmit}
+          required
+          >
+            <option value="">select</option>
+            <option value={1}>⭐</option>
+            <option value={2}>⭐⭐</option>
+            <option value={3}>⭐⭐⭐</option>
+            <option value={4}>⭐⭐⭐⭐</option>
+            <option value={5}>⭐⭐⭐⭐⭐</option>
+            </select>
+          <br />
+        </div>
+            
+            <br />
+            <label>
+              Comment:
+              <textarea
+                value={form.comment}
+                onChange={(e) => setForm({ ...form, comment: e.target.value })}
+              />
+            </label>
+            <br />
+            <label>
+              User:
+              <input
+                type="text"
+                value={form.user}
+                onChange={(e) => setForm({ ...form, user: e.target.value })}
+              />
+            </label>
+            <br />
+            <label>
+              Office:
+              <input
+                type="text"
+                value={form.office}
+                onChange={(e) => setForm({ ...form, office: e.target.value })}
+              />
+            </label>
+            <br />
+            <button type="submit">Submit Review</button>
+          </form>
+        </div>
+      );
+    };
   
   export default PruebaTres

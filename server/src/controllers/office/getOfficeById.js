@@ -1,4 +1,4 @@
-const {Category, Office, OfficeImage, Score, Service, Reservation} = require('../../db')
+const {Category, Office, OfficeImage, Score, Service, Reservation, User} = require('../../db')
 
 
 const getOfficeById = async (req, res) => {
@@ -10,7 +10,7 @@ const getOfficeById = async (req, res) => {
                 {model: Category, as: 'office_category'},
                 {model: OfficeImage, as: 'office_officeImage'},
                 {model: Reservation, as: 'office_reservation'},
-                {model: Score, as: 'office_score'}
+                {model: Score, as: 'office_score', include: [{model: User, as: 'user_score', attributes:['name', 'imgUrl']}]}
             ]});
 
         if(!office) {
