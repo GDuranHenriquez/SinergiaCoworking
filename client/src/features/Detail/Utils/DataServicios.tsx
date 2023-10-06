@@ -9,15 +9,15 @@ type Data = {
 const DataServicios : Record<string, Data> = {
     wifi: {
         icon: <WifiOutlined/>,
-        description: "wifi de alta calidad",
+        description: "Cobertura WiFi de alta velocidad en todas nuestras áreas.",
     },
     cocina: {
         icon: <CoffeeOutlined/>,
-        description: "Cocina con comida gratis",
+        description: "Soluciones gastronómicas y cocina totalmente equipada.",
     },
     juegos: {
         icon: <TrophyOutlined/>,
-        description: "juegos de mesa para los momentos de descanso",
+        description: "Juegos de mesa para los momentos de descanso.",
     }
 
 }

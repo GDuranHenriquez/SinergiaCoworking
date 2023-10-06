@@ -1,10 +1,23 @@
+.containerMayor{
+  background-color: #f8f6f6;
+}
 .container{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    background-color: #f8f6f6;
+    /* background-color: #ffffff; */
     
+}
+
+.comment{
+  width: 90%;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+
 }
 
 .containerInfoBuild{
@@ -14,22 +27,40 @@
   height: fit-content;
   margin-top:70px ;
    align-items: center;
-
-}
-
-.containerTernario{
-  background-color: #f8f6f6;
-
-}
-.imageoffice{
-  width: 100px;
-  height:100px
-
+  }
+  
+  .descripcion{
+    margin: 0px;
+    padding: 0px;
+    
+  }
+  
+  .title{
+    margin: 0px;
+    padding: 0px;
+    
+  }
+  
+  .imageoffice{
+    width: 100px;
+    height:100px
+    
 }
 
 .officeDetailContainer {
-  width: 30% !important;
+  /* background-color: #f8f6f6; */
+  /* width: 100% !important; */
   margin: 5px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  display:flex;
+
+
+  
+  
 }
 
 .msj{
@@ -44,13 +75,69 @@
     color: rgb(0, 0, 0);
     font-size: 16;
   }
-
+  
   .containerInfoOffices{
+    /* background-color: #ffffff; */
     display: flex;
     flex-direction: row;
-    width:90%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-self: center;
+    justify-items: center;
+  }
+  .containerTernario{
+    /* background-color: #f8f6f6; */
+    width: 80%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    align-self: center;
+  margin-left: 130px;
+  border: 1px solid #dfe1e2;
+  border-radius: 8px;
+ 
+  }
+  
+  .msj{
+    display: flex;
+    flex-direction: row;
+    
+    background-color: #ffffff;
+  
+    }
 
+  .izquierda{
+    width: 50%;
+    align-items: center;
+    align-content: center;
 
 
   }
 
+  
+  .nameoffice{
+
+    
+  }
+  
+  .capacityoffice{
+    
+  }
+  .derecha{
+    width: 50%;
+ 
+
+  }
+
+  .averageoffice{
+
+  }
+  .servicesoffice{
+
+  }
+
+  .scoreoffice{
+
+  }
