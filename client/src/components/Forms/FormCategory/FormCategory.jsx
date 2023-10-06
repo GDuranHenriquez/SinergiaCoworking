@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import axios from 'axios';
 
 const FormCategory = () => {
   const [form] = Form.useForm();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
       console.log(values);
-      await axios.post('http://localhost:3001/category', { name: values.name });
+      await axios.post('https://sinergia-coworking.onrender.com/category', { name: values.name });
       form.resetFields();
+      setModalVisible(true); // Mostrar el modal cuando la categoría se crea con éxito
     } catch (error) {
       console.error('Error al crear la categoría:', error);
     }
+  };
+
+  const handleModalOk = () => {
+    setModalVisible(false); // Ocultar el modal cuando se hace clic en "OK"
   };
 
   return (
@@ -27,7 +33,7 @@ const FormCategory = () => {
     >
       <Form
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         style={{
@@ -38,8 +44,11 @@ const FormCategory = () => {
         }}
         onFinish={handleSubmit}
       >
+         <Form.Item>
+          <h2 style={{ textAlign: 'center' }}>Crear Categoría</h2>
+        </Form.Item>
         <Form.Item
-          label="Nombre de la Categoría"
+          label="Nombre"
           name="name"
           rules={[{ required: true, message: 'Por favor ingresa el nombre de la categoría' }]}
         >
@@ -51,6 +60,15 @@ const FormCategory = () => {
           </Button>
         </Form.Item>
       </Form>
+
+      <Modal
+        title="Categoría cargada con éxito"
+        visible={modalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalOk}
+      >
+        La categoría se ha cargado con éxito.
+      </Modal>
     </div>
   );
 };
