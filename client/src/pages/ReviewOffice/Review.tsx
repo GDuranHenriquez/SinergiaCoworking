@@ -6,6 +6,7 @@ import AOS from 'aos';
 import { useAuth } from "../../Authenticator/AuthPro";
 import React, { useState } from 'react';
 import { Rate } from 'antd';
+import style from "./Review.module.css"
 
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
@@ -52,8 +53,8 @@ type FORM = {
 
 
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
+      <div className={style.container}>
+        <form className={style.form} onSubmit={handleSubmit}>
         <span>
       <Rate tooltips={desc} onChange={handleStarsChange} value={form.stars} />
       {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
