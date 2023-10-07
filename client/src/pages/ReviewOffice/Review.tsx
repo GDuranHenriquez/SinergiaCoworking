@@ -32,6 +32,15 @@ type FORM = {
     office:'',
   });
 
+  const resetForm = () => {
+    setForm({
+      stars: 0,
+      comment: '',
+      user: auth.getUser().id,
+      office: '',
+    });
+  };
+
   const handleStarsChange = (value: number) => {
     setForm({ ...form, stars: value });
   };
@@ -57,14 +66,6 @@ type FORM = {
             />
           </label>
           <label>
-            User:
-            <input
-              type="text"
-              value={form.user}
-              onChange={(e) => setForm({ ...form, user: e.target.value })}
-            />
-          </label>
-          <label>
             Office:
             <input
               type="text"
@@ -72,7 +73,8 @@ type FORM = {
               onChange={(e) => setForm({ ...form, office: e.target.value })}
             />
           </label>
-          <button type="submit">Submit Review</button>
+          <button type="submit" disabled={!form.stars || !form.comment || !form.user || !form.office}>Submit Review</button>
+          <button type="button" onClick={resetForm}>Reset</button>
         </form>
       </div>
     );

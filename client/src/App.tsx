@@ -33,7 +33,7 @@ function App() {
     },
     {
       path: "/review",
-      element: <Review></Review>,
+      element: <Review/>,
     },
     {
       path: "/pruebados",
