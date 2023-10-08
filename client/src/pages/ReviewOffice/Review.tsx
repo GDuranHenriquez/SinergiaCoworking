@@ -1,37 +1,55 @@
-import { postReviews } from "../../redux/slices/reviews/actionReviews";
-import { getDetailOffice } from "../../redux/slices/offices/actionOffice";
-import { useCustomDispatch } from "../../hooks/redux";
-import {useEffect} from "react";
-import AOS from 'aos';
-import { useAuth } from "../../Authenticator/AuthPro";
 import React, { useState } from 'react';
 import { Rate } from 'antd';
-import style from "./Review.module.css"
+import style from './Review.module.css';
+import { postReviews } from '../../redux/slices/reviews/actionReviews';
+import { useCustomDispatch } from '../../hooks/redux';
+import { useAuth } from '../../Authenticator/AuthPro';
+import Validation from './Validation';
+import { useEffect } from 'react';
 
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
-
-const Review = () => {
-
-  const [value, setValue] = useState(0);
-  
-const auth = useAuth()
 
 type FORM = {
   stars: number;
   comment: string;
   user: string | undefined;
-  office: string
-}
+  office: string;
+};
 
-  const dispatch = useCustomDispatch();
-  
-  
+const Review = () => {
+
+  const auth = useAuth()
+
+
   const [form, setForm] = useState<FORM>({
     stars: 0,
     comment: '',
     user: auth.getUser().id,
-    office:'',
+    office: '',
   });
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const dispatch = useCustomDispatch();
+
+  useEffect(() => {
+    const validationErrors = Validation(form);
+    setErrors(validationErrors);
+  }, [form]); 
+
+  const handleStarsChange = (value: number) => {
+    setForm({ ...form, stars: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationErrors = Validation(form);
+    if (Object.keys(validationErrors).length === 0) {
+      postReviews(dispatch, form);
+      setErrors({});
+    } else {
+      setErrors(validationErrors);
+    }
+  };
 
   const resetForm = () => {
     setForm({
@@ -40,45 +58,44 @@ type FORM = {
       user: auth.getUser().id,
       office: '',
     });
+    setErrors({});
   };
 
-  const handleStarsChange = (value: number) => {
-    setForm({ ...form, stars: value });
-  };
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    postReviews(dispatch, form); 
-  };
-
-
-    return (
-      <div className={style.container}>
-        <form className={style.form} onSubmit={handleSubmit}>
+  return (
+    <div className={style.container}>
+      <form className={style.form} onSubmit={handleSubmit}>
         <span>
-      <Rate tooltips={desc} onChange={handleStarsChange} value={form.stars} />
-      {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
-    </span>
-          <label>
-            Comment:
-            <textarea
-              value={form.comment}
-              onChange={(e) => setForm({ ...form, comment: e.target.value })}
-            />
-          </label>
-          <label>
-            Office:
-            <input
-              type="text"
-              value={form.office}
-              onChange={(e) => setForm({ ...form, office: e.target.value })}
-            />
-          </label>
-          <button type="submit" disabled={!form.stars || !form.comment || !form.user || !form.office}>Submit Review</button>
-          <button type="button" onClick={resetForm}>Reset</button>
-        </form>
-      </div>
-    );
-  };
-  
-  export default Review
+          <Rate tooltips={desc} onChange={handleStarsChange} value={form.stars} />
+        </span>
+        {form.stars ? <span className="ant-rate-text">{desc[form.stars - 1]}</span> : ''}
+        <label>
+          Comment:
+          <textarea
+            value={form.comment}
+            onChange={(e) => setForm({ ...form, comment: e.target.value })}
+          />
+          {errors.comment && <div className={style.error}>{errors.comment}</div>}
+        </label>
+        <label>
+          Office:
+          <input
+            type="text"
+            value={form.office}
+            onChange={(e) => setForm({ ...form, office: e.target.value })}
+          />
+          {errors.office && <div className={style.error}>{errors.office}</div>}
+        </label>
+        <button type="submit" disabled={!form.stars || !form.comment || !form.user || !form.office}>
+          Submit Review
+        </button>
+        <button type="button" onClick={resetForm}>
+          Reset
+        </button>
+        {errors.boton && <div className={style.error}>{errors.boton}</div>}
+      </form>
+    </div>
+  );
+};
+
+export default Review;
+
