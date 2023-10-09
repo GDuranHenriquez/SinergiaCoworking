@@ -1,143 +1,163 @@
-.containerMayor{
+.containerMayor {
   background-color: #f8f6f6;
 }
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    /* background-color: #ffffff; */
-    
+.container {
+  display: flex;
+  background-color: #fbae5b2e;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.comment{
+.comment {
   width: 90%;
   align-items: center;
   align-content: center;
   justify-content: center;
   justify-self: center;
   justify-items: center;
-
 }
 
-.containerInfoBuild{
+.containerInfoBuild {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: fit-content;
   height: fit-content;
-  margin-top:70px ;
-   align-items: center;
-  }
-  
-  .descripcion{
-    margin: 0px;
-    padding: 0px;
-    
-  }
-  
-  .title{
-    margin: 0px;
-    padding: 0px;
-    
-  }
-  
-  .imageoffice{
-    width: 100px;
-    height:100px
-    
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  /* border: 1px solid #9c9d9d;
+  border-radius: 7px; */
+}
+
+.nombreDireccion {
+  width: 100%;
+  margin-left: 20px;
+  color: black;
+}
+
+.nameBuilding {
+  color: black;
+}
+
+.addresss {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+}
+
+.title {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.imageoffice {
+  width: 100px;
+  height: 100px;
 }
 
 .officeDetailContainer {
-  /* background-color: #f8f6f6; */
-  /* width: 100% !important; */
   margin: 5px;
   align-items: center;
   align-content: center;
   justify-content: center;
   justify-self: center;
   justify-items: center;
-  display:flex;
-
-
-  
-  
+  display: flex;
 }
 
-.msj{
+.msj {
   color: black;
 }
 
-  .title{
-    color: black;
-  }
+.containerInfoOffices {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+}
+.containerTernario {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  align-self: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
 
-  .addresss{
-    color: rgb(0, 0, 0);
-    font-size: 16;
-  }
-  
-  .containerInfoOffices{
-    /* background-color: #ffffff; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    justify-self: center;
-    justify-items: center;
-  }
-  .containerTernario{
-    /* background-color: #f8f6f6; */
-    width: 80%;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    justify-items: center;
-    align-self: center;
-  margin-left: 130px;
+
+.msj {
+  display: flex;
+  flex-direction: row;
   border: 1px solid #dfe1e2;
-  border-radius: 8px;
- 
-  }
+  border-radius: 7px;
+  width: 80%;
+  background-color: #ffffff;
+  align-self: center;
+
+}
+
+.todoContenedor{
+  display: flex;
+  flex-direction: column;
+}
+
+.abajo{
+  width: 80%;
+  height: 30%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffff;
+}
+
+
+.izquierda {
+  width: 60%;
+  align-items: center;
+  align-content: center;
+  height: 70%;
+}
+
+.nameoffice {
+  margin: 0px;
+  padding: 0px;
+
+}
+
+.capacityoffice {
+  margin: 0px;
+  padding: 0px;
+}
+.derecha {
+  width: 40%;
+  height: 70%;
+
+}
+
+.averageoffice {
+}
+.servicesoffice {
+  color: black;
+  background-color: #fbae5b2e;
   
-  .msj{
-    display: flex;
-    flex-direction: row;
-    
-    background-color: #ffffff;
-  
-    }
-
-  .izquierda{
-    width: 50%;
-    align-items: center;
-    align-content: center;
+}
 
 
-  }
 
-  
-  .nameoffice{
+.scoreoffice {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
 
-    
-  }
-  
-  .capacityoffice{
-    
-  }
-  .derecha{
-    width: 50%;
- 
-
-  }
-
-  .averageoffice{
-
-  }
-  .servicesoffice{
-
-  }
-
-  .scoreoffice{
-
-  }
+  background-color: #ffff;
+}

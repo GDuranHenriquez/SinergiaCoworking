@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
+import { Rate } from "antd";
 
 const { Meta } = Card;
 
@@ -23,19 +24,19 @@ type imagen = {
 
 function CardOffice({ id, name, capacity, ratingAverage, office_officeImage }: Props) {
   return (
-    <div style={{ padding: "10px" }} className={styles.container}>
+    <div style={{ padding: "10px"}} className={styles.container}>
       <Card
         hoverable
         className={styles.cardContainer}
         cover={
-          <div>{office_officeImage?.map((img) => <img style={{width:'300px', height:'300px'}}  src={img.imageUrl}></img>)}</div>
+          <div>{office_officeImage?.map((img) => <img style={{width:'280px', height:'230px'}}  src={img.imageUrl}></img>)}</div>
         }
       >
-        {/* <img id={styles.imgCard} alt="example" src={image} /> */}
-        <Meta title={name} description={ratingAverage} />
+
+        <Meta title ={name} description={   <Rate disabled defaultValue={ratingAverage} />} /> 
         <div className={styles.capacidad}>
           <img
-            style={{ height: "20px", width: "20px", marginRight: "8px" }}
+            style={{ padding:'0px', height: "20px", width: "20px", marginRight: "10px", }}
             src="https://icon-library.com/images/users-icon/users-icon-23.jpg"
           ></img>{" "}
           <p style={{ margin: "0px" }}>{capacity}</p>

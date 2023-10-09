@@ -26,7 +26,8 @@ const [filterName, setFilterName] = useState<string>("");
       axios
         .get(import.meta.env.VITE_BASENDPOINT_BACK + `/city`)
         .then((response) => {
-       setLocations(response.data);
+          const allLocations = [{  name: "Todas las ubicaciones" }, ...response.data];
+       setLocations(allLocations);
         })
         .catch((error) => {
           console.error("Error al cargar las ciudades:", error);
@@ -34,7 +35,8 @@ const [filterName, setFilterName] = useState<string>("");
         axios
         .get(import.meta.env.VITE_BASENDPOINT_BACK + `/category`)
         .then((response) => {
-       setCategory(response.data);
+          const allCategories = [{ name: "Todas las oficinas" }, ...response.data];
+       setCategory(allCategories);
         })
         .catch((error) => {
           console.error("Error al cargar las categorias:", error);
@@ -47,12 +49,20 @@ const [filterName, setFilterName] = useState<string>("");
   };
 
   const handleOficinasChange = (value: string) => {
-    setFilterCategory(value)
+    if (value === "Oficinas") {
+      setFilterCategory("");
+    } else {
+    setFilterCategory(value);
+    }
     getBuildingFilters(dispatch, filterCity, value, filterName)
   };
 
   const handleLocationChange = (value: string) => {
-    setFilterCity(value)
+    if (value === "Ubicaciones") {
+      setFilterCity("");
+    } else {
+    setFilterCity(value);
+    }
     getBuildingFilters(dispatch, value, filterCategory, filterName)
   };
   return (
@@ -61,7 +71,8 @@ const [filterName, setFilterName] = useState<string>("");
         className={style.filter}
         style={{ width: 120 }}
         onChange={handleLocationChange}
-        defaultValue={"Ubicación"}
+        // defaultValue={"Ubicación"}
+        value={filterCity || "Ubicaciones"}
       >
         {locations.map((l) => (
           <Option value={l.id}>{l.name}</Option>
@@ -72,7 +83,8 @@ const [filterName, setFilterName] = useState<string>("");
         className={style.filter}
         style={{ width: 120 }}
         onChange={handleOficinasChange}
-        defaultValue={"Oficinas"}
+        // defaultValue={"Oficinas"}
+        value={filterCategory || "Oficinas"}
       >
         {category.map((c) => (
           <Option value={c.id}>{c.name}</Option>
