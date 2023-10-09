@@ -45,9 +45,9 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
         {markers.map((marker) => (
           <Marker position={marker.geocode} icon={customIcon} draggable={true} autoPan={true}>
             <Popup>
-            <div>
-                <img width={300} height={300} src={marker.popUpImg}/>
-                <p>{marker.popUpText}</p>
+            <div style={{width: '200px', height:'250px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <img style={{width: "10rem", height: "10rem"}} src={marker.popUpImg} />
+                <p style={{padding: '0px', margin: '3px'}}>{marker.popUpText}</p>
                 <p>{marker.popUpAddress}</p>
               </div>
             </Popup>

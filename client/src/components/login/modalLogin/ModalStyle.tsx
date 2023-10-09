@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Modal = styled.div`  
   position: fixed;
-  z-index: 100;
+  z-index: 999999999;
   top:0;
   left: 0%;
   width: 100%;
@@ -11,7 +11,7 @@ export const Modal = styled.div`
   display: grid;
   place-items: center;
   background-color: rgba(0,0,0, 0.5);
-  padding-top: calc(100vh * 0.08);
+  /* padding-top: calc(100vh * 0.08); */
   color: white;
   font-weight: bold;
   .modalContainer{
@@ -22,7 +22,8 @@ export const Modal = styled.div`
     justify-content: center;
     align-items: center;
     width: 500px;
-    height: 60vh;
+    height: max-content;
+    padding: 20px;
     border: 1px solid rgb(241, 240, 240) ;
     background-color: rgba(255,255,255);;
     border-radius: 5px;
