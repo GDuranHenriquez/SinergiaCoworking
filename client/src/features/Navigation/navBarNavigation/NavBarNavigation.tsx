@@ -1,6 +1,8 @@
 import React from "react";
 import LinkButton from "./LinkButton";
+import Link from "antd/es/typography/Link";
 import AccesButton from "./AccesButton";
+import LogoPrincipal from "../../../../src/assets/LogoSc.png";
 import { Layout, Menu } from 'antd';
 import { styled } from 'styled-components';
 import { useModal } from "../../../utils/useModal";
@@ -95,8 +97,12 @@ const NavBarNavigation: React.FC = () => {
                     <Menu 
                      mode="inline"
                     style={{ background: '#1F2551', height: '100%', display:'flex', flexWrap:'nowrap' , alignItems:'center', justifyContent:'space-between'}}>
-                        <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div>
-                        <div>  <LinkButton text='Inicio' path='/' />
+                        {/* <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div> */}
+                       
+                          <img style={{width:'5%', height:'40px', marginTop:'5px'}} src={LogoPrincipal} />
+                     
+                        <div> 
+                        <LinkButton text='Inicio' path='/' />
                         <LinkButton text='Oficinas' path='/oficinas' />
                         <LinkButton text='Nosotros' path='/nosotros' />
                         <LinkButton text='Ubicaciones' path='/ubicaciones' /></div>
