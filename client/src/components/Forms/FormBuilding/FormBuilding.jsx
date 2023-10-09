@@ -23,7 +23,7 @@ const FormBuilding = () => {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [errorModalContent, setErrorModalContent] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null); 
   const [name , setName] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -42,8 +42,12 @@ const FormBuilding = () => {
   }
   const handleSubmit = async (values) => {
     try {
-      console.log(values);
-      await axios.post('https://sinergia-coworking.onrender.com/building', values);
+
+      const data = {...values, imageUrl: image}
+      // const data = {address: form.getFieldsValue('addres'), lat: form.getFieldValue(lat), lng: form.getFieldValue(),}
+
+      console.log(data);
+      await axios.post('https://sinergia-coworking.onrender.com/building', data);
       form.resetFields();
       setIsSuccessModalVisible(true);
     } catch (error) {
@@ -59,8 +63,8 @@ const FormBuilding = () => {
   };
   useEffect(() => {
     form.setFieldsValue({
-      lat: formPosition.lat,
-      lng: formPosition.lng,
+      lat: formPosition.lat ? formPosition.lat.toString() : "",
+      lng: formPosition.lng ? formPosition.lng.toString() : "",
       address: formAddress
     })
   }, [formAddress])
@@ -100,6 +104,8 @@ const FormBuilding = () => {
     setImage(null);
   };
 
+
+
   return (<div style={{
     width: '100%',
     padding: '20px',
@@ -111,6 +117,9 @@ const FormBuilding = () => {
   }}>
     <div style={{
       width: '50%',
+      display: 'flex',
+      flexDirection: "column",
+      alignItems: 'center',
       padding: '20px',
       background: 'white',
       borderRadius: '8px',
@@ -119,9 +128,10 @@ const FormBuilding = () => {
     }}>
       <h2 style={{ color: "black" }}>Guarda un nuevo edificio</h2>
       <Form
+        style={{width: '100%'}}
         form={form}
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 14 }}
+        labelCol={{ span: 3 }}
+        wrapperCol={{ span: 24 }}
         layout="horizontal"
 
         onFinish={handleSubmit}
@@ -198,7 +208,7 @@ const FormBuilding = () => {
           <Select options={cities.map(city => ({ value: city.id, label: city.name }))} onChange={handleSelectChange}/>
         </Form.Item>
         <MapDinamic handleAddress={handleAddress} handlePosition={handlePosition}/>
-        <Form.Item label="Guardar">
+        <Form.Item style={{ marginTop: '30px'}}>
           <Button type="primary" htmlType="submit">
             Guardar Edificio
           </Button>
@@ -228,7 +238,7 @@ const FormBuilding = () => {
     <div className={styles.container}>
       {image && <Card hoverable  className={styles.cardContainer} cover={  <img className={styles.imgCard} alt="example" src={image} />} >
       {/* <img id={styles.imgCard} alt="example" src={image} /> */}
-        <Meta title={name} description={address + ' ' + city} />
+        <Meta title={name} description={formAddress} />
       </Card>}
     </div>
   </div>
