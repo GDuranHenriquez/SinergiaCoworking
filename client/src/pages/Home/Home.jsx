@@ -11,12 +11,14 @@ import oficina from "../../assets/oficina.jpg";
 import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
 import Cards from "../../features/Cards/Cards";
 import FooterSection from "../../components/Footer/Footer";
-import { useCustomDispatch } from "../../hooks/redux";
+import { useCustomDispatch, useCustomSelector } from "../../hooks/redux";
 import { getAllBuildings } from "../../redux/slices/building/actionsBuilding";
+import MapStatic from "../../components/Map/MapStatic"
 
 function HomePages() {
 
   const dispatch = useCustomDispatch();
+  const { allBuildings } = useCustomSelector((state) => state.buildin);
   
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});
@@ -38,6 +40,9 @@ function HomePages() {
         <NavbarFilter></NavbarFilter>
         <Cards></Cards>   
       </div>
+      <div data-aos="fade-up" className="thirdPage">
+        <MapStatic buildings={allBuildings}/>
+      </div>
       <Footer>
      <FooterSection></FooterSection>
      </Footer>  
@@ -56,14 +61,17 @@ const ContinerHomePage = styled.div`
     width: 100%;
     min-height: calc(100vh * (1 - 0.1));
     display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+    flex-wrap: wrap;
+    align-items: center;
   }
   .secondPage{
     /* background-color: rgba(31, 37, 81, 0.6); */
     width: 100%;
     height: max-content;
   
+  }
+  .thirdPage{
+    padding-top: calc(100vh * 0.1)
   }
 `;
 
