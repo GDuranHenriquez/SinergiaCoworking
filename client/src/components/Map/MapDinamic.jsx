@@ -1,60 +1,67 @@
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
-import icon from '../assets/icons/placeHolder.png'
-import { useEffect, useRef, useState } from 'react';
+import icon from '../../assets/icons/placeHolder.png'
+import { useEffect, useState } from 'react';
 import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearch";
 import './geocoding.css'
 import * as L from "leaflet";
-import * as EL from "esri-leaflet";
+import axios from "axios";
 
 const APIKEY = import.meta.env.VITE_APIKEY
 
-function MapDinamic() {
-  console.log(EL)
+function MapDinamic({handleAddress, handlePosition}) {
   const customIcon = new L.Icon({
     iconUrl: icon,
     iconSize: [38, 38]
   });
   const center = {
-    lat: -34.6131500,
-    lng: -58.3772300,
+    lat: -33.5219279446995,
+    lng: -64.11621093750001,
   }
-  const [position, setPosition] = useState(center)
+  const [position, setPosition] = useState('')
   const [address, setAddress] = useState('')
+  async function reverseGeocode(location){
+    const response = await axios.get(`https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&location=${location.lng},${location.lat}&token=${APIKEY}`)
+    setAddress(`${response.data.address.Address}, ${response.data.address.City}, ${response.data.address.Postal}, ${response.data.address.Region}, ${response.data.address.CountryCode}`)
+  }
   function DraggableMarker() {
     
     const map = useMapEvents({
       'click': (e) => {
         // map.setView(e.latlng, map.getZoom(), {animate: true})
         setPosition(e.latlng)
+        reverseGeocode(e.latlng)
       }
     })
     const dragHandle = (e) => {
       setPosition(e.target._latlng)
+      reverseGeocode(e.target._latlng)
     }
   
-    return (
-      <Marker
-        icon={customIcon}
-        draggable={true}
-        eventHandlers={{dragend: dragHandle}}
-        position={position}
-        autoPan={true}
-      >
-        <Popup minWidth={90}>
-          <span>
-            Info del marcador
-          </span>
-        </Popup>
-      </Marker>
-    )
+    if(position){
+      return (
+        <Marker
+          icon={customIcon}
+          draggable={true}
+          eventHandlers={{dragend: dragHandle}}
+          position={position}
+          autoPan={true}
+        >
+          <Popup minWidth={90}>
+            <p>
+              Direccion: {address}
+            </p>
+          </Popup>
+        </Marker>
+      )
+    }
   }
 
   useEffect(() => {
-    const {lat, lng} = position
-    console.log(address, lat, lng)
-  }, [position])
+    handleAddress(address)
+    handlePosition(position)
+  }, [address])
   return(
-    <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{ minHeight: "50vh", minWidth: "100vw" }}>
+    <MapContainer center={center} zoom={6} scrollWheelZoom={false} style={{ minHeight: "50vh", minWidth: "25vw" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -71,8 +78,6 @@ function MapDinamic() {
            },
           }}
           eventHandlers={{
-            requeststart: () => console.log("Started request..."),
-            requestend: () => console.log("Ended request..."),
             results: (r) => {
               setAddress(r.text)
               setPosition(r.latlng)
@@ -85,7 +90,3 @@ function MapDinamic() {
 }
 
 export default MapDinamic
-
-
-
-// AAPK3f35aaf4b0dd47f38b6b42143cc59241H5eQSsKSWPR3ar7Rrb1rInU-8B5OH9msacXKXnhhEi5XKFKnprjUuA3EdLz_7jF8

@@ -4,6 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCities } from '../../../redux/slices/city/actionsCity';
 import { getAllServices } from '../../../redux/slices/services/actionsServices';
+import MapDinamic from '../../Map/MapDinamic';
 import axios from 'axios';
 
 const normFile = (e) => {
@@ -20,11 +21,19 @@ const FormBuilding = () => {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [errorModalContent, setErrorModalContent] = useState('');
+  const [formPosition, setFormPosition] = useState({lat:'', lng: ''})
+  const [formAddress, setFormAddress] = useState('')
 
   useEffect(() => {
     getAllCities(dispatch);
   }, [dispatch]);
 
+  const handleAddress = (address) => {
+    setFormAddress(address)
+  }
+  const handlePosition = (position) => {
+    setFormPosition({lat: position.lat, lng: position.lng})
+  }
   const handleSubmit = async (values) => {
     try {
       console.log(values);
@@ -42,7 +51,13 @@ const FormBuilding = () => {
     setIsSuccessModalVisible(false);
     setIsErrorModalVisible(false);
   };
-
+  useEffect(() => {
+    form.setFieldsValue({
+      lat: formPosition.lat,
+      lng: formPosition.lng,
+      address: formAddress
+    })
+  }, [formAddress])
   return (
     <div style={{
       width: '50%',
@@ -76,6 +91,7 @@ const FormBuilding = () => {
           <Input />
         </Form.Item>
         <Form.Item
+          hidden={true}
           label="Latitud"
           name="lat"
           rules={[{ required: true, message: 'Por favor ingresa la latitud' }]}
@@ -83,6 +99,7 @@ const FormBuilding = () => {
           <Input />
         </Form.Item>
         <Form.Item
+          hidden={true}
           label="Longitud"
           name="lng"
           rules={[{ required: true, message: 'Por favor ingresa la longitud' }]}
@@ -126,6 +143,7 @@ const FormBuilding = () => {
         <Form.Item label="Ciudad" name="city" rules={[{ required: true, message: 'Por favor selecciona una ciudad' }]}>
           <Select options={cities.map(city => ({ value: city.id, label: city.name }))} />
         </Form.Item>
+        <MapDinamic handleAddress={handleAddress} handlePosition={handlePosition}/>
         <Form.Item label="Guardar">
           <Button type="primary" htmlType="submit">
             Guardar Edificio
