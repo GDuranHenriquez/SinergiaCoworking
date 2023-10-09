@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Select, Switch, Modal } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Select, Upload, Modal, Card } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCities } from '../../../redux/slices/city/actionsCity';
-import { getAllServices } from '../../../redux/slices/services/actionsServices';
 import MapDinamic from '../../Map/MapDinamic';
 import axios from 'axios';
+import { uploadImageToCloudinary } from '../../../utils/configCloudinary';
+import styles from './styleFormBuilding.module.css';
 
-const normFile = (e) => {
+/* const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
   }
   return e && e.fileList;
-};
+}; */
 
 const FormBuilding = () => {
+  const { Meta } = Card;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const cities = useSelector((state) => state.city.allCities);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [errorModalContent, setErrorModalContent] = useState('');
+  const [image, setImage] = useState(null);
+  const [name , setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
   const [formPosition, setFormPosition] = useState({lat:'', lng: ''})
   const [formAddress, setFormAddress] = useState('')
 
@@ -58,7 +64,51 @@ const FormBuilding = () => {
       address: formAddress
     })
   }, [formAddress])
-  return (
+  const customRequest = async ({ file, onSuccess }) => {
+    try {
+      const response = await uploadImageToCloudinary(file);
+      setImage(response);
+      onSuccess(response);
+      return null;
+    } catch (error) {
+      console.error("Error al cargar la imagen:", error);
+    }
+  };
+
+  const handleChangeImputs = (e) => {
+    console.log(e.target.id)
+    switch (e.target.id) {
+      case 'name':
+        setName(e.target.value);
+        break;
+      case 'address':
+        setAddress(e.target.value);
+        break;
+      case 'city':
+        setCity(e.target.value);
+        break;    
+      default:
+        break;
+    }
+  }
+
+  const handleSelectChange = (value) => {
+    setCity(cities[value - 1].name)
+  }
+
+  const handleImageRemove = () => {
+    setImage(null);
+  };
+
+  return (<div style={{
+    width: '100%',
+    padding: '20px',
+    display: 'flex',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '30px'
+  }}>
     <div style={{
       width: '50%',
       padding: '20px',
@@ -67,13 +117,13 @@ const FormBuilding = () => {
       border: '1px solid rgba(0,0,0,0.3)',
       boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
     }}>
-      <h2 style={{color:"black"}}>Guarda un nuevo edificio</h2>
+      <h2 style={{ color: "black" }}>Guarda un nuevo edificio</h2>
       <Form
         form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
-        
+
         onFinish={handleSubmit}
       >
         <Form.Item
@@ -81,14 +131,14 @@ const FormBuilding = () => {
           name="name"
           rules={[{ required: true, message: 'Por favor ingresa el nombre' }]}
         >
-          <Input />
+          <Input onChange={handleChangeImputs}/>
         </Form.Item>
         <Form.Item
           label="Dirección"
           name="address"
           rules={[{ required: true, message: 'Por favor ingresa la dirección' }]}
         >
-          <Input />
+          <Input onChange={handleChangeImputs}/>
         </Form.Item>
         <Form.Item
           hidden={true}
@@ -125,23 +175,27 @@ const FormBuilding = () => {
           </Upload>
         </Form.Item> */}
         <Form.Item
-          label="Imagen (URL)"
+          label="Imagen"
           name="imageUrl"
           rules={[
             {
               required: true,
-              message: 'Por favor ingresa la URL de la imagen',
-            },
-            {
-              type: 'url',
-              message: 'Ingresa una URL válida',
-            },
+              message: 'Por favor ingresa una imagen correcta',
+            }
           ]}
         >
-          <Input />
+          <Upload
+            customRequest={customRequest}
+            maxCount={1}
+            listType="picture"
+            accept="image/*"
+            onRemove={handleImageRemove}
+          >
+            {!image && <Button icon={<UploadOutlined />}>Cargar Imagen</Button>}
+          </Upload>
         </Form.Item>
         <Form.Item label="Ciudad" name="city" rules={[{ required: true, message: 'Por favor selecciona una ciudad' }]}>
-          <Select options={cities.map(city => ({ value: city.id, label: city.name }))} />
+          <Select options={cities.map(city => ({ value: city.id, label: city.name }))} onChange={handleSelectChange}/>
         </Form.Item>
         <MapDinamic handleAddress={handleAddress} handlePosition={handlePosition}/>
         <Form.Item label="Guardar">
@@ -171,6 +225,14 @@ const FormBuilding = () => {
         {errorModalContent}
       </Modal>
     </div>
+    <div className={styles.container}>
+      {image && <Card hoverable  className={styles.cardContainer} cover={  <img className={styles.imgCard} alt="example" src={image} />} >
+      {/* <img id={styles.imgCard} alt="example" src={image} /> */}
+        <Meta title={name} description={address + ' ' + city} />
+      </Card>}
+    </div>
+  </div>
+
   );
 };
 

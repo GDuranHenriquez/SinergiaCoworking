@@ -22,7 +22,7 @@ export const Modal = styled.div`
     justify-content: center;
     align-items: center;
     width: 500px;
-    height: 400px;
+    height: 60vh;
     border: 1px solid rgb(241, 240, 240) ;
     background-color: rgba(255,255,255);;
     border-radius: 5px;
@@ -40,7 +40,7 @@ export const Modal = styled.div`
       font-weight: bold;
       width: 80%;
       height: 100%;
-      gap: 30px;
+      gap: 20px;
       font-size: 16px;
       #normal_login{
         width: 100%;
@@ -51,7 +51,7 @@ export const Modal = styled.div`
           font-size: 24px;
           color: black;
           padding: 0;
-          margin-bottom: 20px;
+          margin-bottom: 0px;
       }
       #btnCloseModal{
         position: absolute;
