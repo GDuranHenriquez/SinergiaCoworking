@@ -23,31 +23,36 @@ const FormBuilding = () => {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [errorModalContent, setErrorModalContent] = useState('');
-  const [image, setImage] = useState(null); 
+  const [image, setImage] = useState(localStorage.getItem('imageUrl')? localStorage.getItem('imageUrl') : null); 
   const [name , setName] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [formPosition, setFormPosition] = useState({lat:'', lng: ''})
   const [formAddress, setFormAddress] = useState('')
-
+  const localItems = ['address', 'name', 'city', 'lat', 'lng']
+  const storedItems = {}
+  localItems.forEach(k => {storedItems[k] = localStorage.getItem(k)})
+  form.setFieldsValue(storedItems)
   useEffect(() => {
     getAllCities(dispatch);
   }, [dispatch]);
 
   const handleAddress = (address) => {
-    setFormAddress(address)
+    if(address.length){
+      setFormAddress(address)
+    }
   }
   const handlePosition = (position) => {
-    setFormPosition({lat: position.lat, lng: position.lng})
+    if(position){
+      setFormPosition({lat: position.lat, lng: position.lng})
+    }
   }
   const handleSubmit = async (values) => {
     try {
-
       const data = {...values, imageUrl: image}
       // const data = {address: form.getFieldsValue('addres'), lat: form.getFieldValue(lat), lng: form.getFieldValue(),}
-
-      console.log(data);
       await axios.post('https://sinergia-coworking.onrender.com/building', data);
+      localItems.forEach(k => localStorage.removeItem(k))
       form.resetFields();
       setIsSuccessModalVisible(true);
     } catch (error) {
@@ -62,16 +67,22 @@ const FormBuilding = () => {
     setIsErrorModalVisible(false);
   };
   useEffect(() => {
-    form.setFieldsValue({
-      lat: formPosition.lat ? formPosition.lat.toString() : "",
-      lng: formPosition.lng ? formPosition.lng.toString() : "",
-      address: formAddress
-    })
+    if(formPosition.lat){
+      form.setFieldsValue({
+        lat: formPosition.lat ? formPosition.lat.toString() : "",
+        lng: formPosition.lng ? formPosition.lng.toString() : "",
+        address: formAddress
+      })
+      localStorage.setItem('lat', formPosition.lat ? formPosition.lat.toString() : "")
+      localStorage.setItem('lng', formPosition.lng ? formPosition.lng.toString() : "")
+      localStorage.setItem('address', formAddress)
+    }
   }, [formAddress])
   const customRequest = async ({ file, onSuccess }) => {
     try {
       const response = await uploadImageToCloudinary(file);
       setImage(response);
+      localStorage.setItem('imageUrl', response)
       onSuccess(response);
       return null;
     } catch (error) {
@@ -80,7 +91,7 @@ const FormBuilding = () => {
   };
 
   const handleChangeImputs = (e) => {
-    console.log(e.target.id)
+    localStorage.setItem(e.target.id, e.target.value)
     switch (e.target.id) {
       case 'name':
         setName(e.target.value);
@@ -97,6 +108,7 @@ const FormBuilding = () => {
   }
 
   const handleSelectChange = (value) => {
+    localStorage.setItem('city', cities[value - 1].name)
     setCity(cities[value - 1].name)
   }
 
@@ -207,7 +219,7 @@ const FormBuilding = () => {
         <Form.Item label="Ciudad" name="city" rules={[{ required: true, message: 'Por favor selecciona una ciudad' }]}>
           <Select options={cities.map(city => ({ value: city.id, label: city.name }))} onChange={handleSelectChange}/>
         </Form.Item>
-        <MapDinamic handleAddress={handleAddress} handlePosition={handlePosition}/>
+        <MapDinamic handleAddress={handleAddress} handlePosition={handlePosition} positionForm={{lat: form.getFieldValue('lat'), lng: form.getFieldValue('lng')}}/>
         <Form.Item style={{ marginTop: '30px'}}>
           <Button type="primary" htmlType="submit">
             Guardar Edificio
@@ -238,7 +250,7 @@ const FormBuilding = () => {
     <div className={styles.container}>
       {image && <Card hoverable  className={styles.cardContainer} cover={  <img className={styles.imgCard} alt="example" src={image} />} >
       {/* <img id={styles.imgCard} alt="example" src={image} /> */}
-        <Meta title={name} description={formAddress} />
+        <Meta title={form.getFieldValue('name')} description={form.getFieldValue('address')} />
       </Card>}
     </div>
   </div>

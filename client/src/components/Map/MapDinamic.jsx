@@ -8,7 +8,7 @@ import axios from "axios";
 
 const APIKEY = import.meta.env.VITE_APIKEY
 
-function MapDinamic({handleAddress, handlePosition}) {
+function MapDinamic({handleAddress, handlePosition, positionForm}) {
   const customIcon = new L.Icon({
     iconUrl: icon,
     iconSize: [38, 38]
@@ -17,7 +17,11 @@ function MapDinamic({handleAddress, handlePosition}) {
     lat: -33.5219279446995,
     lng: -64.11621093750001,
   }
-  const [position, setPosition] = useState('')
+  const [position, setPosition] = useState(positionForm ? positionForm : '')
+  // console.log(positionForm)
+  // if(positionForm){
+  //   setPosition(positionForm)
+  // }
   const [address, setAddress] = useState('')
   async function reverseGeocode(location){
     const response = await axios.get(`https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&location=${location.lng},${location.lat}&token=${APIKEY}`)
