@@ -210,6 +210,7 @@ const FormBuilding = () => {
             customRequest={customRequest}
             maxCount={1}
             listType="picture"
+            fileList={image ? [{status: "done", name: form.getFieldValue('name'), url:image}] : []}
             accept="image/*"
             onRemove={handleImageRemove}
           >
