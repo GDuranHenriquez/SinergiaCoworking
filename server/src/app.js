@@ -25,6 +25,7 @@ const routerToken = require('./routes/routerToken');
 const routerUser = require('./routes/routerUser')
 const routerLoginRegister = require('./routes/routerLoginRegister');
 const routerDataUserClient = require('./routes/routerProtecteDateUser');
+const routerUpdateUser = require('./routes/routerUpdateUser');
 
 require('./db.js');
 
@@ -49,7 +50,7 @@ server.use(express.json());
 
 //server.use('/', routes);
 server.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
+server.use('/update-user', authenticate, routerUpdateUser);
 server.use('/data-user', authenticate, routerDataUserClient);
 
 //tokens

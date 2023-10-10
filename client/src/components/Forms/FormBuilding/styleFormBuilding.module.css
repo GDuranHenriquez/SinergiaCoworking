@@ -1,0 +1,69 @@
+.container {
+  width: 20%;
+  max-width: 30%;
+  height: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  /* border: 1px solid black;
+  border-radius: 5px; */  
+}
+
+
+.cardContainer{
+  /* display: flex;
+  flex-wrap: wrap; */
+  min-width: 100%;
+  max-width: 100%;
+  min-height: calc(100vh * 0.5);
+  max-height: calc(100vh * 0.5);
+  /* background-color: rgb(224, 218, 218); */
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+.cardContainer:hover{
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.imgCard{
+  width: 100%;  
+  min-height: calc(100vh * 0.35);
+  max-height: calc(100vh * 0.35);
+  object-fit: unset;
+}
+
+@media (max-height: 768px) {
+  .container {
+    width: 20%;
+    max-width: 30%;
+    height: 55%;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    /* border: 1px solid black;
+    border-radius: 5px; */  
+  }
+  
+  
+  .cardContainer{
+    /* display: flex;
+    flex-wrap: wrap; */
+    min-width: 100%;
+    max-width: 100%;
+    min-height: calc(100vh * 0.55);
+    max-height: calc(100vh * 0.55);
+    /* background-color: rgb(224, 218, 218); */
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+  }
+  .cardContainer:hover{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  
+  .imgCard{
+    width: 100%;  
+    min-height: calc(100vh * 0.38);
+    max-height: calc(100vh * 0.38);
+    object-fit: unset;
+  }
+}
