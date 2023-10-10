@@ -58,6 +58,7 @@ const ContinerHomePage = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+   justify-items:center
   }
 `;
 

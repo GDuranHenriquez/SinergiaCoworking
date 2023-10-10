@@ -25,14 +25,15 @@ type imagen = {
 function CardOffice({ id, name, capacity, ratingAverage, office_officeImage }: Props) {
   return (
     <div style={{ padding: "10px"}} className={styles.container}>
-      <Card
+      <Card 
         hoverable
         className={styles.cardContainer}
+        bodyStyle={{padding:'3px'}}
         cover={
           <div>{office_officeImage?.map((img) => <img style={{width:'280px', height:'230px'}}  src={img.imageUrl}></img>)}</div>
         }
       >
-
+   {/* <div className={styles.infocard}> */}
         <Meta title ={name} description={   <Rate disabled defaultValue={ratingAverage} />} /> 
         <div className={styles.capacidad}>
           <img
@@ -41,6 +42,8 @@ function CardOffice({ id, name, capacity, ratingAverage, office_officeImage }: P
           ></img>{" "}
           <p style={{ margin: "0px" }}>{capacity}</p>
         </div>
+        {/* </div> */}
+     
       </Card>
     </div>
   );
