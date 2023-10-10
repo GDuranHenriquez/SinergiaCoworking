@@ -3,6 +3,7 @@ import { Button, Form, Input, Select, Switch, Upload, Image  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { uploadImageToCloudinary } from '../../../utils/configCloudinary';
+import { fetchServices, fetchCategories, fetchBuildings, createOffice } from './Utils';
 import styled from './formOffice.module.css'
 
 const normFile = (e) => {
@@ -16,20 +17,45 @@ const FormOffice = () => {
   const [form] = Form.useForm();
   const [image, setImage] = useState(null);
   const [idListImage, setIdListImage] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [buildingOptions, setBuildingOptions] = useState([]);
+  const [serviceOptions, setServiceOptions] = useState([]);
+
+
 
   const handleSubmit = async (values) => {
     try {
       console.log(values);
-      await axios.post('http://localhost:3001/office', values); // Cambia la URL si es necesario
+      const urlArray = idListImage.map((img)=>{
+        return img.url
+      })
+      console.log(urlArray)
+
+      const data = {...values, images: urlArray}
+      await axios.post('https://sinergia-coworking.onrender.com/office', data);
       form.resetFields();
     } catch (error) {
       console.error('Error al crear la oficina:', error);
     }
   };
 
-  const categoryOptions = ['Categoria A', 'Categoria B', 'Categoria C']; // Reemplaza con tus categorías
-  const serviceOptions = ['Servicio 1', 'Servicio 2', 'Servicio 3']; // Reemplaza con tus servicios
-  const priceOptions = ['Precio 1', 'Precio 2', 'Precio 3']; // Reemplaza con tus precios
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const services = await fetchServices();
+        const categories = await fetchCategories();
+        const buildings = await fetchBuildings();
+
+        setServiceOptions(services);
+        setCategoryOptions(categories);
+        setBuildingOptions(buildings);
+      } catch (error) {
+        console.error('Error al cargar opciones:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const customRequest = async ({ file, onSuccess }) => {
     try {
@@ -51,13 +77,8 @@ const FormOffice = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(idListImage);
-  }, [idListImage])
-  
 
   const handleImageRemove = (file) => {
-    console.log(file)
     const newList = idListImage.filter((data) => data.id !== file.uid)
     setIdListImage(newList);
   };
@@ -126,8 +147,8 @@ const FormOffice = () => {
         >
           <Select>
             {categoryOptions.map((option) => (
-              <Select.Option key={option} value={option}>
-                {option}
+              <Select.Option key={option.id} value={option.id}>
+                {option.name}
               </Select.Option>
             ))}
           </Select>
@@ -137,10 +158,12 @@ const FormOffice = () => {
           name="building"
           rules={[{ required: true, message: 'Por favor selecciona un edificio' }]}
         >
-          <Select>
-            <Select.Option value="edificio1">Edificio 1</Select.Option>
-            <Select.Option value="edificio2">Edificio 2</Select.Option>
-            {/* Agrega más opciones según tus edificios */}
+         <Select>
+            {buildingOptions.map((option) => (
+              <Select.Option key={option.id} value={option.id}>
+                {option.name}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item
@@ -148,10 +171,10 @@ const FormOffice = () => {
           name="services"
           rules={[{ required: true, message: 'Por favor selecciona los servicios' }]}
         >
-          <Select mode="multiple">
+         <Select mode="multiple">
             {serviceOptions.map((option) => (
-              <Select.Option key={option} value={option}>
-                {option}
+              <Select.Option key={option.id} value={option.id}>
+                {option.name}
               </Select.Option>
             ))}
           </Select>
