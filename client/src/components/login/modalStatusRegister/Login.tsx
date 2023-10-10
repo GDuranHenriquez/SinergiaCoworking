@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Modal } from '../modalLogin/ModalStyle';
 import { useAuth } from '../../../Authenticator/AuthPro';
 import Loading from "../../Loading/Loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 //Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { loginGoogleUser, loginUser } from '../../../utils/FunctionSessionsGoogle';
-import { Button, Form, Input, message } from 'antd';
-import { validation } from '../utils/validations';
+import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { AuthResponse } from '../../protecterRoute/typesProtecterRoute';
+
 
 interface Props {
-  isOpen: any;
-  closeModal: any;
+  isOpen: boolean | (() => void);
+  closeModal: (() => void);
 }
 
 type FieldType = {
@@ -27,33 +26,21 @@ type FieldType = {
 function ModalLogin({ isOpen, closeModal }: Props) {
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<{ email?: string; password?: string }>({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [form] = Form.useForm();
 
-  const handleModalContainerClick = (e) => e.stopPropagation();
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleModalContainerClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  useEffect(() =>{
-    if(email!== '' || password !==''){
-      const errors = validation({ email, password });
-      setError(errors);
-    }else{
-      setError({});
-    }
-  }, [email, password])
-
-  const handleSubmit = async (e) => {
+  
+  const handleSubmit = async () => {
     /* e.preventDefault(); */
     setIsLoading(true);
     try {
@@ -65,24 +52,28 @@ function ModalLogin({ isOpen, closeModal }: Props) {
 
       if (loginResponse.pass) {
         if (loginResponse.accessToken && loginResponse.refreshToken) {
-          auth.saveUser(loginResponse);
+          const userInfo: AuthResponse = {
+            user: loginResponse.user,
+            accessToken: loginResponse.accessToken,
+            refreshToken: loginResponse.refreshToken
+          }
+          handleReset();
+          clearImp();
+          auth.saveUser(userInfo);
         }
         messageSuccess("Inicio de sesión exitoso")
         setTimeout(() => {
           auth.getAccess();
           closeModal();
-        }, 1000);
-      } else if (loginResponse.status === 403) {
-        if (loginResponse.data.message) {
-          messageError(loginResponse.data.message);
-          setTimeout(() => {
-            closeModal();
-          }, 2000);
+        }, 0.5);
+      } else if (loginResponse.response.status === 403) {
+        if (loginResponse.response.data.message) {
+          messageError(loginResponse.response.data.message);
+          
         } else {
-          messageError(loginResponse.data.error);
-          setTimeout(() => {
-            closeModal();
-          }, 2000);
+          const message = loginResponse.response.data.error
+          messageError(message);
+          
         }
       } else {
         messageError(loginResponse.response.data.error);
@@ -98,6 +89,8 @@ function ModalLogin({ isOpen, closeModal }: Props) {
       }         
       setIsLoading(false);
     } finally {
+      handleReset();
+      clearImp();
       setIsLoading(false);
     }
   };
@@ -109,26 +102,25 @@ function ModalLogin({ isOpen, closeModal }: Props) {
         token: credentialResponse.credential
       }
       const loginResponse = await loginGoogleUser(data);
+      
       if (loginResponse.pass) {
         if (loginResponse.accessToken && loginResponse.refreshToken) {
           auth.saveUser(loginResponse);
         }
+        clearImp();
+        handleReset();
         messageSuccess("Inicio de sesión exitoso")
         auth.getAccess();
         setTimeout(() => {
           closeModal();
-        }, 1000);
+        }, 800);
       } else if (loginResponse.status === 403) {
         if (loginResponse.data.message) {
           messageError(loginResponse.data.message);
-          setTimeout(() => {
-            closeModal();
-          }, 2000);
+          
         } else {
           messageError(loginResponse.data.error);
-          setTimeout(() => {
-            closeModal();
-          }, 2000);
+          
         }
       } else {
         messageError(loginResponse.response.data.error);
@@ -145,6 +137,8 @@ function ModalLogin({ isOpen, closeModal }: Props) {
       setIsLoading(false);
       
     } finally {
+      clearImp();
+      handleReset();
       setIsLoading(false);
     }
   }
@@ -156,7 +150,7 @@ function ModalLogin({ isOpen, closeModal }: Props) {
   const messageError = (message: string) => {
     toast.error(message, {
       position: "bottom-right",
-      autoClose: 3500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -169,7 +163,7 @@ function ModalLogin({ isOpen, closeModal }: Props) {
   const messageSuccess = (message: string) => {
     toast.success(message, {
       position: "bottom-right",
-      autoClose: 3500,
+      autoClose: 800,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -179,8 +173,16 @@ function ModalLogin({ isOpen, closeModal }: Props) {
     });
   };
 
-  const onFinishFailed = (value: any) => {
+  const onFinishFailed = () => {
     console.log('Ha ocurrido un error')
+  }
+
+  const handleReset = () => {
+    form.resetFields(); 
+  };
+  const clearImp = () => {
+    setEmail('');
+    setPassword('');
   }
 
 
@@ -189,31 +191,37 @@ function ModalLogin({ isOpen, closeModal }: Props) {
       <div className='modalContainer' onClick={handleModalContainerClick}>
         <div className="containerForm">
           <button type="button" id='btnCloseModal' onClick={closeModal}>X</button>
-          <h3 id='titleForm'>Sign in</h3>
+          <h3 id='titleForm'>Inicio de Sesion</h3>
+          <div style={{ width: '100%',
+            padding: '20px',
+            background: 'white',
+            borderRadius: '8px',
+            border: '1px solid rgba(0,0,0,0.2)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
           <Form
+            form={form}
+            wrapperCol={{ span: 24 }}
+            style={{ maxWidth: '80%'}}
+            layout="horizontal"
             name="normal_login"
-            className="login-form"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
             onFinish={handleSubmit}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
-            /* onSubmitCapture={handleSubmit} */
-            initialValues={{ username: email }}
           >
-            <Form.Item<FieldType>
+            <Form.Item
               name="username"
-              rules={[{ required: true, message: 'Por favor introduce tu email!' }]} 
-              help={error?.email ? error.email : undefined}            
+              rules={[{ required: true, message: 'Por favor introduce tu email!' }]}          
               >
-              <Input onChange={handleEmailChange} value={email} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+              <Input onChange={handleEmailChange} value={email} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" 
+                   />
             </Form.Item>
 
             <Form.Item<FieldType>
               name="password"
-              rules={[{ required: true, message: 'Por favor introduce tu contraseña!' }]}
-              help={error?.password ? error.password : undefined}              
+              rules={[{ required: true, message: 'Por favor introduce tu contraseña!' }]}              
               >
                 <Input.Password onChange={handlePasswordChange} value={password} prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
@@ -221,11 +229,12 @@ function ModalLogin({ isOpen, closeModal }: Props) {
             </Form.Item>
 
             <Form.Item >
-              <Button  type="primary" htmlType="submit" disabled={(Object.keys(error).length > 0 || email==='' || password==='')? true: false} className="login-form-button">
+              <Button  type="primary" htmlType="submit" className="login-form-button">
                 Acceder
               </Button>
             </Form.Item>
           </Form>
+          </div>
           <div className="loginGoogle">
             <GoogleLogin
               useOneTap

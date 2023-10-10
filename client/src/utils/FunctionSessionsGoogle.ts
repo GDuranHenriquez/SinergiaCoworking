@@ -1,6 +1,17 @@
 import axios from "axios";
 
-export async function registerGoogleUser(token:any) {
+type DataRegisterUser ={
+  email: string,
+  password: string,
+  name: string
+}
+type DataLoginUser = {
+  password?: string,
+  email?: string,
+  token?: string
+}
+
+export async function registerGoogleUser(token:string | undefined) {
   try {
     const data = {
       token: token
@@ -14,17 +25,18 @@ export async function registerGoogleUser(token:any) {
   }
 }
 
-export async  function loginGoogleUser(token:any) {
+
+export async  function loginGoogleUser(data:DataLoginUser) {
   try {
     const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/sign-in-out/login`;
-    const response = await axios.post(endpoint, token);
+    const response = await axios.post(endpoint, data);
     const apiResponse = response.data;
     return apiResponse;
   } catch (error: any) {
     return error;
   }
 }
-export async  function loginUser(data: any) {
+export async  function loginUser(data: DataLoginUser) {
   try {
     const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/sign-in-out/login`;
     const response = await axios.post(endpoint, data);
@@ -51,4 +63,16 @@ export async function logoutUser(refreshToken: string, signOut: () => void){
     return error;
   } 
 }
+
+export async function registerUser(data: DataRegisterUser) {
+  try {    
+    const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/sign-in-out/register-user`;
+    const response = await axios.post(endpoint, data);
+    const apiResponse = response.data;
+    return apiResponse;
+  } catch (error: any) {
+    return error;
+  }
+}
+
 

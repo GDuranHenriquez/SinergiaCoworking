@@ -2,6 +2,7 @@ import React from "react";
 import { Layout, } from 'antd';
 import { styled } from 'styled-components';
 import UserDropdownMenu from "./UserDropdownMenu";
+import Review from "../../pages/ReviewOffice/Review";
 
 const { Header } = Layout;
 
@@ -10,7 +11,7 @@ const NavBarAdmin: React.FC = () => {
 
     const menuItems = [
         { text: 'Perfil', path: '/perfil' },
-        { text: 'Mis reservas', path: '/reservas' },
+        { text: 'Mis reservas', path: '/review'},
         { text: 'Cerrar sesión', path: '/logout' },
       ];
 
