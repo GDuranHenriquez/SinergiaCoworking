@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
 import { Descriptions, DatePicker } from "antd";
@@ -13,7 +12,7 @@ import { useCustomSelector } from "../../hooks/redux";
 function OfficeDetail() {
   const { id } = useParams<{ id: string }>();
 
-  const { detatilOffice } = useCustomSelector((state) => state.office);
+  const detatilOffice = useCustomSelector((state) => state.office.detatilOffice);
 
   const dispatch = useCustomDispatch();
 
