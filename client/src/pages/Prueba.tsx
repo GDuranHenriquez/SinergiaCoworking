@@ -1,8 +1,6 @@
 import BackGroundGlobal from "../components/backgrounds/BackgroundGlobal";
 import  { styled } from 'styled-components'
-import ButtonFilter from "../features/Cards/NavbarFilter/BottonFilter";
-import NavbarFilter from "../features/Cards/NavbarFilter/NavbarFilter";
-import CardBuilding from "../features/Cards/CardBuilding";
+import NavbarFilter from "../features/Cards/navBarFilter/NavbarFilter";
 import Cards from "../features/Cards/Cards";
 
 

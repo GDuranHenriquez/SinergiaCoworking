@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Typography, Row, Col, Avatar } from "antd";
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import styles from "./Nosotros.module.css";

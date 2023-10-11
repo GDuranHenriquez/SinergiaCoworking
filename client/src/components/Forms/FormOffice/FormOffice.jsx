@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Input, Select, Switch, Upload, Image  } from 'antd';
+import { Button, Form, Input, Select, Switch, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { uploadImageToCloudinary } from '../../../utils/configCloudinary';
-import { fetchServices, fetchCategories, fetchBuildings, createOffice } from './Utils';
+import { fetchServices, fetchCategories, fetchBuildings } from './Utils';
 import styled from './formOffice.module.css'
 
-const normFile = (e) => {
+/* const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
   }
   return e && e.fileList;
-};
+}; */
 
 const FormOffice = () => {
   const [form] = Form.useForm();
-  const [image, setImage] = useState(null);
+  /* const [image, setImage] = useState(null); */
   const [idListImage, setIdListImage] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [buildingOptions, setBuildingOptions] = useState([]);

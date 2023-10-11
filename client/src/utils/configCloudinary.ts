@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { v2 as cloudinary } from 'cloudinary'
 
 
-export async function uploadImageToCloudinary(file) {
+export async function uploadImageToCloudinary(file: File | Blob) {
   try {
     const preset =  import.meta.env.VITE_PRESET;
     const cloud_name = import.meta.env.VITE_CLOUD_NAME;
