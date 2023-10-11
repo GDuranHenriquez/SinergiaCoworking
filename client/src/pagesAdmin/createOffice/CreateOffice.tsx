@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import {useEffect} from "react";
 import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import { styled } from "styled-components";
 import AOS from 'aos';

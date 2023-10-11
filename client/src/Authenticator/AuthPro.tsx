@@ -7,16 +7,19 @@ import { UserInfo, AuthResponse } from "../components/protecterRoute/typesProtec
 interface AuthProviderProps{
   children: React.ReactNode;
 }
+
 const AuthContext = createContext({
   isAuthenticated: false,
   isRoot: false,
   getAccessToken: () => {},
-  saveUser: (authResponse: AuthResponse) => {},
+  saveUser: (_authResponse: AuthResponse) => {},  
   getRefreshToken: () => {},
   getUser: () => ({} as UserInfo | undefined),
   getAccess: () => {},
   signOut: () => {}
 });
+
+
 
 // Crear el contexto con los tipos definidos
 /* const AuthContext = React.createContext<AuthContextType | undefined>(undefined); */
@@ -127,7 +130,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function saveUser(authResponse: AuthResponse) {
-    saveSessionInfo(authResponse.user, authResponse.accessToken, authResponse.refreshToken);
+    const user = authResponse.user;
+    const accessTokens = authResponse.accessToken;
+    const refreshTokens = authResponse.refreshToken;
+    saveSessionInfo(user, accessTokens, refreshTokens);
   }
 
   function getAccess() {
