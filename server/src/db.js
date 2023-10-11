@@ -51,7 +51,7 @@ const {
 
 Purchase.belongsTo(User, {as: 'user_purchase', foreignKey: 'user'})
 Purchase.hasMany(Reservation, {as: 'purchase_reservation', foreignKey: 'purchase'})
-Reservation.belongsTo(Office, {as: 'reservation_office', foreignKey:'office'})
+Reservation.belongsTo(Office, {as: 'office_reservation', foreignKey:'office'})
 // User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
 Score.belongsTo(User, {as: 'user_score', foreignKey: 'user'})
 Office.hasMany(Score, {as: 'office_score', foreignKey: 'office'})
