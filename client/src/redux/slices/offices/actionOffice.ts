@@ -3,7 +3,7 @@ import { setDetailOffice } from ".";
 import { Dispatch } from "../../store/store";
 
 
-export const getDetailOffice = async (dispatch: Dispatch, id: string) => {
+export const getDetailOffice = async (dispatch: Dispatch, id: string | undefined) => {
   try {
     const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/${id}`;
     const { data } = await axios.get(endpoint);
