@@ -19,8 +19,9 @@ export const validation = (userData: userData) => {
       "The email address should not contain more than 35 characters";
   } */
   //Password validation
+  const regest = /(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\\-/])/
   if (
-    !/(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-/])/.test(
+    !regest.test(
       userData.password
     )
   ) {

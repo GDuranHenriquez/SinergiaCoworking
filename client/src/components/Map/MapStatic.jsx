@@ -4,7 +4,6 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import icon from '../../assets/icons/placeHolder.png'
 
 function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom = 7, buildings}) {
-  console.log(buildings)
   const customIcon = new Icon({
     iconUrl: icon,
     iconSize: [38, 38]
@@ -23,7 +22,6 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
     markers = buildings.map(building => (
       {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
     ))
-    console.log(markers)
   } else if(buildings){
     markers = [{geocode: [buildings.lat, buildings.lng], popUpText: buildings.name, popUpImg: buildings.imageUrl, popUpAddress: buildings.address}]
   }

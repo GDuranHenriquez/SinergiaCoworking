@@ -1,16 +1,14 @@
-import React,{useEffect} from "react";
+import {useEffect} from "react";
 import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import { styled } from "styled-components";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import FooterSection from "../../components/Footer/Footer";
-import { useCustomDispatch } from "../../hooks/redux";
 import FormBuilding from "../../components/Forms/FormBuilding/FormBuilding";
 
 function CreateBuilding() {
 
-  const dispatch = useCustomDispatch();
   
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});

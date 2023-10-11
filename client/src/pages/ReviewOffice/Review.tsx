@@ -24,7 +24,7 @@ const Review = () => {
   const [form, setForm] = useState<FORM>({
     stars: 0,
     comment: '',
-    user: auth.getUser().id,
+    user: auth.getUser()?.id,
     office: '',
   });
 
@@ -55,7 +55,7 @@ const Review = () => {
     setForm({
       stars: 0,
       comment: '',
-      user: auth.getUser().id,
+      user: auth.getUser()?.id,
       office: '',
     });
     setErrors({});

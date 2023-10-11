@@ -13,9 +13,9 @@ const FormService = () => {
 
   const onChange = (event) => {
     const value = form.getFieldValue(event.target.id);
+    const regest = /^[a-zA-Z]+$/;
     switch (event.target.id) {
       case 'name':
-        const regest = /^[a-zA-Z]+$/;
         if (!regest.test(value)) {
           const newError = { ...error, name: { status: true, message: 'El nombre no puede contener números' } };
           setError(newError);

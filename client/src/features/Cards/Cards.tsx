@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import Card from "./CardBuilding";
 import styles from "./Cards.module.css";
 import CardBuilding from "./CardBuilding";
-import axios, { all } from "axios";
-import React from "react";
 import { Pagination } from "antd";
 import { useCustomSelector } from "../../hooks/redux";
 import { ObjectBuilding } from "../../redux/slices/building/typesBuilding";
@@ -20,8 +17,8 @@ function Cards() {
   }, [allBuildings]); 
 
   const getBuildingsToShow = (buildings: ObjectBuilding[], page: number, size: number) => {
-    let var1 = page * size - size;
-    let var2 = page * size;
+    const var1 = page * size - size;
+    const var2 = page * size;
    return buildings.slice(var1, var2);
   }
 

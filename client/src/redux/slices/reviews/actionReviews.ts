@@ -25,7 +25,7 @@ import { Dispatch } from "../../store/store";
 interface ReviewFormData {
     stars: number;
     comment: string;
-    user: string;
+    user: string | undefined;
     office: string;
   }
 
