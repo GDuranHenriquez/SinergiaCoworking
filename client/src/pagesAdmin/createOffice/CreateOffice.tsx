@@ -5,12 +5,9 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import FooterSection from "../../components/Footer/Footer";
-import { useCustomDispatch } from "../../hooks/redux";
 import FormOffice from "../../components/Forms/FormOffice/FormOffice";
 
 function CreateOfficePage() {
-
-  const dispatch = useCustomDispatch();
   
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});

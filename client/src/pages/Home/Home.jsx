@@ -8,7 +8,7 @@ import SliderCarousel from "../../features/Navigation/Carrousel/Slider";
 import portada from "../../assets/portada.jpg";
 import notebook from "../../assets/notebook.jpg";
 import oficina from "../../assets/oficina.jpg";
-import NavbarFilter from "../../features/Cards/NavbarFilter/NavbarFilter";
+import NavbarFilter from "../../features/Cards/navBarFilter/NavbarFilter";
 import Cards from "../../features/Cards/Cards";
 import FooterSection from "../../components/Footer/Footer";
 import { useCustomDispatch, useCustomSelector } from "../../hooks/redux";

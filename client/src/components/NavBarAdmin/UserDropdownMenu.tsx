@@ -3,7 +3,6 @@ import { Menu, Dropdown, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import LinkButton from './LinkButton'; // Asegúrate de importar el componente LinkButton
 import CloseSeionButton from '../../features/Navigation/navBarNavigation/CloseSesionButton';
-import { useAuth } from '../../Authenticator/AuthPro';
 
 interface MenuItem {
   text: string;

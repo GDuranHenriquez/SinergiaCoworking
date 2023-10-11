@@ -1,5 +1,4 @@
 import {WifiOutlined, CoffeeOutlined, TrophyOutlined,  } from '@ant-design/icons';
-import {ReactNode} from "react";
 
 type Data = {
     icon: JSX.Element;

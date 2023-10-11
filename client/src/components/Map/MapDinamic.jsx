@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup /* useMapEvents */ } from "react-leaflet";
 import icon from '../../assets/icons/placeHolder.png'
 import { useEffect, useState } from 'react';
 import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearch";
@@ -29,13 +29,13 @@ function MapDinamic({handleAddress, handlePosition, positionForm}) {
   }
   function DraggableMarker() {
     
-    const map = useMapEvents({
+    /* const map = useMapEvents({
       'click': (e) => {
         // map.setView(e.latlng, map.getZoom(), {animate: true})
         setPosition(e.latlng)
         reverseGeocode(e.latlng)
       }
-    })
+    }) */
     const dragHandle = (e) => {
       setPosition(e.target._latlng)
       reverseGeocode(e.target._latlng)
