@@ -1,11 +1,18 @@
 const {Office} = require("../../db");
 
 const deleteOffice = async (req, res) =>{
-    const { id } = req.params;
     try {
+        const { id } = req.params;
+        if(!id){
+            return res.status(401).json({error: 'Falta id oficina'})
+        }
         const office = await Office.findByPk(id);
-        if(!office.name || office.deleted) {
-            return res.status(404).json({message: 'No se encontró la oficina'});
+        if(!office) {
+            return res.status(404).json({message: 'Oficina invalida'});
+        }
+        if(office.deleted){
+            await office.update({deleted: false});
+            return res.json({msg: 'Oficina restaurada'});
         }
         await office.update({deleted: true});
         return res.json({msg: 'Oficina eliminada'});
