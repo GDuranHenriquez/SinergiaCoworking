@@ -5,7 +5,7 @@ import { AuthProvider } from './Authenticator/AuthPro.jsx';
 import ProtectedRoute from './components/protecterRoute/ProtectedRoute.jsx';
 import HomePages from "./pages/Home/Home.jsx";
 import Prueba from './pages/Prueba.tsx'
-import PruebaDos from "./pages/PruebaDos.tsx";
+import ProfilePage from "./pages/Profile/ProfilePage.jsx";
 import Review from "./pages/ReviewOffice/Review.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
@@ -36,8 +36,8 @@ function App() {
       element: <Review/>,
     },
     {
-      path: "/pruebados",
-      element: <PruebaDos/>,
+      path: "/perfil",
+      element: <ProfilePage/>,
     },
     {
       path: "/detail/:id",

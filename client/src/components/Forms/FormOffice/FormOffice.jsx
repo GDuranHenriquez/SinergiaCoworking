@@ -88,6 +88,7 @@ const FormOffice = () => {
     padding: '20px',
     display: 'flex',
     flexWrap: 'nowrap',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     gap: '30px'

@@ -1,5 +1,9 @@
 .containerMayor {
   background-color: #f8f6f6;
+
+  
+
+ 
 }
 .container {
   display: flex;
@@ -7,6 +11,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+
 }
 
 .comment {
@@ -68,6 +73,7 @@
   justify-self: center;
   justify-items: center;
   display: flex;
+
 }
 
 .msj {
@@ -103,10 +109,12 @@
   width: 80%;
   background-color: #ffffff;
   align-self: center;
-
+  
 }
 
 .todoContenedor{
+  /* transform: translateZ(0); */
+
   display: flex;
   flex-direction: column;
 }
@@ -126,6 +134,7 @@
   align-items: center;
   align-content: center;
   height: 70%;
+  scroll-behavior: smooth !important;
 }
 
 .nameoffice {
@@ -137,11 +146,11 @@
 .capacityoffice {
   margin: 0px;
   padding: 0px;
+
 }
 .derecha {
   width: 40%;
   height: 70%;
-
 }
 
 .averageoffice {

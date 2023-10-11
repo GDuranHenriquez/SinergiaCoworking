@@ -108,8 +108,10 @@ const FormBuilding = () => {
 
   return (<div style={{
     width: '100%',
+   
     padding: '20px',
     display: 'flex',
+    flexDirection: 'column',
     flexWrap: 'nowrap',
     justifyContent: 'center',
     alignItems: 'center',
