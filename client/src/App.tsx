@@ -9,7 +9,7 @@ import PruebaDos from "./pages/PruebaDos.tsx";
 import Review from "./pages/ReviewOffice/Review.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
-import OfficeDetail from "./features/Detail/Detail2.tsx";
+/* import OfficeDetail from "./features/Detail/Detail2.tsx"; */
 import './App.css'
 import CreateBuilding from "./pagesAdmin/createBuilding/CreateBuildingPage.tsx";
 import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
@@ -42,11 +42,11 @@ function App() {
     {
       path: "/detail/:id",
       element: <Detail/>,
-    },
+    }/* ,
     {
       path: "/office/:id",
       element: <OfficeDetail/>
-    },
+    } */,
     {
       path: "/",
       element: <ProtectedRoute/>,
