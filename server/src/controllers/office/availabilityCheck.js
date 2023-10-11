@@ -1,17 +1,21 @@
-const {Purchase, Office, Reservation, User} = require('../../db')
+const {Purchase, Office, Reservation, Category} = require('../../db')
 
 const availabilityCheck = async (req, res) => {
     try {
-        const {date, office} = req.query
+        const {date, office, amount} = req.query
         if(!office){
             return res.status(401).json({error: 'Falta id de oficina'})
         }
         if(!date){
             return res.status(401).json({error: 'Falta fecha'})
         }
-        const checkOffice = await Office.findOne({where: {id: office}, include: [{model: Reservation, as: 'office_reservation'}]})
+        const checkOffice = await Office.findOne({where: {id: office, deleted: false}, include: [{model: Reservation, as: 'office_reservation'}, {model: Category, as: 'office_category'}]})
         if(!checkOffice){
             return res.status(404).json({error: 'Oficina invalida'})
+        }
+        const openSpace = checkOffice.office_category.name === "Open space"
+        if(openSpace && !amount){
+            return res.status(401).json({error: 'Falta cantidad de espacios'})
         }
         const serverDate = new Date()
         const reservationDate = new Date(date)
@@ -22,9 +26,22 @@ const availabilityCheck = async (req, res) => {
         }
         const checkDateText = `${reservationDate.getFullYear()}-${reservationDate.getMonth() + 1}-${reservationDate.getDate()}`
         const checkDate = new Date(checkDateText)
-        const reservation = await Reservation.findOne({where: {office, date: checkDate}})
-        if(!reservation){
-            return res.status(200).json({available: true})
+        const reservations = await Reservation.findAll({where: {office, date: checkDate}})
+        const price = openSpace ? checkOffice.price * amount : checkOffice.price
+        if(!reservations.length){
+            if(openSpace){
+                if(amount > checkOffice.capacity){
+                    return res.status(200).json({available: false})
+                }
+            }
+            return res.status(200).json({available: true, price})
+        }
+        if(openSpace){
+            let totalAmount = 0
+            reservations.forEach(reservation => totalAmount += reservation.amount);
+            if((totalAmount + Number(amount)) <= checkOffice.capacity){
+                return res.status(200).json({available: true, price})
+            }
         }
         return res.status(200).json({available: false})
     } catch (error) {

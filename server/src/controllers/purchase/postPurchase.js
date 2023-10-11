@@ -2,7 +2,7 @@ const {Purchase, Office, Reservation, User, Building} = require('../../db')
 
 const postPurchase = async (req, res) => {
     try {
-        const {user, office, date, stripe} = req.query
+        const {user, office, date, stripe, price, amount} = req.query
         if(!user){
             return res.status(401).json({error: 'Falta id de usuario'})
         }
@@ -27,8 +27,8 @@ const postPurchase = async (req, res) => {
         const reservationDate = new Date(date)
         // const reservationDateText = `${reservationDate.getDate()}/${reservationDate.getMonth() + 1}/${reservationDate.getFullYear()}`
         // const dbDate = new Date(reservationDateText)
-        const purchase = await Purchase.create({date: actualDate, totalPrice: checkOffice.price, user})
-        const reservation = await Reservation.create({date: reservationDate, purchase: purchase.id, office})
+        const purchase = await Purchase.create({date: actualDate, totalPrice: price, user})
+        const reservation = await Reservation.create({date: reservationDate, purchase: purchase.id, office, amount})
         const response = await Reservation.findOne({where: {id: reservation.id}, include: [{model: Office, as: 'office_reservation', include:[{model: Building, as: 'office_building'}]}]})
         return res.status(200).json(response)
     } catch (error) {
