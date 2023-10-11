@@ -88,7 +88,7 @@ function Detail() {
     imageUrl: "",
     office_building: [],
   });
-  const [officeId, setOfficeId] = useState<string>("");
+  /* const [officeId, setOfficeId] = useState<string>(""); */
   const [selectedOffice, setSelectedOffice] = useState<OfficeInfo>();
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function Detail() {
   }, []);
 
   const getOfficeInfo = (id: string) => {
-    setOfficeId(id);
+    /* setOfficeId(id); */
     axios
       .get(import.meta.env.VITE_BASENDPOINT_BACK + `/office/${id}`)
       .then((response) => {
