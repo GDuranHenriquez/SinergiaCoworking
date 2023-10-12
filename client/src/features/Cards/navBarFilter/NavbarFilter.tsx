@@ -2,7 +2,6 @@ import style from "./NavbarFilter.module.css";
 import { Select, Input } from "antd";
 import { Option } from "antd/es/mentions";
 import { useEffect, useState } from "react";
-import ButtonFilter from "./BottonFilter";
 import axios from "axios";
 import { getBuildingFilters } from "../../../redux/slices/building/actionsBuilding";
 import { useCustomDispatch } from "../../../hooks/redux";

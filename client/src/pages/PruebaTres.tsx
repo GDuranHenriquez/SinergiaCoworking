@@ -1,8 +1,6 @@
 import { postReviews } from "../redux/slices/reviews/actionReviews";
 import { useCustomDispatch } from "../hooks/redux";
-import React,{useEffect} from "react";
-import { useState } from "react";
-import AOS from 'aos';
+import React, { useState } from "react";
 
 const PruebaTres = () => {
   const [form, setForm] = useState({
@@ -15,7 +13,7 @@ const PruebaTres = () => {
 
   const dispatch = useCustomDispatch();
   
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     postReviews(dispatch, form); 
   };

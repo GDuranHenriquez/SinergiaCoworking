@@ -1,24 +1,3 @@
-// import CityTable from "../components/City/CityTable";
-// import NavBarAdmin from "../components/NavBarAdmin/NavBarAdmin";
-
-
-// function PruebaDos() {
-
-
-    
-//     return (
-//         <div>
-//             <CityTable/>
-//         </div>
-//     )
-// }
-
-
-
-
-// export default PruebaDos;
-
-
 import React from 'react';
 import { Avatar, Card, Carousel, Rate } from 'antd';
 import Meta from 'antd/es/card/Meta';

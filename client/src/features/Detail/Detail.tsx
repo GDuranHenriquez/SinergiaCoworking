@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
-import { Descriptions, DatePicker, Calendar, Button, FloatButton } from "antd";
-import ButtonConfirm from "./ButtonConfirm";
-import ImageZoom from "../../components/Image/Image";
+import { Descriptions, Calendar, Button } from "antd";
 import styles from "./Detail.module.css";
 import axios from "axios";
 import CardOffice from "./CardOffice";
 import getInfoDataServicios from "./Utils/DataServicios";
 import IconDescription from "./ComponentServices/IconDescription";
-import type { DatePickerProps } from "antd";
 import { Rate } from "antd";
-import { Card, Space, Avatar, Carousel } from "antd";
+import { Card, Space, Avatar } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
 import { current } from "@reduxjs/toolkit";
@@ -97,7 +94,7 @@ function Detail() {
     imageUrl: "",
     office_building: [],
   });
-  const [officeId, setOfficeId] = useState<string>("");
+  /* const [officeId, setOfficeId] = useState<string>(""); */
   const [selectedOffice, setSelectedOffice] = useState<OfficeInfo>();
 
   const ref = useRef<null | HTMLDivElement>(null); 

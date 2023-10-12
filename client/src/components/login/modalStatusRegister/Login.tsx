@@ -52,14 +52,14 @@ function ModalLogin({ isOpen, closeModal }: Props) {
 
       if (loginResponse.pass) {
         if (loginResponse.accessToken && loginResponse.refreshToken) {
-          const userInfo: AuthResponse = {
+          const authResponse: AuthResponse = {
             user: loginResponse.user,
             accessToken: loginResponse.accessToken,
             refreshToken: loginResponse.refreshToken
           }
           handleReset();
           clearImp();
-          auth.saveUser(userInfo);
+          auth.saveUser(authResponse);
         }
         messageSuccess("Inicio de sesión exitoso")
         setTimeout(() => {

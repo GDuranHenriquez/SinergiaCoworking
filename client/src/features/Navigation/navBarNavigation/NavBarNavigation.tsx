@@ -1,12 +1,11 @@
 import React from "react";
 import LinkButton from "./LinkButton";
-import Link from "antd/es/typography/Link";
 import AccesButton from "./AccesButton";
 import LogoPrincipal from "../../../../src/assets/LogoSc.png";
 import { Layout, Menu } from 'antd';
 import { styled } from 'styled-components';
 import { useModal } from "../../../utils/useModal";
-import ModalRegister from "../../../components/login/modalStatusRegister/register";
+import ModalRegister from "../../../components/login/modalStatusRegister/Register";
 import ModalLogin from "../../../components/login/modalStatusRegister/Login";
 import UserDropdownMenu from "../../../components/NavBarAdmin/UserDropdownMenu";
 import { useAuth } from "../../../Authenticator/AuthPro";

@@ -1,9 +1,5 @@
 import { Card } from "antd";
 import styles from "./CardOffice.module.css";
-import { useEffect, useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
-
-import { useDispatch, useSelector } from "react-redux";
 import { Rate } from "antd";
 
 const { Meta } = Card;
@@ -32,6 +28,7 @@ function CardOffice({ id, name, capacity, ratingAverage, office_officeImage }: P
         cover={
           <div>{office_officeImage?.map((img) => <img style={{width:'280px', height:'230px'}}  src={img.imageUrl}></img>)}</div>
         }
+        id={id}
       >
    {/* <div className={styles.infocard}> */}
         <Meta title ={name} description={   <Rate disabled defaultValue={ratingAverage} />} /> 

@@ -96,6 +96,22 @@ const MyProfile = () => {
     setErrorModalVisible(false);
   };
 
+  const customRequest = async ({ file, onSuccess }) => {
+    try {
+      const response = await uploadImageToCloudinary(file);
+      // Actualiza la imagen de perfil en Cloudinary
+      await axios.put('https://sinergia-coworking.onrender.com/update-user/', { imgUrl: response }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      onSuccess(response);
+    } catch (error) {
+      console.error("Error al cargar la imagen en Cloudinary:", error);
+      setErrorModalVisible(true);
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Card style={{ width: '100%' }}>
@@ -113,7 +129,7 @@ const MyProfile = () => {
 
       <Modal
         title="Cambiar Imagen de Perfil"
-        visible={changeImageVisible}
+        open={changeImageVisible}
         onCancel={() => setChangeImageVisible(false)}
         footer={null}
       >
@@ -125,6 +141,7 @@ const MyProfile = () => {
           headers={{
             Authorization: `Bearer ${accessToken}`,
           }}
+          customRequest={customRequest}
           onChange={handleImageChange}
         >
           <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
@@ -133,7 +150,7 @@ const MyProfile = () => {
 
       <Modal
         title="Éxito"
-        visible={successModalVisible}
+        open={successModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >
@@ -142,7 +159,7 @@ const MyProfile = () => {
 
       <Modal
         title="Error"
-        visible={errorModalVisible}
+        open={errorModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >

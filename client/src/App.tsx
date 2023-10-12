@@ -10,6 +10,7 @@ import Review from "./pages/ReviewOffice/Review.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
 import OfficeDetail from "./features/Detail/Detail2.tsx";
+import ReservasPage from "./pages/MisReservas/ReservasPage.jsx"
 import './App.css'
 import CreateBuilding from "./pagesAdmin/createBuilding/CreateBuildingPage.tsx";
 import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
@@ -40,13 +41,17 @@ function App() {
       element: <ProfilePage/>,
     },
     {
+      path: "/reservas",
+      element: <ReservasPage/>,
+    },
+    {
       path: "/detail/:id",
       element: <Detail/>,
-    },
+    }/* ,
     {
       path: "/office/:id",
       element: <OfficeDetail/>
-    },
+    } */,
     {
       path: "/",
       element: <ProtectedRoute/>,

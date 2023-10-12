@@ -1,15 +1,8 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { FcApproval } from 'react-icons/fc';
 // Define una animación para el checkmark
 
-const drawCheckmark = keyframes`
-  0% {
-    stroke-dashoffset: 25;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-`;
+
 
 // Estilo del contenedor del checkmark
 const CheckmarkContainer = styled.div`
