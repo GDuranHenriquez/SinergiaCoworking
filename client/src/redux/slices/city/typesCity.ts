@@ -1,3 +1,8 @@
 export interface CityState {
-    allCities: string[];
+    allCities: City[] | []
   }
+
+  export type City = {
+    id: string;
+    name: string;
+  };

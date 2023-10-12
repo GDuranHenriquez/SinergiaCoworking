@@ -14,7 +14,6 @@ import dayjs from "dayjs";
 import { current } from "@reduxjs/toolkit";
 import { useAuth } from "../../Authenticator/AuthPro";
 
-
 interface BuildingObject {
   id: string;
   name: string;
@@ -94,12 +93,10 @@ function Detail() {
     imageUrl: "",
     office_building: [],
   });
-  /* const [officeId, setOfficeId] = useState<string>(""); */
+  const [officeId, setOfficeId] = useState<string>(""); 
   const [selectedOffice, setSelectedOffice] = useState<OfficeInfo>();
 
   const ref = useRef<null | HTMLDivElement>(null); 
-
-
 
   useEffect(() => {
     axios
@@ -344,7 +341,6 @@ function Detail() {
                 </div>
               </div>
             )}
-          
           </div>
         </div>
       </div>

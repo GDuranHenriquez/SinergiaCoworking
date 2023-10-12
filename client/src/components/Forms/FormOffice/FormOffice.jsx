@@ -171,9 +171,9 @@ const FormOffice = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          label="Edificio"
+          label="Sucursal"
           name="building"
-          rules={[{ required: true, message: 'Por favor selecciona un edificio' }]}
+          rules={[{ required: true, message: 'Por favor selecciona una sucursal' }]}
         >
          <Select>
             {buildingOptions.map((option) => (

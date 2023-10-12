@@ -9,10 +9,10 @@ export const validation = (userData: userData) => {
   const error: { email?: string; password?: string } = {};
   //Email validation
   if (!/\S+@\S+\.\S+/.test(userData.email)) {
-    error.email = "This is not a valid email";
+    error.email = "Este correo no es válido";
   }
   if (!userData.email) {
-    error.email = "You must enter an email address";
+    error.email = "Ingrese un correo electrónico";
   }
   /* if (userData.email.length > 35) {
     error.email =
@@ -26,11 +26,11 @@ export const validation = (userData: userData) => {
     )
   ) {
     error.password =
-      "Password must contain at least one number, one letter, and one special character";
+      "La contraseña debe contener al menos un número, una letra y un caracter especial";
   }
 
   if (!(userData.password.length >= 8 && userData.password.length <= 32)) {
-    error.password = "Password must have between 8 and 32 characters";
+    error.password = "La contraseña debe contener entre 8 y 32 caracteres";
   }
 
   return error;
