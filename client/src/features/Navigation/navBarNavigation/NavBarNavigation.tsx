@@ -62,7 +62,9 @@ const NavBarNavigation: React.FC = () => {
                 { text: 'Perfil', path: '/perfil' },
                 { text: 'Mis reservas', path: '/reservas' },
                 { text: 'Crear oficina', path: '/crear-oficina' },
-                { text: 'Crear Edificio', path: '/crear-edificio' },
+                { text: 'Crear sucursal', path: '/crear-sucursal' },
+                { text: 'Editar oficina', path: '/editar-oficina' },
+                { text: 'Editar sucursal', path: '/editar-sucursal' },
                 { text: 'Cerrar sesión', path: '#' }
             ]
         }else{

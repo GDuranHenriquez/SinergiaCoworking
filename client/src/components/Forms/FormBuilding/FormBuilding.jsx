@@ -51,8 +51,8 @@ const FormBuilding = () => {
       form.resetFields();
       setIsSuccessModalVisible(true);
     } catch (error) {
-      console.error('Error al crear el edificio:', error);
-      setErrorModalContent(error.message || 'Error al crear el edificio');
+      console.error('Error al crear la sucursal:', error);
+      setErrorModalContent(error.message || 'Error al crear la sucrusal');
       setIsErrorModalVisible(true);
     }
   };
@@ -128,7 +128,7 @@ const FormBuilding = () => {
       border: '1px solid rgba(0,0,0,0.3)',
       boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
     }}>
-      <h2 style={{ color: "black" }}>Guarda un nuevo edificio</h2>
+      <h2 style={{ color: "black" }}>Guardar nueva sucursal</h2>
       <Form
         style={{width: '100%'}}
         form={form}
@@ -203,7 +203,7 @@ const FormBuilding = () => {
             accept="image/*"
             onRemove={handleImageRemove}
           >
-            {!image && <Button icon={<UploadOutlined />}>Cargar Imagen</Button>}
+            {!image && <Button icon={<UploadOutlined />}>Cargar imagen</Button>}
           </Upload>
         </Form.Item>
         <Form.Item label="Ciudad" name="city" rules={[{ required: true, message: 'Por favor selecciona una ciudad' }]}>
@@ -212,24 +212,24 @@ const FormBuilding = () => {
         <MapDinamic handleAddress={handleAddress} handlePosition={handlePosition}/>
         <Form.Item style={{ marginTop: '30px'}}>
           <Button type="primary" htmlType="submit">
-            Guardar Edificio
+            Guardar
           </Button>
         </Form.Item>
       </Form>
 
       {/* Modal de éxito */}
       <Modal
-        title="Edificio creado con éxito"
+        title="Sucursal creada con éxito"
         open={isSuccessModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >
-        El edificio se ha creado con éxito.
+        La sucursal se ha creado con éxito.
       </Modal>
 
       {/* Modal de error */}
       <Modal
-        title="Error al crear el edificio"
+        title="Error al crear la sucursal"
         open={isErrorModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}

@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { Card, List, Modal, Rate, Button, Form, Input } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
 import { useAuth } from '../../Authenticator/AuthPro';
 import axios from 'axios';
+import { postReviews } from '../../redux/slices/reviews/actionReviews';
+import { useCustomDispatch } from '../../hooks/redux';
 
 const MyReservations = () => {
     const auth = useAuth();
-    const user = auth.getUser();
+    const dispatch = useCustomDispatch();
+
+    const [form, setForm] = useState({
+      stars: 0,
+      comment: '',
+      user: auth.getUser()?.id,
+      office: '',
+    });
   
     const [reservations, setReservations] = useState([
       {
@@ -40,18 +50,9 @@ const MyReservations = () => {
     const [selectedReservation, setSelectedReservation] = useState(null);
     const [userRating, setUserRating] = useState(0);
     const [userComment, setUserComment] = useState(''); 
-    const [officeId, setOfficeId] = useState('');
   
     const handleRate = (value) => {
       setUserRating(value);
-    };
-  
-    const handleCommentChange = (e) => {
-      setUserComment(e.target.value);
-    };
-  
-    const handleOfficeIdChange = (e) => {
-      setOfficeId(e.target.value);
     };
   
     const showRatingModal = (reservation) => {
@@ -61,14 +62,14 @@ const MyReservations = () => {
   
     const handleRatingOk = async () => {
       try {
-        const response = await axios.post('https://sinergia-coworking.onrender.com/score', {
+        const updatedForm = {
+          ...form,
           stars: userRating,
-          comment: userComment,
-          user: user.id,
-          office: officeId,
-        });
-  
-        if (response.status === 200) {
+        };
+    
+        const response = await postReviews(dispatch, updatedForm);
+    
+        if (response && response.status === 200) {
           const updatedReservations = reservations.map((reservation) => {
             if (reservation.id === selectedReservation.id) {
               return {
@@ -78,7 +79,7 @@ const MyReservations = () => {
             }
             return reservation;
           });
-  
+    
           setReservations(updatedReservations);
           setRatingVisible(false);
         } else {
@@ -88,6 +89,7 @@ const MyReservations = () => {
         console.error('Error al enviar la calificación y el comentario:', error);
       }
     };
+    
   
     const handleRatingCancel = () => {
       setRatingVisible(false);
@@ -134,18 +136,18 @@ const MyReservations = () => {
           <p>Deja un comentario:</p>
           <Form>
             <Form.Item>
-              <Input.TextArea
-                value={userComment}
-                onChange={handleCommentChange}
-                rows={4}
-              />
+            <textarea
+            value={form.comment}
+            onChange={(e) => setForm({ ...form, comment: e.target.value })}
+          />
             </Form.Item>
             <p>Ingresa el ID de la oficina:</p>
             <Form.Item>
-              <Input
-                value={officeId}
-                onChange={handleOfficeIdChange}
-              />
+            <input
+            type="text"
+            value={form.office}
+            onChange={(e) => setForm({ ...form, office: e.target.value })}
+          />
             </Form.Item>
           </Form>
         </Modal>

@@ -14,6 +14,9 @@ import ReservasPage from "./pages/MisReservas/ReservasPage.jsx"
 import './App.css'
 import CreateBuilding from "./pagesAdmin/createBuilding/CreateBuildingPage.tsx";
 import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
+import EditBuildingPage from "./pagesAdmin/EditBuilding/EditBuilding.tsx";
+import EditOfficePage from "./pagesAdmin/EditOffice/EditOffice.tsx";
+import FormEditBuilding from "./components/FormEditBuilding/FormEditBuilding.tsx";
 
 
 
@@ -57,13 +60,25 @@ function App() {
       element: <ProtectedRoute/>,
       children: [
         {
-          path:'/crear-edificio',
+          path:'/crear-sucursal',
           element: <CreateBuilding/>
         },
         {
           path: '/crear-oficina',
           element: <CreateOfficePage/>
-        }
+        },
+        {
+          path: '/editar-sucursal',
+          element: <EditBuildingPage/>
+        },
+        {
+          path: '/editar-oficina',
+          element: <EditOfficePage/>
+        },
+        {
+          path: '/building/:id/edit',
+          element: <FormEditBuilding/>
+        },
       ],
     },
   ]);
