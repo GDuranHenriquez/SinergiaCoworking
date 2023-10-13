@@ -9,8 +9,12 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false
+        },
+        amount: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         }
     },
     {

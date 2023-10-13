@@ -65,7 +65,7 @@ function ModalLogin({ isOpen, closeModal }: Props) {
         setTimeout(() => {
           auth.getAccess();
           closeModal();
-        }, 0.5);
+        }, 0.7);
       } else if (loginResponse.response.status === 403) {
         if (loginResponse.response.data.message) {
           messageError(loginResponse.response.data.message);
@@ -190,8 +190,8 @@ function ModalLogin({ isOpen, closeModal }: Props) {
     {isOpen ? <Modal onClick={closeModal}>
       <div className='modalContainer' onClick={handleModalContainerClick}>
         <div className="containerForm">
-          <button type="button" id='btnCloseModal' onClick={closeModal}>X</button>
-          <h3 id='titleForm'>Inicio de Sesion</h3>
+          <button type="button" id='btnCloseModal'  style={{marginLeft:'500px', width:'32px', height:'28px'}} onClick={closeModal}>X</button>
+          <h3 id='titleForm'>Inicio de sesión</h3>
           <div style={{ width: '100%',
             padding: '20px',
             background: 'white',
@@ -204,24 +204,24 @@ function ModalLogin({ isOpen, closeModal }: Props) {
           <Form
             form={form}
             wrapperCol={{ span: 24 }}
-            style={{ maxWidth: '80%'}}
+            style={{ maxWidth: '80%', marginTop:'30px'}}
             layout="horizontal"
             name="normal_login"
             onFinish={handleSubmit}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
-            <Form.Item
+            <Form.Item style={{padding:'7px'}}
               name="username"
-              rules={[{ required: true, message: 'Por favor introduce tu email!' }]}          
+              rules={[{ required: true, message: 'Introduce tu email' }]}          
               >
               <Input onChange={handleEmailChange} value={email} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" 
                    />
             </Form.Item>
 
-            <Form.Item<FieldType>
+            <Form.Item<FieldType>  style={{padding:'7px'}}
               name="password"
-              rules={[{ required: true, message: 'Por favor introduce tu contraseña!' }]}              
+              rules={[{ required: true, message: 'Introduce tu contraseña' }]}              
               >
                 <Input.Password onChange={handlePasswordChange} value={password} prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"

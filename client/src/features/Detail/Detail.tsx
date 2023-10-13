@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
 import { Descriptions, Calendar, Button } from "antd";
@@ -8,9 +8,12 @@ import CardOffice from "./CardOffice";
 import getInfoDataServicios from "./Utils/DataServicios";
 import IconDescription from "./ComponentServices/IconDescription";
 import { Rate } from "antd";
-import { Card, Space, Avatar } from "antd";
+import { Card, Space, Avatar,  Modal} from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
+import { useAuth } from "../../Authenticator/AuthPro";
+import ModalLogin from "../../components/login/modalStatusRegister/Login";
+import ModalRegister from "../../components/login/modalStatusRegister/Register";
 
 interface BuildingObject {
   id: string;
@@ -48,7 +51,7 @@ type OfficeInfo = {
   office_officeImage?: ImageOffice[];
   services?: ServicesOffice[];
   office_score?: ScoreOffice[];
-  office_reservation: Reservation[] | [];
+  office_reservation?: Reservation[] | [];
 };
 
 type ImageOffice = {
@@ -80,6 +83,11 @@ type OfficeData = {
 const { Meta } = Card;
 
 function Detail() {
+  const auth = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)
+  const useAuthenticator = auth.isAuthenticated;
+  const isRoot = auth.isRoot;
   const { id } = useParams<{ id: string }>();
   const [building, setBuilding] = useState<BuildingObject>({
     name: "",
@@ -88,8 +96,10 @@ function Detail() {
     imageUrl: "",
     office_building: [],
   });
-  /* const [officeId, setOfficeId] = useState<string>(""); */
+  const [officeId, setOfficeId] = useState<string>(""); 
   const [selectedOffice, setSelectedOffice] = useState<OfficeInfo>();
+
+  const ref = useRef<null | HTMLDivElement>(null); 
 
   useEffect(() => {
     axios
@@ -103,10 +113,14 @@ function Detail() {
   }, []);
 
   const getOfficeInfo = (id: string) => {
-    /* setOfficeId(id); */
+    if (ref && ref.current) {
+    ref.current.scrollIntoView({ behavior: "smooth", block: 'center', inline: 'start'  });
+    }
+    setOfficeId("");
     axios
       .get(import.meta.env.VITE_BASENDPOINT_BACK + `/office/${id}`)
       .then((response) => {
+        setOfficeId(id);
         setSelectedOffice(response.data);
       })
       .catch((error) => {
@@ -142,6 +156,29 @@ function Detail() {
     return current && current < dayjs().endOf("day");
   };
 
+  const reservarButton = () =>{
+    if(auth.isAuthenticated){
+      setIsModalOpenDetail(true);
+    }else{
+      setIsModalOpen(true);
+    }
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancelDetal = () => {
+    setIsModalOpenDetail(false);
+  };
+  const handleOkDetail = () => {
+    setIsModalOpenDetail(false);
+  };
+
+  
+
+
   return (
     <div>
       <NavBarNavigation />
@@ -150,7 +187,12 @@ function Detail() {
           <div className={styles.containerInfoBuild}>
             <img
               id={styles.imagenn}
-              style={{ maxHeight: "400px", width: "100%",   borderRadius: '7px',   border: '1px solid #25252570' }}
+              style={{
+                maxHeight: "400px",
+                width: "100%",
+                borderRadius: "7px",
+                border: "1px solid #25252570",
+              }}
               alt="example"
               src={building.imageUrl}
             />
@@ -160,6 +202,20 @@ function Detail() {
               <Descriptions.Item label="Dirección">
                 <p className={styles.addresss}>{building.address}</p>
               </Descriptions.Item>
+            
+              {isRoot && useAuthenticator? <Button
+                      style={{
+                        backgroundColor: "#E47F36",
+                        color: "black",
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                      }}
+                      type="primary"
+                      htmlType="submit"
+                      // disabled={Object.keys(disabledDate) ? true : false}
+                    >
+                      Editar sucursal
+                    </Button> : null }
             </div>
           </div>
         </div>
@@ -184,12 +240,13 @@ function Detail() {
           <div className={styles.todoContenedor}>
             {/* <div className={styles.arriba}> */}
 
-            {selectedOffice && (
+            {officeId && selectedOffice && (
               <div className={styles.msj}>
                 <div className={styles.izquierda}>
                   {/* <br></br> */}
                   <div className={styles.calendario}>
                     <h2>Agendá tu visita</h2>
+                    <div id={'ref'} ref={ref}></div>
                     <Calendar
                       style={{
                         border: "1px solid rgba(0,0,0,0.3)",
@@ -205,17 +262,17 @@ function Detail() {
                         backgroundColor: "#E47F36",
                         color: "black",
                         marginTop: "10px",
-                        marginBottom: '10px'
+                        marginBottom: "10px",
                       }}
                       type="primary"
                       htmlType="submit"
+                      onClick={reservarButton}
                       // disabled={Object.keys(disabledDate) ? true : false}
                     >
                       RESERVAR
                     </Button>
                   </div>
                 </div>
-               
 
                 <br></br>
 
@@ -244,51 +301,85 @@ function Detail() {
                     </h4>
                   </div>
                   <Rate disabled defaultValue={selectedOffice.ratingAverage} />
+                  <br></br>
+                  <Button
+                      style={{
+                        backgroundColor: "#E47F36",
+                        color: "black",
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                      }}
+                      type="primary"
+                      htmlType="submit"
+                      // disabled={Object.keys(disabledDate) ? true : false}
+                    >
+                      Editar oficina
+                    </Button>
                 </div>
+                
                 <div className={styles.capacityoffice}> </div>
+            
               </div>
             )}
-            {/* </div> */}
-            <div className={styles.abajo}>
-              <div className={styles.servicesoffice}>
-                <h5>
-                  {/* <h2>¿Por qué elegir Sinergia?</h2> */}
-                  <div className={styles.servicio}>
-                    {selectedOffice?.services?.map((service) => (
-                      <IconDescription
-                        data={getInfoDataServicios(service.name.toLowerCase())}
-                      ></IconDescription>
-                    ))}
-                  </div>
-                </h5>
+
+            {officeId && selectedOffice && (
+              <div className={styles.abajo}>
+                <div className={styles.servicesoffice}>
+                  <h5>
+                    {/* <h2>¿Por qué elegir Sinergia?</h2> */}
+                    <div className={styles.servicio}>
+                      {selectedOffice?.services?.map((service) => (
+                        <IconDescription
+                          data={getInfoDataServicios(
+                            service.name.toLowerCase()
+                          )}
+                        ></IconDescription>
+                      ))}
+                    </div>
+                  </h5>
+                </div>
+                <div>
+                  <Space direction="vertical" size={15}>
+                    <div className={styles.scoreoffice}>
+                      {" "}
+                      {selectedOffice?.office_score?.map((sc) => (
+                        <Card
+                          size="small"
+                          style={{ width: 290, margin: "6px" }}
+                        >
+                          <Meta
+                            avatar={<Avatar src={sc.user_score.imgUrl} />}
+                            title={sc.user_score.name}
+                            description={
+                              <div>
+                                {" "}
+                                <Rate disabled defaultValue={sc.score} />
+                                <br></br>
+                                <div className={styles.comment}>
+                                  {sc.comment}
+                                </div>
+                              </div>
+                            }
+                          />
+                        </Card>
+                      ))}
+                    </div>
+                  </Space>
+                </div>
               </div>
-              <div>
-                <Space direction="vertical" size={15}>
-                  <div className={styles.scoreoffice}>
-                    {" "}
-                    {selectedOffice?.office_score?.map((sc) => (
-                      <Card size="small" style={{ width: 290, margin: "6px" }}>
-                        <Meta
-                          avatar={<Avatar src={sc.user_score.imgUrl} />}
-                          title={sc.user_score.name}
-                          description={
-                            <div>
-                              {" "}
-                              <Rate disabled defaultValue={sc.score} />
-                              <br></br>
-                              <div className={styles.comment}>{sc.comment}</div>
-                            </div>
-                          }
-                        />
-                      </Card>
-                    ))}
-                  </div>
-                </Space>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
+      <Modal title="Aviso de autenticacion" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Gracias por preferirnos al elegir nuestros espacios...</p>
+        <p>Para continuar debe autenticarse</p>
+      </Modal>
+      <Modal title="Detail" open={isModalOpenDetail} onOk={handleOkDetail} onCancel={handleCancelDetal}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </div>
   );
 }

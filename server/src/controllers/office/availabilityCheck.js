@@ -1,28 +1,49 @@
-const {Reservation, Office} = require('../../db')
+const {Purchase, Office, Reservation, Category} = require('../../db')
 
 const availabilityCheck = async (req, res) => {
     try {
-        const {date, office} = req.body
+        const {date, office, amount} = req.query
+        if(!office){
+            return res.status(401).json({error: 'Falta id de oficina'})
+        }
+        if(!date){
+            return res.status(401).json({error: 'Falta fecha'})
+        }
+        const checkOffice = await Office.findOne({where: {id: office, deleted: false}, include: [{model: Reservation, as: 'office_reservation'}, {model: Category, as: 'office_category'}]})
+        if(!checkOffice){
+            return res.status(404).json({error: 'Oficina invalida'})
+        }
+        const openSpace = checkOffice.office_category.name === "Open space"
+        if(openSpace && !amount){
+            return res.status(401).json({error: 'Falta cantidad de espacios'})
+        }
         const serverDate = new Date()
-        const userDate = new Date(date)
-        const offset = userDate.getTimezoneOffset() / 60
-        userDate.setHours(userDate.getHours() + offset)
-        if(userDate.getTime() < serverDate.getTime()){
+        const reservationDate = new Date(date)
+        const offset = reservationDate.getTimezoneOffset() / 60
+        reservationDate.setHours(reservationDate.getHours() + offset)
+        if(reservationDate.getTime() < serverDate.getTime()){
             return res.status(401).json({error: 'La fecha no puede ser anterior a la actual'})
         }
-        const checkOffice = await Office.findByPk(office)
-        if(!checkOffice){
-            return res.status(404).json({error: 'Oficina no registrada'})
+        const checkDateText = `${reservationDate.getFullYear()}-${reservationDate.getMonth() + 1}-${reservationDate.getDate()}`
+        const checkDate = new Date(checkDateText)
+        const reservations = await Reservation.findAll({where: {office, date: checkDate}})
+        const price = openSpace ? checkOffice.price * amount : checkOffice.price
+        if(!reservations.length){
+            if(openSpace){
+                if(amount > checkOffice.capacity){
+                    return res.status(200).json({available: false})
+                }
+            }
+            return res.status(200).json({available: true, price})
         }
-        const reservation = await Reservation.findOne({where: {office}})
-        if(!reservation){
-            return res.status(200).json({available: true})
+        if(openSpace){
+            let totalAmount = 0
+            reservations.forEach(reservation => totalAmount += reservation.amount);
+            if((totalAmount + Number(amount)) <= checkOffice.capacity){
+                return res.status(200).json({available: true, price})
+            }
         }
-        const dbDate = new Date(reservation.date)
-        if(userDate.getTime() === serverDate.getTime()){
-            return res.status(200).json({available: false})
-        }
-        return res.status(200).json({available: true})
+        return res.status(200).json({available: false})
     } catch (error) {
         return res.status(500).json({error: error.message})
     }

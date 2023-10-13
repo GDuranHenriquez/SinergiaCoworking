@@ -43,7 +43,7 @@ function ModalRegister({ isOpen, closeModal}: Props) {
         }
         setTimeout(() => {
           closeModal();
-        }, 800);        
+        }, 1000);        
         
       } else if (registerResponse.response.status == 403) {
         const message = registerResponse.response.data.error;
@@ -78,7 +78,7 @@ function ModalRegister({ isOpen, closeModal}: Props) {
       handleReset();
       setTimeout(() => {
         closeModal();
-      }, 800);
+      }, 1000);
     }
   }
   
@@ -145,11 +145,11 @@ function ModalRegister({ isOpen, closeModal}: Props) {
           clearImp();
           auth.saveUser(userInfo);
         }
-        messageSuccess("Registro de usuario exitoso")
+        messageSuccess("Usuario registrado con éxito")
         setTimeout(() => {
           auth.getAccess();
           closeModal();
-        }, 800);
+        }, 1000);
       } else if (registerResponse.status === 403) {
         if (registerResponse.data.message) {
           messageError(registerResponse.data.message);
@@ -203,8 +203,8 @@ function ModalRegister({ isOpen, closeModal}: Props) {
     {isOpen? <Modal  onClick={closeModal}>
     <div className='modalContainer' onClick={handleModalContainerClick}>
       <div className="containerForm">
-        <h3 id='titleForm'>Registro</h3>
-        <button type="button" id='btnCloseModal' onClick={closeModal}>X</button>
+        <h3 id='titleForm'>Registro de usuario</h3>
+        <button type="button" id='btnCloseModal'  style={{marginLeft:'500px', width:'32px', height:'28px'}} onClick={closeModal}>X</button>
         <div style={{ width: '100%',
             padding: '20px',
             background: 'white',
@@ -217,33 +217,33 @@ function ModalRegister({ isOpen, closeModal}: Props) {
           <Form
             form={form}
             wrapperCol={{ span: 24 }}
-            style={{ maxWidth: '80%'}}
+            style={{ maxWidth: '80%', marginTop:'30px'}}
             layout="horizontal"
             name="normal_login"
             onFinish={handleSubmit}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
-            <Form.Item
+            <Form.Item style={{padding:'4px'}}
               name="name"
-              rules={[{ required: true, message: 'Por favor introduce tu nombre!' }]} 
+              rules={[{ required: true, message: 'Introduce tu nombre' }]} 
               help={error?.name ? error.name : undefined}          
               >
               <Input onChange={handleEmailName} value={name} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Nombre" 
                    />
             </Form.Item>
-            <Form.Item
+            <Form.Item style={{padding:'4px'}}
               name="username"
-              rules={[{ required: true, message: 'Por favor introduce tu email!' }]} 
+              rules={[{ required: true, message: 'Introduce tu email' }]} 
               help={error?.email ? error.email : undefined}          
               >
               <Input onChange={handleEmailChange} value={email} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" 
                    />
             </Form.Item>
 
-            <Form.Item
+            <Form.Item style={{padding:'4px'}}
               name="password"
-              rules={[{ required: true, message: 'Por favor introduce tu contraseña!' }]}
+              rules={[{ required: true, message: 'Introduce tu contraseña' }]}
               help={error?.password ? error.password : undefined}              
               >
                 <Input.Password onChange={handlePasswordChange} value={password} prefix={<LockOutlined className="site-form-item-icon" />}
@@ -253,7 +253,7 @@ function ModalRegister({ isOpen, closeModal}: Props) {
 
             <Form.Item >
               <Button  type="primary" htmlType="submit" disabled={(Object.keys(error).length > 0 || email==='' || password==='')? true: false} className="login-form-button">
-                Registro
+                Registrarse
               </Button>
             </Form.Item>
           </Form>
