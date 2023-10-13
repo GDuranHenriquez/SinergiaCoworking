@@ -62,7 +62,9 @@ const NavBarNavigation: React.FC = () => {
                 { text: 'Perfil', path: '/perfil' },
                 { text: 'Mis reservas', path: '/reservas' },
                 { text: 'Crear oficina', path: '/crear-oficina' },
-                { text: 'Crear Edificio', path: '/crear-edificio' },
+                { text: 'Crear sucursal', path: '/crear-sucursal' },
+                { text: 'Editar oficina', path: '/editar-oficina' },
+                { text: 'Editar sucursal', path: '/editar-sucursal' },
                 { text: 'Cerrar sesión', path: '#' }
             ]
         }else{
@@ -98,11 +100,11 @@ const NavBarNavigation: React.FC = () => {
                     style={{ background: '#1F2551', height: '100%', display:'flex', flexWrap:'nowrap' , alignItems:'center', justifyContent:'space-between'}}>
                         {/* <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div> */}
                        
-                          <img style={{width:'5%', height:'40px', marginTop:'5px'}} src={LogoPrincipal} />
+                          <img style={{width:'4.7%', height:'40px', marginTop:'5px'}} src={LogoPrincipal} />
                      
                         <div> 
                         <LinkButton text='Inicio' path='/' />
-                        <LinkButton text='Oficinas' path='/oficinas' />
+                        <LinkButton text='Sucursales' path='/oficinas' />
                         <LinkButton text='Nosotros' path='/nosotros' />
                         <LinkButton text='Ubicaciones' path='/ubicaciones' /></div>
                         

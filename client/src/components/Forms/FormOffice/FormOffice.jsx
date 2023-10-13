@@ -34,10 +34,20 @@ const FormOffice = () => {
       const data = {...values, images: urlArray}
       await axios.post('https://sinergia-coworking.onrender.com/office', data);
       form.resetFields();
+      localStorage.removeItem('formOfficeData');
     } catch (error) {
       console.error('Error al crear la oficina:', error);
     }
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('formOfficeData');
+  
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      form.setFieldsValue(parsedData);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,11 +93,17 @@ const FormOffice = () => {
     setIdListImage(newList);
   };
 
+  const handleFormValuesChange = (changedValues, allValues) => {
+    localStorage.setItem('formOfficeData', JSON.stringify(allValues));
+  };
+  
+
   return (<div style={{
     width: '100%',
     padding: '20px',
     display: 'flex',
     flexWrap: 'nowrap',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     gap: '30px'
@@ -111,6 +127,7 @@ const FormOffice = () => {
         layout="horizontal"
         style={{width: '100%'}}
         onFinish={handleSubmit}
+        onValuesChange={handleFormValuesChange}
       >
         <Form.Item
           label="Nombre"
@@ -154,9 +171,9 @@ const FormOffice = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          label="Edificio"
+          label="Sucursal"
           name="building"
-          rules={[{ required: true, message: 'Por favor selecciona un edificio' }]}
+          rules={[{ required: true, message: 'Por favor selecciona una sucursal' }]}
         >
          <Select>
             {buildingOptions.map((option) => (
@@ -197,9 +214,6 @@ const FormOffice = () => {
           </Upload>
         </Form.Item>
 
-        <Form.Item label="Estado" name="status" valuePropName="checked">
-          <Switch />
-        </Form.Item>
         <Form.Item label="Guardar">
           <Button type="primary" htmlType="submit">
             Guardar Oficina

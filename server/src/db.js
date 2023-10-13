@@ -50,10 +50,13 @@ const {
 } = sequelize.models;
 
 Purchase.belongsTo(User, {as: 'user_purchase', foreignKey: 'user'})
-Purchase.hasMany(Reservation, {as: 'purchase_reservation', foreignKey: 'purchase'})
-Reservation.belongsTo(Office, {as: 'reservation_office', foreignKey:'office'})
+Purchase.hasOne(Reservation, {as: 'purchase_reservation', foreignKey: 'purchase'})
+User.hasMany(Purchase, {as: 'user_purchase', foreignKey: 'user'})
+Reservation.belongsTo(Office, {as: 'office_reservation', foreignKey: 'office'})
+Reservation.hasOne(Score, {as: 'reservation_score', foreignKey: 'reservation'})
 // User.hasOne(Cart, {as: 'user_cart', foreignKey: 'user'})
 Score.belongsTo(User, {as: 'user_score', foreignKey: 'user'})
+Score.belongsTo(Reservation, {as: 'reservation_score', foreignKey: 'reservation'})
 Office.hasMany(Score, {as: 'office_score', foreignKey: 'office'})
 Office.hasMany(OfficeImage, {as: 'office_officeImage', foreignKey: 'office'})
 Office.hasMany(Reservation, {as: 'office_reservation', foreignKey: 'office'})
