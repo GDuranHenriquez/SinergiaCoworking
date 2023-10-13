@@ -8,11 +8,12 @@ import CardOffice from "./CardOffice";
 import getInfoDataServicios from "./Utils/DataServicios";
 import IconDescription from "./ComponentServices/IconDescription";
 import { Rate } from "antd";
-import { Card, Space, Avatar } from "antd";
+import { Card, Space, Avatar,  Modal} from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
-import { current } from "@reduxjs/toolkit";
 import { useAuth } from "../../Authenticator/AuthPro";
+import ModalLogin from "../../components/login/modalStatusRegister/Login";
+import ModalRegister from "../../components/login/modalStatusRegister/Register";
 
 interface BuildingObject {
   id: string;
@@ -83,6 +84,8 @@ const { Meta } = Card;
 
 function Detail() {
   const auth = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)
   const useAuthenticator = auth.isAuthenticated;
   const isRoot = auth.isRoot;
   const { id } = useParams<{ id: string }>();
@@ -152,6 +155,29 @@ function Detail() {
 
     return current && current < dayjs().endOf("day");
   };
+
+  const reservarButton = () =>{
+    if(auth.isAuthenticated){
+      setIsModalOpenDetail(true);
+    }else{
+      setIsModalOpen(true);
+    }
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancelDetal = () => {
+    setIsModalOpenDetail(false);
+  };
+  const handleOkDetail = () => {
+    setIsModalOpenDetail(false);
+  };
+
+  
+
 
   return (
     <div>
@@ -240,6 +266,7 @@ function Detail() {
                       }}
                       type="primary"
                       htmlType="submit"
+                      onClick={reservarButton}
                       // disabled={Object.keys(disabledDate) ? true : false}
                     >
                       RESERVAR
@@ -344,6 +371,15 @@ function Detail() {
           </div>
         </div>
       </div>
+      <Modal title="Aviso de autenticacion" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Gracias por preferirnos al elegir nuestros espacios...</p>
+        <p>Para continuar debe autenticarse</p>
+      </Modal>
+      <Modal title="Detail" open={isModalOpenDetail} onOk={handleOkDetail} onCancel={handleCancelDetal}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </div>
   );
 }
