@@ -1,4 +1,4 @@
-const {Purchase, User, Office, Building, Reservation, Score} = require('../../db')
+const {Purchase, User, Office, Building, Reservation, Score, Category, OfficeImage} = require('../../db')
 
 const getAllPurchase = async (req, res) => {
     try {
@@ -19,8 +19,12 @@ const getAllPurchase = async (req, res) => {
                         {
                             model: Reservation, 
                             as: 'purchase_reservation', 
-                            attributes: ['id', 'date', 'amount', 'office'], 
-                            
+                            attributes: ['id', 'date', 'amount', 'office'],
+                            include: [{
+                                model: Score,
+                                as: 'reservation_score',
+                                attributes: ['score', 'comment']
+                            }]
                         }
                     ]
                 }
@@ -31,10 +35,21 @@ const getAllPurchase = async (req, res) => {
             reservation.id = checkUser.user_purchase[i].purchase_reservation.id
             reservation.totalPrice = checkUser.user_purchase[i].totalPrice
             reservation.date = checkUser.user_purchase[i].purchase_reservation.date
-            reservation.amount = 
-            reservations.push()
+            reservation.amount = checkUser.user_purchase[i].purchase_reservation.amount
+            reservation.score = checkUser.user_purchase[i].purchase_reservation.reservation_score
+            const office = await Office.findOne({
+                where: {id: checkUser.user_purchase[i].purchase_reservation.office},
+                attributes: ['name', 'area', 'capacity', 'ratingAverage'],
+                include: [
+                    {model: Building, as: 'office_building', attributes: ['name', 'address', 'imageUrl']}, 
+                    {model: Category, as: 'office_category', attributes: ['name']},
+                    {model: OfficeImage, as: 'office_officeImage', attributes: ['imageUrl']}
+                ]
+            })
+            reservation.office = office
+            reservations.push(reservation)
         }
-        return res.status(200).json(checkUser)
+        return res.status(200).json(reservations)
     } catch (error) {
         return res.status(500).json({error: error.message})
     }
