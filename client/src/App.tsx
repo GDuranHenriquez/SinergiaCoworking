@@ -17,6 +17,7 @@ import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
 import EditBuildingPage from "./pagesAdmin/EditBuilding/EditBuilding.tsx";
 import EditOfficePage from "./pagesAdmin/EditOffice/EditOffice.tsx";
 import FormEditBuilding from "./components/FormEditBuilding/FormEditBuilding.tsx";
+import DataAdmin from "./pages/DataAdmin/DataAdmin.jsx";
 
 
 
@@ -46,6 +47,10 @@ function App() {
     {
       path: "/reservas",
       element: <ReservasPage/>,
+    },
+    {
+      path: "/resumenAdmin",
+      element: <DataAdmin/>,
     },
     {
       path: "/detail/:id",

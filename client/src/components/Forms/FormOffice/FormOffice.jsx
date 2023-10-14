@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Input, Select, Switch, Upload } from 'antd';
+import { Button, Form, Input, Select, Switch, Upload, Modal } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { uploadImageToCloudinary } from '../../../utils/configCloudinary';
@@ -15,39 +15,29 @@ import styled from './formOffice.module.css'
 
 const FormOffice = () => {
   const [form] = Form.useForm();
-  /* const [image, setImage] = useState(null); */
   const [idListImage, setIdListImage] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [buildingOptions, setBuildingOptions] = useState([]);
   const [serviceOptions, setServiceOptions] = useState([]);
-
-
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
-      console.log(values);
-      const urlArray = idListImage.map((img)=>{
-        return img.url
-      })
-      console.log(urlArray)
+      const urlArray = idListImage.map((img) => {
+        return img.url;
+      });
 
-      const data = {...values, images: urlArray}
+      const data = { ...values, images: urlArray };
       await axios.post('https://sinergia-coworking.onrender.com/office', data);
       form.resetFields();
-      localStorage.removeItem('formOfficeData');
+      setIdListImage([]);
+      setSuccessModalVisible(true);
     } catch (error) {
       console.error('Error al crear la oficina:', error);
+      setErrorModalVisible(true);
     }
   };
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('formOfficeData');
-  
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      form.setFieldsValue(parsedData);
-    }
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,32 +59,37 @@ const FormOffice = () => {
 
   const customRequest = async ({ file, onSuccess }) => {
     try {
-      /* const response = await uploadImageToCloudinary(file);
-      setImage(response); */
       const response = await uploadImageToCloudinary(file);
 
       const newImage = {
         id: file.uid,
         name: file.name,
-        url: response
-      }
-      
+        url: response,
+      };
+
       setIdListImage((prevList) => [...prevList, newImage]);
       onSuccess(file);
       return null;
     } catch (error) {
-      console.error("Error al cargar la imagen:", error);
+      console.error('Error al cargar la imagen:', error);
     }
   };
 
-
   const handleImageRemove = (file) => {
-    const newList = idListImage.filter((data) => data.id !== file.uid)
+    const newList = idListImage.filter((data) => data.id !== file.uid);
     setIdListImage(newList);
   };
 
   const handleFormValuesChange = (changedValues, allValues) => {
     localStorage.setItem('formOfficeData', JSON.stringify(allValues));
+  };
+
+  const handleSuccessModalOk = () => {
+    setSuccessModalVisible(false);
+  };
+
+  const handleErrorModalOk = () => {
+    setErrorModalVisible(false);
   };
   
 
@@ -228,6 +223,22 @@ const FormOffice = () => {
           </div>
         ))}
     </div>
+    <Modal
+        title="Oficina creada con éxito"
+        visible={successModalVisible}
+        onOk={handleSuccessModalOk}
+        onCancel={handleSuccessModalOk}
+      >
+        La oficina se ha creado con éxito.
+      </Modal>
+      <Modal
+        title="Error al crear la oficina"
+        visible={errorModalVisible}
+        onOk={handleErrorModalOk}
+        onCancel={handleErrorModalOk}
+      >
+        Ha ocurrido un error al crear la oficina.
+      </Modal>
   </div>
       
   );
