@@ -4,6 +4,7 @@ import { UserInfo } from "../../../components/protecterRoute/typesProtecterRoute
 import { useEffect }  from 'react';
 import { Stripe, StripeElements  } from '@stripe/stripe-js';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import axios, { axsio } from 'axios';
 
 interface Props {
   user: UserInfo | undefined;
@@ -65,53 +66,20 @@ function FormCheckout({ user, office, date, open, onCancel }: Props) {
     },
   };
 
-  const handleSubmit = async () => {
-    try {
-      if (!stripe || !elements) {
+  useEffect(() => {
 
-        return;
-      }
-      /* setIsLoading(true); */
-      const { paymentMethod, error } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: elements.getElement(CardElement)
-      });
-
-      if (!error) {
-        const { id } = paymentMethod;
-        const dataPayment = {
-          stripeId: id,
-          cartId: idCart,
-          user: auth.user.id
-        }
-        const refreshToken = localStorage.getItem("token");
-        const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + "/sale";
-        const config = {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        };
-        const { data } = await axios.post(endPoint, dataPayment, config);
-        setIsLoading(false);
-        setSucessPayment(true)
-        reset();
-        setTimeout(() => {
-          navigate("/my-orders");
-        }, 2000)
-        
-      }
-    } catch (error) {
-      setIsLoading(false);
-      if(error.response.data.message){
-        messageError(error.response.data.message);
-      }else{
-        /* messageError(error.error); */
-        messageError(error.response.data.error)
-      }
-
+    const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/availability-check/?office=${office}&date=${date}&amount=1`
+    const data = {
+      amount: 90,
+      description: 'hola'
     }
-  }
-
+    axios.post(endPoint, data).then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error("Error al cargar las sucursales:", error);
+    });
+  }, [open])
 
   return <Modal title="Detail" open={open} onOk={handleOk} onCancel={handleCancel}>
       <div className="containerForm">
