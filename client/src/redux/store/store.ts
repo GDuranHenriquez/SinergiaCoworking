@@ -6,6 +6,7 @@ import buildingReducer from '../slices/building';
 import officeReducer from '../slices/offices';
 import cityReducer from '../slices/city'
 import serviceReducer from '../slices/services'
+import purchaseReducer from '../slices/purchase'
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     office: officeReducer,
     city: cityReducer,
     service: serviceReducer,
+    purchase: purchaseReducer,
   }
 });
 

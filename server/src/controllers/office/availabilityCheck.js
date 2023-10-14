@@ -1,4 +1,7 @@
 const {Purchase, Office, Reservation, Category} = require('../../db')
+require('dotenv').config();
+const { SKSTRIPE_PRIVATE } = process.env;
+
 
 const availabilityCheck = async (req, res) => {
     try {
@@ -28,19 +31,33 @@ const availabilityCheck = async (req, res) => {
         const checkDate = new Date(checkDateText)
         const reservations = await Reservation.findAll({where: {office, date: checkDate}})
         const price = openSpace ? checkOffice.price * amount : checkOffice.price
+        const stripe = require('stripe')(SKSTRIPE_PRIVATE);
+        
         if(!reservations.length){
             if(openSpace){
                 if(amount > checkOffice.capacity){
                     return res.status(200).json({available: false})
                 }
             }
-            return res.status(200).json({available: true, price})
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: req.body.amount * 100,
+                currency: 'usd',
+                payment_method_types: ['card'],
+                description: req.body.description,
+            })
+            return res.status(200).json({available: true, price, paymentIntent})
         }
         if(openSpace){
             let totalAmount = 0
             reservations.forEach(reservation => totalAmount += reservation.amount);
             if((totalAmount + Number(amount)) <= checkOffice.capacity){
-                return res.status(200).json({available: true, price})
+                const paymentIntent = await stripe.paymentIntents.create({
+                    amount: req.body.amount * 100,
+                    currency: 'usd',
+                    payment_method_types: ['card'],
+                    description: req.body.description,
+                })
+                return res.status(200).json({available: true, price, paymentIntent})
             }
         }
         return res.status(200).json({available: false})
