@@ -16,6 +16,7 @@ import { useModal } from "../../utils/useModal";
 import ModalLogin from "../../components/login/modalStatusRegister/Login";
 import ModalRegister from "../../components/login/modalStatusRegister/Register";
 import FormCheckout from "./ComponentSheckout/FormCheckout";
+import Loading from "../../components/Loading/Loading";
 
 interface BuildingObject {
   id: string;
@@ -91,6 +92,8 @@ function Detail() {
   const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
   const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);
   const [calendarDate, SetCalendarDate] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [amount, setAmount] = useState(0);
 
   const user = auth.getUser();
   const useAuthenticator = auth.isAuthenticated;
@@ -129,6 +132,10 @@ function Detail() {
       .then((response) => {
         setOfficeId(id);
         setSelectedOffice(response.data);
+        const typeOffice = selectedOffice.office_category.name
+        if(typeOffice !== "Open space"){
+          setAmount(1);
+        };
         console.log(response.data);
       })
       .catch((error) => {
@@ -164,13 +171,50 @@ function Detail() {
     return current && current < dayjs().endOf("day");
   };
 
+  const disponibilityOffice =  async ( description:string | undefined, amount: number | undefined, amountPrice: number | undefined, date: string, office: string) => {
+      try {
+        const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/availability-check/?office=${office}&date=${date}&amount=${amount}`;
+
+      const dataSend = {
+        amount: amountPrice,
+        description: description
+      }
+      const { data } = await axios.post(endPoint, dataSend);
+      return data;
+
+    } catch (error) {
+      if(typeof error === 'string'){
+        console.log(error)
+      }else if(error instanceof Error){
+        const message = error.message
+        console.log(message)
+      } else {
+        console.log(error)
+      }         
+      setIsLoading(false);
+    }
+    
+
+  }
+
   const reservarButton = () =>{
     if(auth.isAuthenticated){
-      setIsModalOpenDetail(true);
+      
+      const sendQuery = {
+        description:selectedOffice?.name, 
+        amount: amount,
+        amountPrice: selectedOffice?.price,
+        date: calendarDate,
+        office: officeId
+      }
+      const data = disponibilityOffice(sendQuery.description, sendQuery.amount, sendQuery.amountPrice, sendQuery.date, sendQuery.office);
+      console.log(data)
+      /* setIsModalOpenDetail(true); */
     }else{
       setIsModalOpen(true);
     }
   }
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -402,6 +446,7 @@ function Detail() {
 
       <ModalRegister isOpen={isOpenModalRegister} closeModal={closeModalRegister} switModalLogin={switModalLogin}></ModalRegister>
       <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin} switModalRegister={switModalRegister}></ModalLogin>
+      {isLoading && <Loading />}
     </div>
   );
 }
