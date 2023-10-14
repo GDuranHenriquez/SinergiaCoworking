@@ -45,7 +45,11 @@ const availabilityCheck = async (req, res) => {
                 payment_method_types: ['card'],
                 description: req.body.description,
             })
-            return res.status(200).json({available: true, price, paymentIntent})
+            const itentPaiment = {
+                id_itent: paymentIntent.id,
+                client_secret : paymentIntent.client_secret,
+            }
+            return res.status(200).json({available: true, price, itentPaiment})
         }
         if(openSpace){
             let totalAmount = 0
