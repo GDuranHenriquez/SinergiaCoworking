@@ -6,7 +6,7 @@ const initialState: PurchaseState = {
 }
 
 const purchaseSlice = createSlice({
-  name: 'review',
+  name: 'purchase',
   initialState,
   reducers: {
     setPurchase: (state, action: PayloadAction<Purchase | object>) => {
