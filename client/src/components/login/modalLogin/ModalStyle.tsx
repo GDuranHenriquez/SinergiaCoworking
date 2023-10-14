@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Modal = styled.div`  
   position: fixed;
-  z-index: 999999999;
+  z-index: 9999;
   top:0;
   left: 0%;
   width: 100%;
@@ -43,6 +43,19 @@ export const Modal = styled.div`
       height: 100%;
       gap: 20px;
       font-size: 16px;
+      .linkRegistro{
+        color: black;
+        font-size: 12px;
+        button{
+          color: blue;
+          background: transparent;
+          border: none;
+        }
+        button:hover{
+          cursor: pointer;
+          
+        }
+      }
       #normal_login{
         width: 100%;
         margin: 0 auto;

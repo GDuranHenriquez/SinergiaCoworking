@@ -15,10 +15,11 @@ import { AuthResponse } from '../../protecterRoute/typesProtecterRoute';
 interface Props {
   isOpen: boolean | (() => void);
   closeModal: (() => void);
+  switModalLogin: (()=> void);
 } 
 
 
-function ModalRegister({ isOpen, closeModal}: Props) {
+function ModalRegister({ isOpen, closeModal, switModalLogin}: Props) {
   const [form] = Form.useForm();
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false); 
@@ -199,6 +200,14 @@ function ModalRegister({ isOpen, closeModal}: Props) {
     }
   }, [email, password])
   
+
+  const swithLogin = ()=> {
+    closeModal();
+    setTimeout(() => {
+      switModalLogin();
+    }, 300)    
+  }
+
   return (<>
     {isOpen? <Modal  onClick={closeModal}>
     <div className='modalContainer' onClick={handleModalContainerClick}>
@@ -257,6 +266,9 @@ function ModalRegister({ isOpen, closeModal}: Props) {
               </Button>
             </Form.Item>
           </Form>
+          </div>
+          <div className="linkRegistro">
+            <span>Si ya tienes cuenta vel a <button onClick={swithLogin}>inicio de sesion</button></span>
           </div>
         <GoogleLogin
           useOneTap
