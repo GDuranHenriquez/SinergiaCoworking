@@ -1,55 +1,39 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, List, Modal, Rate, Button, Form, Input } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
 import { useAuth } from '../../Authenticator/AuthPro';
 import axios from 'axios';
 import { postReviews } from '../../redux/slices/reviews/actionReviews';
-import { useCustomDispatch } from '../../hooks/redux';
+import { useCustomDispatch, useCustomSelector } from '../../hooks/redux';
+
 
 const MyReservations = () => {
     const auth = useAuth();
     const dispatch = useCustomDispatch();
-
-    const [form, setForm] = useState({
-      stars: 0,
-      comment: '',
-      user: auth.getUser()?.id,
-      office: '',
-    });
-  
-    const [reservations, setReservations] = useState([
-      {
-        id: 1,
-        officeName: 'Oficina A',
-        reservationDate: '2023-09-01',
-      },
-      {
-        id: 2,
-        officeName: 'Oficina B',
-        reservationDate: '2023-09-05',
-      },
-      {
-        id: 3,
-        officeName: 'Oficina C',
-        reservationDate: '2023-09-10',
-      },
-      {
-        id: 4,
-        officeName: 'Oficina D',
-        reservationDate: '2023-09-15',
-      },
-      {
-        id: 5,
-        officeName: 'Oficina E',
-        reservationDate: '2023-09-20',
-      },
-    ]);
-  
+    const { Purchase } = useCustomSelector((state) => state.purchase);
+    const user = auth.getUser()?.id
+    const [reservations, setReservations] = useState([])
     const [ratingVisible, setRatingVisible] = useState(false);
     const [selectedReservation, setSelectedReservation] = useState(null);
     const [userRating, setUserRating] = useState(0);
     const [userComment, setUserComment] = useState(''); 
+  
+
+    useEffect(() => {
+        const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/purchase/${user}`;
+        axios.get(endpoint)
+        .then(data => {
+          setReservations(data.data)
+        })
+    }, [ratingVisible])
+
+    const [form, setForm] = useState({
+      stars: 0,
+      comment: '',
+      user,
+      reservation: '',
+    });
   
     const handleRate = (value) => {
       setUserRating(value);
@@ -68,25 +52,10 @@ const MyReservations = () => {
         };
     
         const response = await postReviews(dispatch, updatedForm);
+        setRatingVisible(false);
     
-        if (response && response.status === 200) {
-          const updatedReservations = reservations.map((reservation) => {
-            if (reservation.id === selectedReservation.id) {
-              return {
-                ...reservation,
-                rated: true,
-              };
-            }
-            return reservation;
-          });
-    
-          setReservations(updatedReservations);
-          setRatingVisible(false);
-        } else {
-          console.error('Error al enviar la calificación y el comentario.');
-        }
       } catch (error) {
-        console.error('Error al enviar la calificación y el comentario:', error);
+        console.error(error);
       }
     };
     
@@ -104,21 +73,22 @@ const MyReservations = () => {
             <List.Item>
               <Card
                 style={{ width: '80%', margin: '0 auto' }}
-                title={reservation.officeName}
+                title={reservation.office.name}
+
                 extra={
-                  !reservation.rated && (
+                  !reservation.score && (
                     <Button onClick={() => showRatingModal(reservation)}>
                       Calificar
                     </Button>
                   )
                 }
               >
-                Fecha de reserva: {reservation.reservationDate}
+                Fecha de reserva: {reservation.date}
                 <br />
-                {reservation.rated && (
+                {reservation.score && (
                   <div>
-                    Calificación: <Rate allowHalf defaultValue={4.5} disabled />
-                    Comentario: {userComment} 
+                    Calificación: <Rate value={reservation.score.score} disabled />
+                    Comentario: {reservation.score.comment} 
                   </div>
                 )}
               </Card>
@@ -145,8 +115,8 @@ const MyReservations = () => {
             <Form.Item>
             <input
             type="text"
-            value={form.office}
-            onChange={(e) => setForm({ ...form, office: e.target.value })}
+            value={form.reservation}
+            onChange={(e) => setForm({ ...form, reservation: e.target.value })}
           />
             </Form.Item>
           </Form>

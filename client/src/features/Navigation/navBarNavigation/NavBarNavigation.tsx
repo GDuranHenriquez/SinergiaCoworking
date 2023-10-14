@@ -89,7 +89,12 @@ const NavBarNavigation: React.FC = () => {
         });
       };
     
-   
+      const switModalRegister = () =>{
+        openModalRegister();
+      }
+      const switModalLogin = () =>{
+        openModalLogin()
+      }
 
     return (
         <StyleContainerNav>
@@ -118,8 +123,8 @@ const NavBarNavigation: React.FC = () => {
                     </Menu>
                 </Header>
             </Layout>
-            <ModalRegister isOpen={isOpenModalRegister} closeModal={closeModalRegister}></ModalRegister>
-            <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin}></ModalLogin>
+            <ModalRegister isOpen={isOpenModalRegister} closeModal={closeModalRegister} switModalLogin={switModalLogin}></ModalRegister>
+            <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin} switModalRegister={switModalRegister}></ModalLogin>
             {isLoading && <Loading />}
             <ToastContainer></ToastContainer>
         </StyleContainerNav>
