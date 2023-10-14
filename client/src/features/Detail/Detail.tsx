@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
-import { Descriptions, Calendar, Button } from "antd";
+import { Descriptions, Calendar, Button, CalendarProps  } from "antd";
 import styles from "./Detail.module.css";
 import axios from "axios";
 import CardOffice from "./CardOffice";
@@ -10,10 +10,12 @@ import IconDescription from "./ComponentServices/IconDescription";
 import { Rate } from "antd";
 import { Card, Space, Avatar,  Modal} from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useAuth } from "../../Authenticator/AuthPro";
+import { useModal } from "../../utils/useModal";
 import ModalLogin from "../../components/login/modalStatusRegister/Login";
 import ModalRegister from "../../components/login/modalStatusRegister/Register";
+import FormCheckout from "./ComponentSheckout/FormCheckout";
 
 interface BuildingObject {
   id: string;
@@ -86,6 +88,11 @@ function Detail() {
   const auth = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)
+  const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
+  const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);
+  const [calendarDate, SetCalendarDate] = useState<string>('');
+
+  const user = auth.getUser();
   const useAuthenticator = auth.isAuthenticated;
   const isRoot = auth.isRoot;
   const { id } = useParams<{ id: string }>();
@@ -122,6 +129,7 @@ function Detail() {
       .then((response) => {
         setOfficeId(id);
         setSelectedOffice(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error al cargar la oficina:", error);
@@ -168,7 +176,11 @@ function Detail() {
   };
   const handleOk = () => {
     setIsModalOpen(false);
+    setTimeout(() =>{
+      openModalLogin();
+    }, 300)
   };
+  
   const handleCancelDetal = () => {
     setIsModalOpenDetail(false);
   };
@@ -176,8 +188,17 @@ function Detail() {
     setIsModalOpenDetail(false);
   };
 
-  
+  const switModalRegister = () =>{
+    openModalRegister();
+  }
+  const switModalLogin = () =>{
+    openModalLogin()
+  }
 
+  const handlePanelChange = (date: Dayjs) => {
+    const dateSelec = date.format('YYYY-MM-DD')
+    SetCalendarDate( dateSelec);
+  };
 
   return (
     <div>
@@ -256,6 +277,7 @@ function Detail() {
                       }}
                       fullscreen={false}
                       disabledDate={disabledDate}
+                      onSelect={handlePanelChange}
                     ></Calendar>
                     <Button
                       style={{
@@ -375,11 +397,11 @@ function Detail() {
         <p>Gracias por preferirnos al elegir nuestros espacios...</p>
         <p>Para continuar debe autenticarse</p>
       </Modal>
-      <Modal title="Detail" open={isModalOpenDetail} onOk={handleOkDetail} onCancel={handleCancelDetal}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
+      
+      <FormCheckout open={isModalOpenDetail} onCancel={handleCancelDetal} user={user} office={officeId} date={calendarDate}></FormCheckout>
+
+      <ModalRegister isOpen={isOpenModalRegister} closeModal={closeModalRegister} switModalLogin={switModalLogin}></ModalRegister>
+      <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin} switModalRegister={switModalRegister}></ModalLogin>
     </div>
   );
 }
