@@ -15,7 +15,8 @@ import { AuthResponse } from '../../protecterRoute/typesProtecterRoute';
 interface Props {
   isOpen: boolean | (() => void);
   closeModal: (() => void);
-}
+  switModalRegister: (()=> void);
+} 
 
 type FieldType = {
   username?: string;
@@ -23,7 +24,7 @@ type FieldType = {
   remember?: string;
 };
 
-function ModalLogin({ isOpen, closeModal }: Props) {
+function ModalLogin({ isOpen, closeModal, switModalRegister }: Props) {
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -185,6 +186,13 @@ function ModalLogin({ isOpen, closeModal }: Props) {
     setPassword('');
   }
 
+  const swithRegister = ()=> {
+    closeModal();
+    setTimeout(() => {
+      switModalRegister();
+    }, 300)    
+  }
+
 
   return (<>
     {isOpen ? <Modal onClick={closeModal}>
@@ -234,6 +242,9 @@ function ModalLogin({ isOpen, closeModal }: Props) {
               </Button>
             </Form.Item>
           </Form>
+          </div>
+          <div className="linkRegistro">
+            <span>Si no tienes cuenta registrate <button onClick={swithRegister}>aquí</button></span>
           </div>
           <div className="loginGoogle">
             <GoogleLogin

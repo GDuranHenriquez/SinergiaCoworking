@@ -67,8 +67,7 @@ const [filterName, setFilterName] = useState<string>("");
   return (
     <div className={style.container}>
       <Select
-        className={style.filter}
-        style={{ width: 120 }}
+        style={{ width: 180 }}
         onChange={handleLocationChange}
         // defaultValue={"Ubicación"}
         value={filterCity || "Ubicaciones"}
@@ -80,7 +79,7 @@ const [filterName, setFilterName] = useState<string>("");
 
       <Select
         className={style.filter}
-        style={{ width: 120 }}
+        style={{ width: 180 }}
         onChange={handleOficinasChange}
         // defaultValue={"Oficinas"}
         value={filterCategory || "Oficinas"}
@@ -94,7 +93,7 @@ const [filterName, setFilterName] = useState<string>("");
         className={style.search}
         placeholder="Búsqueda"
         onSearch={onSearch}
-        style={{ width: "200px" }}
+        style={{ width: 300 }}
       />
     </div>
   );

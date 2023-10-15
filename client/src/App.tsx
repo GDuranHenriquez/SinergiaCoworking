@@ -17,12 +17,14 @@ import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
 import EditBuildingPage from "./pagesAdmin/EditBuilding/EditBuilding.tsx";
 import EditOfficePage from "./pagesAdmin/EditOffice/EditOffice.tsx";
 import FormEditBuilding from "./components/FormEditBuilding/FormEditBuilding.tsx";
-import DataAdmin from "./pages/DataAdmin/DataAdmin.jsx";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 
 
 function App() {
   
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PASSWORD);  
   const router = createBrowserRouter([
     {
       path: "/",
@@ -47,10 +49,6 @@ function App() {
     {
       path: "/reservas",
       element: <ReservasPage/>,
-    },
-    {
-      path: "/resumenAdmin",
-      element: <DataAdmin/>,
     },
     {
       path: "/detail/:id",
@@ -90,7 +88,9 @@ function App() {
 
   return (
     <AuthProvider>
-      <RouterProvider router={router}/> 
+      <Elements stripe={stripePromise}>
+        <RouterProvider router={router}/> 
+      </Elements>      
     </AuthProvider>    
   )
 }
