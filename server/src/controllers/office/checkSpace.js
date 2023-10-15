@@ -15,7 +15,6 @@ const checkSpace = async (req, res) => {
         }
         const serverDate = new Date()
         const formatedServerDate = new Date(`${serverDate.getFullYear()}-${serverDate.getMonth()+1}-${serverDate.getDate()}`)
-        console.log(formatedServerDate)
         const reservationDate = new Date(date)
         const offset = reservationDate.getTimezoneOffset() / 60
         reservationDate.setHours(reservationDate.getHours() + offset)
