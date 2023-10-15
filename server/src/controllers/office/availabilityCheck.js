@@ -17,7 +17,7 @@ const availabilityCheck = async (req, res) => {
             return res.status(404).json({error: 'Oficina invalida'})
         }
         const openSpace = checkOffice.office_category.name === "Open space"
-        if(openSpace && !amount){
+        if(!amount){
             return res.status(401).json({error: 'Falta cantidad de espacios'})
         }
         const serverDate = new Date()
