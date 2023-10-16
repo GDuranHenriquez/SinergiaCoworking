@@ -14,6 +14,7 @@ import styled from './formOffice.module.css'
 }; */
 
 const FormOffice = () => {
+  const endpoint = import.meta.env.VITE_BASENDPOINT_BACK
   const [form] = Form.useForm();
   const [idListImage, setIdListImage] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -29,7 +30,7 @@ const FormOffice = () => {
       });
 
       const data = { ...values, images: urlArray };
-      await axios.post('https://sinergia-coworking.onrender.com/office', data);
+      await axios.post(`${endpoint}/office`, data);
       form.resetFields();
       setIdListImage([]);
       setSuccessModalVisible(true);
