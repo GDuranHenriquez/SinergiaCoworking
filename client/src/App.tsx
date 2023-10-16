@@ -26,10 +26,6 @@ function App() {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PASSWORD);  
   const router = createBrowserRouter([
     {
-      path: "/data-admin",
-      element: <DataAdmin/>
-    },
-    {
       path: "/",
       element: <HomePages/>,
     },
@@ -65,6 +61,10 @@ function App() {
       path: "/",
       element: <ProtectedRoute/>,
       children: [
+        {
+          path: "/charts",
+          element: <DataAdmin/>
+        },
         {
           path:'/crear-sucursal',
           element: <CreateBuilding/>

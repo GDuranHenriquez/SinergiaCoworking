@@ -63,7 +63,8 @@ const ContinerHomePage = styled.div`
   }
   .secondPage{
     /* background-color: rgba(31, 37, 81, 0.6); */
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     height: max-content;
   
   }
