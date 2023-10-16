@@ -38,9 +38,7 @@ const FormEditBuilding = () => {
   const [formPosition, setFormPosition] = useState({ lat: "", lng: "" });
   const [formAddress, setFormAddress] = useState("");
   const [finish, setFinish] = useState(false);
-  const [defaultListImage, setDefaultListImage] = useState<
-    UploadFile<any>[] | undefined
-  >(undefined);
+  const [defaultListImage, setDefaultListImage] = useState<UploadFile<any>[] | undefined>(undefined);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [errorIsModalContent, setIsErrorModalContent] = useState("");
@@ -89,8 +87,6 @@ const FormEditBuilding = () => {
   };
 
   useEffect(() => {
-    console.log(state.lat);
-    console.log(state.lng);
     setAddress(state.address);
     setDefaultListImage([
       {
@@ -155,8 +151,8 @@ const FormEditBuilding = () => {
     setIsSuccessModalVisible(false);
     setIsErrorModalVisible(false);
   };
-  return (
-    
+  return (<>
+    {finish? 
     <div
       style={{
         width: "100%",
@@ -254,7 +250,7 @@ const FormEditBuilding = () => {
           >
             <Input value={formPosition.lng} />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Imagen"
             name="imageUrl"
            
@@ -265,8 +261,12 @@ const FormEditBuilding = () => {
                 src={state.imageUrl}
               ></img>
             )}
-          </Form.Item>
-          <Form.Item style={{ marginLeft: "10%", width: "90%" }}>
+          </Form.Item> */}
+          <Form.Item label="Imagen"
+            name="imageUrl" style={{ width: "100%" }}
+            rules={[
+              { required: true, message: "Por favor carga una imagen" },
+            ]}>
             <Upload
               defaultFileList={defaultListImage}
               customRequest={customRequest as any}
@@ -275,7 +275,7 @@ const FormEditBuilding = () => {
               accept="image/*"
               onRemove={handleImageRemove}
             >
-              {!image && (
+              {!defaultListImage && (
                 <Button icon={<UploadOutlined />}>Cargar imagen</Button>
               )}
             </Upload>
@@ -312,7 +312,8 @@ const FormEditBuilding = () => {
           </Form.Item>
         </Form>
       </div>
-    </div>
+    </div>: null}
+  </>
   );
 };
 

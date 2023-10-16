@@ -1,6 +1,13 @@
+.containerMayorDetail{
+  width: 100%;
+}
 .containerMayor {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
   width: 100%;
   height: max-content;  
   gap: 35px;
@@ -10,8 +17,10 @@
   background-color: #fbae5b2e;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-
+  padding-top: 2px;
+  padding-bottom: 6px;
 }
 
 .comment {
@@ -26,10 +35,10 @@
 .containerInfoBuild {
   display: flex;
   flex-direction: row;
-  width: fit-content;
+  width: 80%;
   height: fit-content;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   justify-self: center;
   justify-items: center;
   align-items: center;
@@ -66,11 +75,7 @@
 }
 
 .officeDetailContainer {
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  justify-self: center;
-  justify-items: center;
+  width: 25%;
 }
 
 .msj {
@@ -80,6 +85,7 @@
 .containerInfoOffices {
   display: flex;
   flex-direction: row;
+  width: 80%;
   gap: 30px;
   align-items: center;
   justify-content: center;

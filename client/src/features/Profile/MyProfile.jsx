@@ -4,6 +4,7 @@ import { UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { useAuth } from '../../Authenticator/AuthPro';
 import { uploadImageToCloudinary } from '../../utils/configCloudinary';
 import axios from 'axios';
+import Loading from '../../components/Loading/Loading';
 
 const { Title, Text } = Typography;
 
@@ -11,6 +12,7 @@ const MyProfile = () => {
   const auth = useAuth();
   const user = auth.getUser();
   const [changePasswordVisible, setChangePasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [changeImageVisible, setChangeImageVisible] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [successModalVisible, setSuccessModalVisible] = useState(false);
@@ -25,17 +27,20 @@ const MyProfile = () => {
 
   const handlePasswordChange = async (values) => {
     try {
+      setIsLoading(true);
       const newPassword = values.password;
       await axios.put('https://sinergia-coworking.onrender.com/update-user/', { password: newPassword }, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      setIsLoading(false);
       message.success('Contraseña actualizada con éxito');
       setChangePasswordVisible(false);
       form.resetFields();
       setSuccessModalVisible(true);
     } catch (error) {
+      setIsLoading(false);
       console.error('Error al cambiar la contraseña:', error);
       message.error('Error al cambiar la contraseña');
       setErrorModalVisible(true);
@@ -98,17 +103,29 @@ const MyProfile = () => {
 
   const customRequest = async ({ file, onSuccess }) => {
     try {
+      setIsLoading(true);
       const response = await uploadImageToCloudinary(file);
       // Actualiza la imagen de perfil en Cloudinary
-      await axios.put('https://sinergia-coworking.onrender.com/update-user/', { imgUrl: response }, {
+      const data = await axios.put('https://sinergia-coworking.onrender.com/update-user/', { imgUrl: response }, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      if(data.status === 200){
+        const updateUser = data.data.userUpdate;
+        const updateNewUser = {
+          user: updateUser,
+          accessToken: auth.getAccessToken(),
+          refreshToken: auth.getRefreshToken()
+        }
+        auth.saveUser(updateNewUser);
+      }
+      setIsLoading(false);
       onSuccess(response);
     } catch (error) {
       console.error("Error al cargar la imagen en Cloudinary:", error);
       setErrorModalVisible(true);
+      setIsLoading(false);
     }
   };
 
@@ -165,6 +182,7 @@ const MyProfile = () => {
       >
         Hubo un error al procesar la solicitud.
       </Modal>
+      {isLoading && <Loading />}
     </div>
   );
 };

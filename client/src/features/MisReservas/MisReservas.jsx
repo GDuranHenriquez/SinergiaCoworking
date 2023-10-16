@@ -6,7 +6,7 @@ import { useAuth } from '../../Authenticator/AuthPro';
 import axios from 'axios';
 import { postReviews } from '../../redux/slices/reviews/actionReviews';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/redux';
-
+import styles from './misReservas.module.css';
 
 const MyReservations = () => {
     const auth = useAuth();
@@ -26,7 +26,7 @@ const MyReservations = () => {
         axios.get(endpoint)
         .then(data => {
           setReservations(data.data)
-          console.log(data);
+          console.log(data.data);
         })
     }, [ratingVisible])
 
@@ -77,9 +77,9 @@ const MyReservations = () => {
           renderItem={(reservation) => (
             <List.Item>
               <Card
-                style={{ width: '80%', margin: '0 auto' }}
+                style={{ width: '80%', margin: '0 auto', boxShadow:'0px 0px 10px 0px rgb(0, 0, 0)'}}
                 title={reservation.office.name}
-
+                headStyle={{background:'rgba(228, 127, 54, 0.7)'}}
                 extra={
                   !reservation.score && (
                     <Button id={reservation.id} onClick={() => showRatingModal(reservation)}>
@@ -88,18 +88,23 @@ const MyReservations = () => {
                   )
                 }
               >
-                <div>
-                Edificio: {reservation.office.office_building.name}
-                Total Price: {reservation.totalPrice} USD
-                Categoria: {reservation.office.office_category.name}
-                Fecha de reserva: {reservation.date}
-                {reservation.office.office_officeImage.imageUrl}
+                <div className={styles.ContainerinfoReserva}>
+                  <div className={styles.imageReserva}>
+                    <img src={reservation.office.office_officeImage[0].imageUrl} alt={reservation.office.office_officeImage.imageUrl}></img>
+                  </div> 
+                  <div className={styles.infoReserva}>
+                    <p>Edificio: {reservation.office.office_building.name}</p>
+                    <p>Total: {reservation.totalPrice} USD</p>
+                    <p>Categoria: {reservation.office.office_category.name}</p>
+                    <p>Fecha de reserva: {reservation.date}</p>
+                  </div>                
+                                 
                 </div>
                 <br />
                 {reservation.score && (
-                  <div>
-                    Calificación: <Rate value={reservation.score.score} disabled />
-                    Comentario: {reservation.score.comment} 
+                  <div className={styles.review}>
+                    <p>Calificación: <Rate value={reservation.score.score} disabled /></p>
+                    <p>Comentario: {reservation.score.comment}</p>                     
                   </div>
                 )}
               </Card>

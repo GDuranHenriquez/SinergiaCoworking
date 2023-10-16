@@ -23,11 +23,11 @@ import Link from "antd/es/typography/Link";
 const FormEditOffice = () => {
   const [form] = Form.useForm();
   let { state } = useLocation();
-  console.log(state);
 
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [errorIsModalContent, setIsErrorModalContent] = useState("");
+  const [finish, setFinish] = useState(false);
   const [name, setName] = useState();
   const [capacity, setCapacity] = useState();
   const [price, setPrice] = useState();
@@ -77,6 +77,17 @@ const FormEditOffice = () => {
       .get(import.meta.env.VITE_BASENDPOINT_BACK + `/office/${state.id}`)
       .then((response) => {
         setOffice(response.data);
+        
+        if(response.data && response.data.office_officeImage && response.data.office_officeImage.length > 0){
+          setDefaultListImage([
+            {
+              uid: "-1",
+              name: "imagen.png",
+              status: "done",
+              url: response.data.office_officeImage[0].imageUrl,
+            },
+          ])
+        }
       })
       .catch((error) => {
         console.error("Error al realizar la acción:", error);
@@ -88,12 +99,12 @@ const FormEditOffice = () => {
     form.setFieldValue("capacity", office?.capacity);
     form.setFieldValue("price", office?.price);
     form.setFieldValue("category", office?.category);
-    console.log(office?.services);
     let svcs: number[]=[];
     office?.services?.map((s) => {
       svcs.push(s.id)
     })
-    form.setFieldValue("services", svcs);
+    form.setFieldValue("services", svcs);    
+    setFinish(true);
     // form.setFieldValue("imageUrl", office?.office_officeImage);
   }, [office]);
 
@@ -126,11 +137,7 @@ const FormEditOffice = () => {
     setImage(null);
   };
 
-  const handleImageChange = (value:any) => {
-    console.log(value);
-    setDefaultListImage(value)
-  };
-  
+    
   const customRequest = async ({
     file,
     onSuccess,
@@ -147,8 +154,9 @@ const FormEditOffice = () => {
       console.error("Error al cargar la imagen:", error);
     }
   };
-  return (
-    <div
+  return (<>
+      {finish? 
+      <div
       style={{
         width: "100%",
         padding: "20px",
@@ -309,7 +317,8 @@ const FormEditOffice = () => {
           </Form.Item>
         </Form>
       </div>
-    </div>
+    </div>:null}
+    </>
   );
 };
 

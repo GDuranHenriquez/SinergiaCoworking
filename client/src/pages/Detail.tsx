@@ -20,7 +20,7 @@ const ContainerDetailPage = styled.div`
   justify-content: center;
   min-height: calc(100vh * (1 - 0.1));
   width: 100%;
-  padding-top: calc(100vh * 0.1 + 30px);
+  padding-top: calc(100vh * 0.1);
   
 `;
 

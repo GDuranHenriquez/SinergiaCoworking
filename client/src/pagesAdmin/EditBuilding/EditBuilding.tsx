@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Avatar, Button, Modal, Space, Table, Tag } from "antd";
 import { Link } from "react-router-dom";
-import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import { Footer } from "antd/es/layout/layout";
 import FooterSection from "../../components/Footer/Footer";
@@ -92,7 +91,6 @@ function EditBuildingPage() {
           flexWrap: "wrap",
         }}
       >
-        <NavBarNavigation />
 
         <Modal
           title="Acción exitosa"

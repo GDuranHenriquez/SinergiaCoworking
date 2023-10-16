@@ -357,7 +357,7 @@ function Detail() {
 
 
   return (
-    <div>
+    <div className={styles.containerMayorDetail}>
       <NavBarNavigation />
       <div className={styles.containerMayor}>
         <div className={styles.container}>
@@ -429,7 +429,6 @@ function Detail() {
                         border: "1px solid rgba(0,0,0,0.3)",
                         borderColor: "black",
                         width: "50%",
-                        marginLeft: "180px",
                       }}
                       fullscreen={false}
                       disabledDate={disabledDate}

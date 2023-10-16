@@ -13,6 +13,7 @@ import axios from "axios";
 import Loading from "../../../components/Loading/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 
@@ -23,6 +24,7 @@ const NavBarNavigation: React.FC = () => {
   const [isOpenModalRegister, openModalRegister, closeModalRegister] = useModal(false);
   const [isOpenModalLogin, openModalLogin, closeModalLogin] = useModal(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(user)
@@ -45,6 +47,7 @@ const NavBarNavigation: React.FC = () => {
         auth.signOut();
       }
       setIsLoading(false);
+      navigate('/');
     } catch (error) {
       if (typeof error === 'string') {
         messageError(error)
