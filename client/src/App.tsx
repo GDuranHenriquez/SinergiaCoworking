@@ -22,10 +22,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import FormEditOffice from "./components/FormEditBuilding/FormEditOffice.tsx";
 
-import DataAdmin from "./pages/DataAdmin/DataAdmin.jsx";
-
-
-
 function App() {
   
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PASSWORD);  
