@@ -9,7 +9,7 @@ async function deleteCity(req, res) {
         }
         const checkBuilding = await Building.findAll({where:{city: cityId, deleted: false}})
         if(checkBuilding.length){
-            return res.status(401).json({error: `Existen ${checkBuilding.length} edificios relacionados con la ciudad. Elimine los edificios y vuelva a intentarlo`})
+            return res.status(401).json({error: `Existen ${checkBuilding.length} sucursales relacionadas con la ciudad. Elimine las sucursales y vuelva a intentarlo`})
         }
         await city.update({deleted: true});
         return res.json({msg: 'City Deleted'});

@@ -19,6 +19,9 @@ import EditOfficePage from "./pagesAdmin/EditOffice/EditOffice.tsx";
 import FormEditBuilding from "./components/FormEditBuilding/FormEditBuilding.tsx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import FormEditOffice from "./components/FormEditBuilding/FormEditOffice.tsx";
+
+
 
 
 
@@ -81,6 +84,10 @@ function App() {
         {
           path: '/building/:id/edit',
           element: <FormEditBuilding/>
+        },
+        {
+          path: '/office/:id/edit',
+          element: <FormEditOffice/>
         },
       ],
     },

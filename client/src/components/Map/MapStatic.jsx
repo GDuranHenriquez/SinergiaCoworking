@@ -19,9 +19,14 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
 
   let markers
   if(buildings && Array.isArray(buildings)){
-    markers = buildings.map(building => (
-      {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
-    ))
+    console.log(buildings);
+    markers = buildings.map(building => {
+      try {
+      return {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
+      } catch (err) {
+
+      }
+  })
   } else if(buildings){
     markers = [{geocode: [buildings.lat, buildings.lng], popUpText: buildings.name, popUpImg: buildings.imageUrl, popUpAddress: buildings.address}]
   }

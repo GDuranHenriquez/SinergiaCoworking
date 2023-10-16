@@ -154,7 +154,7 @@ const MyProfile = () => {
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >
-        ¡Operación exitosa!
+        Operación exitosa.
       </Modal>
 
       <Modal
@@ -163,7 +163,7 @@ const MyProfile = () => {
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >
-        ¡Hubo un error al procesar la solicitud!
+        Hubo un error al procesar la solicitud.
       </Modal>
     </div>
   );
