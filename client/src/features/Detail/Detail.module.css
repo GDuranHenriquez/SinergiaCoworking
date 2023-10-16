@@ -1,5 +1,9 @@
 .containerMayor {
-  background-color: #f8f6f6; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: max-content;  
+  gap: 35px;
 }
 .container {
   display: flex;
@@ -62,14 +66,11 @@
 }
 
 .officeDetailContainer {
-  margin: 5px;
   align-items: center;
   align-content: center;
   justify-content: center;
   justify-self: center;
   justify-items: center;
-  display: flex;
-
 }
 
 .msj {
@@ -79,11 +80,9 @@
 .containerInfoOffices {
   display: flex;
   flex-direction: row;
+  gap: 30px;
   align-items: center;
-  align-content: center;
   justify-content: center;
-  justify-self: center;
-  justify-items: center;
 }
 .containerTernario {
   align-items: center;

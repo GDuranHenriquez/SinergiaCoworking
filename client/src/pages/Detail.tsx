@@ -1,18 +1,28 @@
 
+import { styled } from "styled-components";
 import OfficeDetail from "../features/Detail/Detail";
-
+import BackGroundGlobal from "../components/backgrounds/BackgroundGlobal";
 
 
 function PruebaDos() {
 
     return (
-        <div>
+        <ContainerDetailPage>
+            <BackGroundGlobal></BackGroundGlobal>
             <OfficeDetail></OfficeDetail>
-        </div>
+        </ContainerDetailPage>
     )
 }
 
-
+const ContainerDetailPage = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: calc(100vh * (1 - 0.1));
+  width: 100%;
+  padding-top: calc(100vh * 0.1 + 30px);
+  
+`;
 
 
 export default PruebaDos;
