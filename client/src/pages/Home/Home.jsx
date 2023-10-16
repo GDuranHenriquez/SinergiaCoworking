@@ -33,11 +33,11 @@ function HomePages() {
           imageThree='https://res.cloudinary.com/dbapuszll/image/upload/v1697064904/SinergiaCowork/oficina_q4gc7p.jpg'
           ></SliderCarousel>
       </div>
-      <div data-aos="fade-up" className="secondPage">
+      <div id="sucursales" data-aos="fade-up" className="secondPage">
         <NavbarFilter></NavbarFilter>
         <Cards></Cards>   
       </div>
-      <div data-aos="fade-up" className="thirdPage">
+      <div id="ubicaciones" data-aos="fade-up" className="thirdPage">
         <MapStatic buildings={allBuildings}/>
       </div>
       <Footer>

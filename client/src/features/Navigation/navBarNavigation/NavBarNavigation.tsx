@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LinkButton from "./LinkButton";
 import AccesButton from "./AccesButton";
 import LogoPrincipal from "../../../../src/assets/LogoSc.png";
@@ -17,64 +17,70 @@ import { useState } from "react";
 const { Header } = Layout;
 
 const NavBarNavigation: React.FC = () => {
-    const auth = useAuth()
-    const isRoot = auth.getUser()?.type
-    const authenticated = auth.isAuthenticated;
-    const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
-    const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);
-    const [isLoading, setIsLoading] = useState(false);
+  const auth = useAuth()
+  const isRoot = auth.getUser()?.type
+  const authenticated = auth.isAuthenticated;
+  const [isOpenModalRegister, openModalRegister, closeModalRegister] = useModal(false);
+  const [isOpenModalLogin, openModalLogin, closeModalLogin] = useModal(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const logout = async () => {
-        setIsLoading(true);
-        try {
-          const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + "/sign-in-out/sign-out";
-          const refreshToken = auth.getRefreshToken();
-          const response = await axios.delete(endPoint, {
-            headers: {
-              Authorization: `Bearer ${refreshToken}`,
-            },
-            data: null,
-          });
-          if (response.status === 200) {
-            auth.signOut();
-          }
-          setIsLoading(false);
-        } catch (error) {
-          if(typeof error === 'string'){
-            messageError(error)
-            setIsLoading(false);
-          }else if(error instanceof Error){
-            const message = error.message
-            messageError(message)
-            setIsLoading(false);
-          } else {
-            console.log(error)
-            setIsLoading(false);
-          }        
-        }finally {
-            setIsLoading(false);
-        } 
-      };
+  useEffect(() => {
+    console.log(user)
+  }, [])
 
-    const getItemMenu = (typeRoot : string | undefined) => {
-        if(typeRoot === 'root' || typeRoot === 'admin' ){
-            return  [
-                { text: 'Perfil', path: '/perfil' },
-                { text: 'Mis reservas', path: '/reservas' },
-                { text: 'Crear oficina', path: '/crear-oficina' },
-                { text: 'Crear sucursal', path: '/crear-sucursal' },
-                { text: 'Editar oficina', path: '/editar-oficina' },
-                { text: 'Editar sucursal', path: '/editar-sucursal' },
-                { text: 'Cerrar sesión', path: '#' }
-            ]
-        }else{
-            return [
-                { text: 'Perfil', path: '/perfil' },
-                { text: 'Mis reservas', path: '/reservas' },
-                { text: 'Cerrar sesión', path: '#'  },
-            ]
-        }
+  const user = auth.getUser()
+
+  const logout = async () => {
+    setIsLoading(true);
+    try {
+      const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + "/sign-in-out/sign-out";
+      const refreshToken = auth.getRefreshToken();
+      const response = await axios.delete(endPoint, {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+        data: null,
+      });
+      if (response.status === 200) {
+        auth.signOut();
+      }
+      setIsLoading(false);
+    } catch (error) {
+      if (typeof error === 'string') {
+        messageError(error)
+        setIsLoading(false);
+      } else if (error instanceof Error) {
+        const message = error.message
+        messageError(message)
+        setIsLoading(false);
+      } else {
+        console.log(error)
+        setIsLoading(false);
+      }
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const getItemMenu = (typeRoot: string | undefined) => {
+    if (typeRoot === 'root' || typeRoot === 'admin') {
+      return [
+        { text: 'Perfil', path: '/perfil' },
+        { text: 'Mis reservas', path: '/reservas' },
+        { text: 'Crear oficina', path: '/crear-oficina' },
+        { text: 'Crear sucursal', path: '/crear-sucursal' },
+        { text: 'Editar oficina', path: '/editar-oficina' },
+        { text: 'Editar sucursal', path: '/editar-sucursal' },
+        { text: 'Cerrar sesión', path: '#' }
+      ]
+    } else {
+      return [
+        { text: 'Perfil', path: '/perfil' },
+        { text: 'Mis reservas', path: '/reservas' },
+        { text: 'Cerrar sesión', path: '#' },
+      ]
+    }
+  }
 
     const messageError = (message: string) => {
         toast.error(message, {
@@ -96,29 +102,38 @@ const NavBarNavigation: React.FC = () => {
         openModalLogin()
       }
 
-    return (
-        <StyleContainerNav>
-            <Layout style={{width:'100%', height:'10%', position:'fixed', top: 0, left:0, zIndex:9999, margin:0, padding: 0, minHeight: '63px'}}>
-                <Header style={{ background: '#1F2551', width: '100%', height: '100%', margin:0, padding: 0}}>
-                    <Menu 
-                     mode="inline"
-                    style={{ background: '#1F2551', height: '100%', display:'flex', flexWrap:'nowrap' , alignItems:'center', justifyContent:'space-between'}}>
-                        {/* <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div> */}
-                       
-                          <img style={{width:'4.7%', height:'40px', marginTop:'5px'}} src={LogoPrincipal} />
-                     
-                        <div> 
-                        <LinkButton text='Inicio' path='/' />
-                        <LinkButton text='Sucursales' path='/oficinas' />
-                        <LinkButton text='Nosotros' path='/nosotros' />
-                        <LinkButton text='Ubicaciones' path='/ubicaciones' /></div>
-                        
-                        {!authenticated? <div className="accesLogin"> <AccesButton text='REGISTRO' click={openModalRegister}/>
-                        <AccesButton text='ACCEDER' click={openModalLogin}/></div>:
+  return (
+    <StyleContainerNav>
+      <Layout style={{ width: '100%', height: '10%', position: 'fixed', top: 0, left: 0, zIndex: 9999, margin: 0, padding: 0, minHeight: '63px' }}>
+        <Header style={{ background: '#1F2551', width: '100%', height: '100%', margin: 0, padding: 0 }}>
+          <Menu
+            mode="inline"
+            style={{ background: '#1F2551', height: '100%', display: 'flex', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'space-between' }}>
+            {/* <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div> */}
 
-                        <div className="accesLogin">
-                            <UserDropdownMenu LogoutFunction={logout} menuItems={getItemMenu(isRoot)}></UserDropdownMenu>
-                        </div>}
+            <img style={{ width: '4.7%', height: '40px', marginTop: '5px' }} src={LogoPrincipal} />
+
+            <div>
+              <LinkButton text='Inicio' path='/' />
+              <LinkButton text='Sucursales' path='/#sucursales' />
+              <LinkButton text='Nosotros' path='/nosotros' />
+              <LinkButton text='Ubicaciones' path='/#ubicaciones' /></div>
+
+            <div className="accesLogin">
+              {authenticated ? (
+                <div>
+                  <span style={{ color: 'white', marginRight: '16px' }}>
+                    Hola, {user?.name || 'Usuario'}
+                  </span>
+                  <UserDropdownMenu LogoutFunction={logout} menuItems={getItemMenu(isRoot)} />
+                </div>
+              ) : (
+                <>
+                  <AccesButton text="REGISTRO" click={openModalRegister} />
+                  <AccesButton text="ACCEDER" click={openModalLogin} />
+                </>
+              )}
+            </div>
 
                     </Menu>
                 </Header>

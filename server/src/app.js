@@ -26,6 +26,7 @@ const routerUser = require('./routes/routerUser')
 const routerLoginRegister = require('./routes/routerLoginRegister');
 const routerDataUserClient = require('./routes/routerProtecteDateUser');
 const routerUpdateUser = require('./routes/routerUpdateUser');
+const routerAdminChart = require('./routes/routerAdminChart')
 
 require('./db.js');
 
@@ -56,6 +57,7 @@ server.use('/data-user', authenticate, routerDataUserClient);
 //tokens
 server.use('/cart', routerCart);
 server.use('/category', routerCategory);
+server.use('/admin-chart', routerAdminChart)
 server.use('/city', routerCity);
 server.use('/building', routerBuilding)
 server.use('/office', routerOffice);
