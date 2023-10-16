@@ -268,7 +268,7 @@ function ModalRegister({ isOpen, closeModal, switModalLogin}: Props) {
           </Form>
           </div>
           <div className="linkRegistro">
-            <span>Si ya tienes cuenta vel a <button onClick={swithLogin}>inicio de sesion</button></span>
+            <span>Si ya tienes una cuenta<button onClick={swithLogin}>inicia sesión</button></span>
           </div>
         <GoogleLogin
           useOneTap
