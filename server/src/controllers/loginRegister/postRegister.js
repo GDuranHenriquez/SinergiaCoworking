@@ -5,6 +5,7 @@ const { generatePassword } = require('../../auth/generatePassword');
 const { VerifyIsRoot } = require('../../auth/verifyIsUserRoot');
 const { createRefreshToken, createAccessToken } = require('../../auth/createTokens');
 const { generateInfo } = require('../../auth/generateTokens');
+const { sendMailNewUser } = require('../../utils/nodemailer');
 
 async function postRegisterAcountUser(req, res){
   try {
@@ -45,7 +46,8 @@ async function postRegisterAcountUser(req, res){
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
         const refreshToken = await createRefreshToken(data);
-
+        
+        sendMailNewUser(nameUser + lastName, email);
         return res.status(200).json({
           pass: true, 
           message: 'Correct username and password', 
@@ -60,7 +62,8 @@ async function postRegisterAcountUser(req, res){
         var data = registerAcountUser.dataValues;
         const accessToken = createAccessToken(data);
         const refreshToken = await createRefreshToken(data);
-
+        
+        sendMailNewUser(name, email);
         return res.status(200).json({
           pass: true, 
           message: 'Correct username and password', 
@@ -101,7 +104,7 @@ async function postRegisterAcountUser(req, res){
       var data = registerAcountUser.dataValues;
       const accessToken = createAccessToken(data);
       const refreshToken = await createRefreshToken(data);
-
+      sendMailNewUser(name, email);
       return res.status(200).json({
         pass: true, 
         message: 'Correct username and password', 
@@ -117,7 +120,7 @@ async function postRegisterAcountUser(req, res){
       var data = registerAcountUser.dataValues;
       const accessToken = createAccessToken(data);
       const refreshToken = await createRefreshToken(data);
-      
+      sendMailNewUser(nameUser ? (nameUser + name): name, email);
       return res.status(200).json({
         pass: true, 
         message: 'Correct username and password', 

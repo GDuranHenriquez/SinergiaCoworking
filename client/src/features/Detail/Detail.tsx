@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
-import { Descriptions, Calendar, Button, CalendarProps  } from "antd";
+import { Descriptions, Calendar, Button, CalendarProps } from "antd";
 import styles from "./Detail.module.css";
 import axios from "axios";
 import CardOffice from "./CardOffice";
 import getInfoDataServicios from "./Utils/DataServicios";
 import IconDescription from "./ComponentServices/IconDescription";
 import { Rate } from "antd";
-import { Card, Space, Avatar,  Modal} from "antd";
+import { Card, Space, Avatar, Modal } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs, { Dayjs } from "dayjs";
 import { useAuth } from "../../Authenticator/AuthPro";
@@ -17,7 +17,12 @@ import ModalLogin from "../../components/login/modalStatusRegister/Login";
 import ModalRegister from "../../components/login/modalStatusRegister/Register";
 import FormCheckout from "./ComponentSheckout/FormCheckout";
 import Loading from "../../components/Loading/Loading";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { HiOutlineMinusCircle } from "react-icons/hi";
 
+/* import { ObjectBuilding } from "../../redux/slices/building/typesBuilding"; */
 interface BuildingObject {
   id: string;
   name: string;
@@ -45,7 +50,7 @@ type Imagen = {
   office?: string;
 };
 
-type OfficeInfo = {
+export type OfficeInfo = {
   id?: string;
   name?: string;
   capacity?: number;
@@ -83,17 +88,24 @@ type OfficeData = {
   imgUrl: string;
 };
 
+export type ItentPaiment = {
+  id_itent: string,
+  client_secret: string
+}
+
 const { Meta } = Card;
 
 function Detail() {
   const auth = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)
-  const [isOpenModalRegister, openModalRegister, closeModalRegister ] = useModal(false);    
-  const [isOpenModalLogin, openModalLogin, closeModalLogin ] = useModal(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); //Modal aviso
+  const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)//Modal Detail
+  const [isOpenModalRegister, openModalRegister, closeModalRegister] = useModal(false);//Modal Register    
+  const [isOpenModalLogin, openModalLogin, closeModalLogin] = useModal(false);//Modal Login
   const [calendarDate, SetCalendarDate] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
+  const [itentPaiment, setItentPaiment] = useState<ItentPaiment | null>(null);
+  const [priceQuery, setPriceQuery] = useState<number>(0);
 
   const user = auth.getUser();
   const useAuthenticator = auth.isAuthenticated;
@@ -106,10 +118,23 @@ function Detail() {
     imageUrl: "",
     office_building: [],
   });
-  const [officeId, setOfficeId] = useState<string>(""); 
+  const [officeId, setOfficeId] = useState<string>("");
   const [selectedOffice, setSelectedOffice] = useState<OfficeInfo>();
 
-  const ref = useRef<null | HTMLDivElement>(null); 
+  const ref = useRef<null | HTMLDivElement>(null);
+
+  const messageError = (message: string) => {
+    toast.error(message, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   useEffect(() => {
     axios
@@ -124,7 +149,7 @@ function Detail() {
 
   const getOfficeInfo = (id: string) => {
     if (ref && ref.current) {
-    ref.current.scrollIntoView({ behavior: "smooth", block: 'center', inline: 'start'  });
+      ref.current.scrollIntoView({ behavior: "smooth", block: 'center', inline: 'start' });
     }
     setOfficeId("");
     axios
@@ -133,10 +158,9 @@ function Detail() {
         setOfficeId(id);
         setSelectedOffice(response.data);
         const typeOffice = selectedOffice.office_category.name
-        if(typeOffice !== "Open space"){
+        if (typeOffice !== "Open space") {
           setAmount(1);
-        };
-        console.log(response.data);
+        }
       })
       .catch((error) => {
         console.error("Error al cargar la oficina:", error);
@@ -171,9 +195,9 @@ function Detail() {
     return current && current < dayjs().endOf("day");
   };
 
-  const disponibilityOffice =  async ( description:string | undefined, amount: number | undefined, amountPrice: number | undefined, date: string, office: string) => {
-      try {
-        const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/availability-check/?office=${office}&date=${date}&amount=${amount}`;
+  const disponibilityOffice = async (description: string | undefined, amount: number | undefined, amountPrice: number | undefined, date: string, office: string) => {
+    try {
+      const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/availability-check/?office=${office}&date=${date}&amount=${amount}`;
 
       const dataSend = {
         amount: amountPrice,
@@ -183,66 +207,116 @@ function Detail() {
       return data;
 
     } catch (error) {
-      if(typeof error === 'string'){
+      if (typeof error === 'string') {
         console.log(error)
-      }else if(error instanceof Error){
+      } else if (error instanceof Error) {
         const message = error.message
         console.log(message)
       } else {
         console.log(error)
-      }         
+      }
       setIsLoading(false);
     }
-    
+
 
   }
 
-  const reservarButton = () =>{
-    if(auth.isAuthenticated){
-      
+  const reservarButton = async () => {
+    if (auth.isAuthenticated) {
+      setIsLoading(true);
+
       const sendQuery = {
-        description:selectedOffice?.name, 
+        description: selectedOffice?.name,
         amount: amount,
-        amountPrice: selectedOffice?.price,
+        amountPrice: selectedOffice?.price * amount,
         date: calendarDate,
         office: officeId
       }
-      const data = disponibilityOffice(sendQuery.description, sendQuery.amount, sendQuery.amountPrice, sendQuery.date, sendQuery.office);
-      console.log(data)
-      /* setIsModalOpenDetail(true); */
-    }else{
+      
+      const data = await disponibilityOffice(sendQuery.description, sendQuery.amount, sendQuery.amountPrice, sendQuery.date, sendQuery.office);
+      if (!data.available) {
+        messageError('El espacio a reservar no se encuentra disponible en este horario.')
+        setIsLoading(false);
+      } else {
+        setItentPaiment(data.itentPaiment);
+        setPriceQuery(data.price)
+        setIsLoading(false);
+        setIsModalOpenDetail(true);
+      }
+
+    } else {
       setIsModalOpen(true);
     }
   }
 
+  //Modal aviso authenticacion 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
   const handleOk = () => {
     setIsModalOpen(false);
-    setTimeout(() =>{
+    setTimeout(() => {
       openModalLogin();
     }, 300)
   };
-  
-  const handleCancelDetal = () => {
-    setIsModalOpenDetail(false);
-  };
-  const handleOkDetail = () => {
-    setIsModalOpenDetail(false);
-  };
 
-  const switModalRegister = () =>{
+
+  //Modal login
+  const switModalRegister = () => {
     openModalRegister();
   }
-  const switModalLogin = () =>{
+
+  //Modal Register
+  const switModalLogin = () => {
     openModalLogin()
   }
 
+  //Modal Checkout Detail
+  const handleCancelDetal = () => {
+    setIsModalOpenDetail(false);
+  };
+
   const handlePanelChange = (date: Dayjs) => {
     const dateSelec = date.format('YYYY-MM-DD')
-    SetCalendarDate( dateSelec);
+    SetCalendarDate(dateSelec);
   };
+
+  const handleAmount = (e) =>{
+    if(e.target.name === 'iconsMinus'){
+      const newAmount = amount -1
+      if(newAmount >= 1){
+        setAmount(newAmount);
+      }
+    }else if(e.target.name === 'iconsPlus'){
+      const newAmount = amount + 1
+      if(newAmount <= 5){
+        setAmount(newAmount);
+      }
+    }
+  }
+
+  const returnCounter = () =>{
+    if(selectedOffice){
+      if(selectedOffice.office_category.name === "Open space"){
+        return <div className={styles.counter}>                      
+          <div className={styles.iconsMinus}>
+            <button id={styles.iconsMinus} name="iconsMinus" onClick={handleAmount}>-</button>
+          </div>
+          <div className={styles.amount}>
+            <input type="text" inputMode="none" value={amount} />
+          </div>
+          <div className= {styles.iconsPlus}>
+            <button id={styles.iconsPlus} name="iconsPlus" onClick={handleAmount}>+</button>
+          </div>
+        </div>  
+      }else{
+        return null
+      }
+    }
+    return null; 
+
+  }
+
 
   return (
     <div>
@@ -267,20 +341,20 @@ function Detail() {
               <Descriptions.Item label="Dirección">
                 <p className={styles.addresss}>{building.address}</p>
               </Descriptions.Item>
-            
-              {isRoot && useAuthenticator? <Button
-                      style={{
-                        backgroundColor: "#E47F36",
-                        color: "black",
-                        marginTop: "10px",
-                        marginBottom: "10px",
-                      }}
-                      type="primary"
-                      htmlType="submit"
-                      // disabled={Object.keys(disabledDate) ? true : false}
-                    >
-                      Editar sucursal
-                    </Button> : null }
+
+              {isRoot && useAuthenticator ? <Button
+                style={{
+                  backgroundColor: "#E47F36",
+                  color: "black",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                }}
+                type="primary"
+                htmlType="submit"
+              // disabled={Object.keys(disabledDate) ? true : false}
+              >
+                Editar sucursal
+              </Button> : null}
             </div>
           </div>
         </div>
@@ -317,12 +391,12 @@ function Detail() {
                         border: "1px solid rgba(0,0,0,0.3)",
                         borderColor: "black",
                         width: "50%",
-                        marginLeft: "180px",
                       }}
                       fullscreen={false}
                       disabledDate={disabledDate}
                       onSelect={handlePanelChange}
                     ></Calendar>
+                    {returnCounter()}
                     <Button
                       style={{
                         backgroundColor: "#E47F36",
@@ -333,7 +407,7 @@ function Detail() {
                       type="primary"
                       htmlType="submit"
                       onClick={reservarButton}
-                      // disabled={Object.keys(disabledDate) ? true : false}
+                    // disabled={Object.keys(disabledDate) ? true : false}
                     >
                       RESERVAR
                     </Button>
@@ -369,22 +443,22 @@ function Detail() {
                   <Rate disabled defaultValue={selectedOffice.ratingAverage} />
                   <br></br>
                   <Button
-                      style={{
-                        backgroundColor: "#E47F36",
-                        color: "black",
-                        marginTop: "10px",
-                        marginBottom: "10px",
-                      }}
-                      type="primary"
-                      htmlType="submit"
-                      // disabled={Object.keys(disabledDate) ? true : false}
-                    >
-                      Editar oficina
-                    </Button>
+                    style={{
+                      backgroundColor: "#E47F36",
+                      color: "black",
+                      marginTop: "10px",
+                      marginBottom: "10px",
+                    }}
+                    type="primary"
+                    htmlType="submit"
+                  // disabled={Object.keys(disabledDate) ? true : false}
+                  >
+                    Editar oficina
+                  </Button>
                 </div>
-                
+
                 <div className={styles.capacityoffice}> </div>
-            
+
               </div>
             )}
 
@@ -437,15 +511,20 @@ function Detail() {
           </div>
         </div>
       </div>
-      <Modal title="Aviso de autenticacion" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Gracias por preferirnos al elegir nuestros espacios...</p>
-        <p>Para continuar debe autenticarse</p>
+
+      <Modal title="Aviso de autenticación" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Gracias por preferirnos al elegir nuestros espacios.</p>
+        <p>Para continuar debe autenticarse.</p>
       </Modal>
-      
-      <FormCheckout open={isModalOpenDetail} onCancel={handleCancelDetal} user={user} office={officeId} date={calendarDate}></FormCheckout>
+
+      <FormCheckout open={isModalOpenDetail} onCancel={handleCancelDetal} user={user} office={selectedOffice} date={calendarDate} itentPaiment={itentPaiment} address={building.address}
+        amount={amount} price={priceQuery}></FormCheckout>
+
+      <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin} switModalRegister={switModalRegister}></ModalLogin>
 
       <ModalRegister isOpen={isOpenModalRegister} closeModal={closeModalRegister} switModalLogin={switModalLogin}></ModalRegister>
-      <ModalLogin isOpen={isOpenModalLogin} closeModal={closeModalLogin} switModalRegister={switModalRegister}></ModalLogin>
+
+      <ToastContainer></ToastContainer>
       {isLoading && <Loading />}
     </div>
   );

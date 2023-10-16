@@ -52,10 +52,6 @@ function App() {
       element: <ReservasPage/>,
     },
     {
-      path: "/resumenAdmin",
-      element: <DataAdmin/>,
-    },
-    {
       path: "/detail/:id",
       element: <Detail/>,
     }/* ,

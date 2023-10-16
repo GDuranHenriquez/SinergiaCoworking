@@ -20,7 +20,7 @@ transporter.verify().then(() => {
 
 async function sendMailLogin(name, lastName,emailUser){
   const info = await transporter.sendMail({
-    from: `WellNest Clinic <${ADDRESS_MAIL}>`, // sender address
+    from: `Sinergia Cowork <${ADDRESS_MAIL}>`, // sender address
     to: emailUser, // list of receivers
     subject: "🎉 WellNest clinic session start 🎉", // Subject line
     //text: `Hello ${name} ${lastName}, Welcome back to Wellnest Clinic`, // plain text body
@@ -28,19 +28,19 @@ async function sendMailLogin(name, lastName,emailUser){
   });
 }
 
-async function sendMailNewUser(name, lastName,emailUser){
+async function sendMailNewUser(name, emailUser){
   const info = await transporter.sendMail({
-    from: `WellNest Clinic <${ADDRESS_MAIL}>`, // sender address
+    from: `Sinergia Cowork <${ADDRESS_MAIL}>`, // sender address
     to: emailUser, // list of receivers
-    subject: "🎉 Welcome to WellNest Clinic! 🎉", // Subject line
+    subject: "🎉 Welcome to Sinergia Cowork! 🎉", // Subject line
     //text: `Hello ${name} ${lastName}, Welcome back to Wellnest Clinic`, // plain text body
-    html: `<b>Hello ${name} ${lastName}, Welcome to Wellnest Clinic</b>`, // html body
+    html: `<b>Hola ${name}, Bienvenido a Sinergia Cowork</b>`, // html body
   });
 }
 
 async function sendMailAppointment(name, lastName,emailUser, doctorName, Speciality, date){
   const info = await transporter.sendMail({
-    from: `WellNest Clinic <${ADDRESS_MAIL}>`, // sender address
+    from: `Sinergia Cowork <${ADDRESS_MAIL}>`, // sender address
     to: emailUser, // list of receivers
     subject: "You have a date! 👀🏥", // Subject line
     //text: `Hello ${name} ${lastName}, Welcome back to Wellnest Clinic`, // plain text body
@@ -48,17 +48,20 @@ async function sendMailAppointment(name, lastName,emailUser, doctorName, Special
   });
 }
 
-async function sendBillPharmacyToUser(name, emailUser, amount, price, sale, product){
+async function sendRentSpaceToUser(emailUser, name, typeSpace, price, cantSpace, direction ){
   const info = await transporter.sendMail({
-    from: `WellNest Clinic <${ADDRESS_MAIL}>`, // sender address
+    from: `Sinergia Cowork <${ADDRESS_MAIL}>`, // sender address
     to: emailUser, // list of receivers
-    subject: `Hi ${name}! this is your bill! 👀🏥`, // Subject line
+    subject: `Hola ${name}! esta es la información de tu reserva! 👀🏥`, // Subject line
     //text: `Hello ${name} ${lastName}, Welcome back to Wellnest Clinic`, // plain text body
-    html: `<b>amount : ${amount}</br>
-               price : ${price} </br>
-               sale : ${sale} </br>
-               product : ${product}</b>`, // html body
+    html: `<b>Tipo de espacio : ${typeSpace}</br>
+               Total cancelado : ${price} </br>
+               Cantidad de espacios : ${cantSpace} </br>
+               Dirección : ${direction}</b></br>
+               </br>
+               </br>
+               <b>Gracias por preferirnos.</b>`, // html body
   });
 }
 
-module.exports = {sendMailLogin, sendMailNewUser, sendMailAppointment, sendBillPharmacyToUser}
+module.exports = {sendMailLogin, sendMailNewUser, sendMailAppointment, sendRentSpaceToUser}

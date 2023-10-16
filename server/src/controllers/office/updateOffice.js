@@ -38,6 +38,8 @@ const updateOffice = async (req, res) => {
         }
         await office.save()
         if(images && images.length){
+            const imageIds = office.office_officeImage.map(image => image.id);
+            await OfficeImage.destroy({where: {id: imageIds}})
             const imagesArray = images.map(image => ({imageUrl: image, office: office.id}))
             await OfficeImage.bulkCreate(imagesArray)
         }

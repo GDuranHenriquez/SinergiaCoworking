@@ -1,8 +1,9 @@
 const {Purchase, Office, Reservation, User, Building} = require('../../db')
+const { sendRentSpaceToUser } = require('../../utils/nodemailer');
 
 const postPurchase = async (req, res) => {
     try {
-        const {user, office, date, stripe, price, amount} = req.query
+        const {user, office, date, stripe, price, amount, typeOffice, address} = req.query
         if(!user){
             return res.status(401).json({error: 'Falta id de usuario'})
         }
@@ -30,7 +31,11 @@ const postPurchase = async (req, res) => {
         const purchase = await Purchase.create({date: actualDate, totalPrice: price, user})
         const reservation = await Reservation.create({date: reservationDate, purchase: purchase.id, office, amount})
         const response = await Reservation.findOne({where: {id: reservation.id}, include: [{model: Office, as: 'office_reservation', include:[{model: Building, as: 'office_building'}]}]})
+        
+        
+        sendRentSpaceToUser(checkUser.email, checkUser.name, typeOffice, price, amount, address )
         return res.status(200).json(response)
+        
     } catch (error) {
         return res.status(500).json({error: error.message})
     }

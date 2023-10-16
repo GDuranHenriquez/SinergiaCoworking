@@ -1,9 +1,5 @@
 .containerMayor {
-  background-color: #f8f6f6;
-
-  
-
- 
+  background-color: #f8f6f6; 
 }
 .container {
   display: flex;
@@ -131,10 +127,22 @@
 
 .izquierda {
   width: 60%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  align-content: center;
-  height: 70%;
+  justify-content: center;
+  justify-items: center;
+  height: max-content;
   scroll-behavior: smooth !important;
+}
+.calendario{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  height: max-content;
 }
 
 .nameoffice {
@@ -169,4 +177,76 @@
   flex-wrap:wrap;
 
   background-color: #ffff;
+}
+
+.counter{
+  width: 20%;
+  height: 30px;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 5px;
+  margin: 20px 0 10px 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+}
+
+.containerCounter{
+  width: 50%;
+}
+
+.amount{
+  height: 100%;
+  width: 50%;
+}
+.amount > input{
+  height: 100%;
+  width: 100%;
+  font-weight: 400;
+  font-size: 18px;
+  text-align: center;
+  background-color: transparent;
+  border: 5px;
+  outline: 1px solid rgba(219, 217, 218, 0.2);
+  border: 1px solid rgba(219, 217, 218, 0.2);
+  border-radius: 5px;
+  margin: 0 5px 0 5px;
+  color: black;
+}
+.iconsPlus{
+  height: 90%;
+  width: 15%;
+}
+#iconsPlus{
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: black;
+  
+}
+.iconsMinus{
+  height: 90%;
+  width: 15%;
+}
+#iconsMinus{
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: black;
+}
+
+#iconsPlus:hover{
+  cursor: pointer;
+}
+#iconsMinus:hover{
+  cursor: pointer;;
 }
