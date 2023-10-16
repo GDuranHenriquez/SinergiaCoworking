@@ -28,13 +28,13 @@ async function sendMailLogin(name, lastName,emailUser){
   });
 }
 
-async function sendMailNewUser(name, lastName,emailUser){
+async function sendMailNewUser(name, emailUser){
   const info = await transporter.sendMail({
     from: `Sinergia Cowork <${ADDRESS_MAIL}>`, // sender address
     to: emailUser, // list of receivers
     subject: "🎉 Welcome to Sinergia Cowork! 🎉", // Subject line
     //text: `Hello ${name} ${lastName}, Welcome back to Wellnest Clinic`, // plain text body
-    html: `<b>Hello ${name}, Welcome Sinergia Cowork</b>`, // html body
+    html: `<b>Hola ${name}, Bienvenido a Sinergia Cowork</b>`, // html body
   });
 }
 
