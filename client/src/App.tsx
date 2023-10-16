@@ -20,6 +20,9 @@ import FormEditBuilding from "./components/FormEditBuilding/FormEditBuilding.tsx
 import DataAdmin from "./pages/DataAdmin/DataAdmin.jsx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import FormEditOffice from "./components/FormEditBuilding/FormEditOffice.tsx";
+
+import DataAdmin from "./pages/DataAdmin/DataAdmin.jsx";
 
 
 
@@ -27,6 +30,10 @@ function App() {
   
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PASSWORD);  
   const router = createBrowserRouter([
+    {
+      path: "/data-admin",
+      element: <DataAdmin/>
+    },
     {
       path: "/",
       element: <HomePages/>,
@@ -82,6 +89,10 @@ function App() {
         {
           path: '/building/:id/edit',
           element: <FormEditBuilding/>
+        },
+        {
+          path: '/office/:id/edit',
+          element: <FormEditOffice/>
         },
       ],
     },

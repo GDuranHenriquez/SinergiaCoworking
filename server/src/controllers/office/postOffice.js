@@ -16,7 +16,7 @@ const postOffice = async (req, res)=> {
             return res.status(401).json({error: 'No se indicó la categoría'})
         }
         if(!building){
-            return res.status(401).json({error: 'No se indicó el edificio'})
+            return res.status(401).json({error: 'No se indicó la sucursal'})
         }
         if(!price){
             return res.status(401).json({error: 'No se indicó el precio'})
@@ -33,7 +33,7 @@ const postOffice = async (req, res)=> {
         }
         const checkBuilding = await Building.findByPk(building)
         if(!checkBuilding){
-            return res.status(404).json({error: 'El id del edificio provisto no está registrado'})
+            return res.status(404).json({error: 'El id de la sucursal provisto no está registrado'})
         }
 
         const [office, created] = await Office.findOrCreate({where: {name, building, category}, defaults: {area, capacity, price}})

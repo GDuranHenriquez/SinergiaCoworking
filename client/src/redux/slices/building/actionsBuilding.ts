@@ -5,12 +5,25 @@ import { Dispatch } from "../../store/store";
 
 export const getAllBuildings = async (dispatch: Dispatch) => {
   try {
-  
+    
+    const token = localStorage.getItem("token");
     const endpoint = import.meta.env.VITE_BASENDPOINT_BACK + `/building`;
+    if (token) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(endpoint, config); 
+    
+    dispatch(setAllBuilding(data));
+  } else {
+
     const { data } = await axios.get(endpoint); 
     
     dispatch(setAllBuilding(data));
 
+  }
   } catch (error) {
     if (typeof error === "string") {
       console.log(error);
@@ -21,6 +34,7 @@ export const getAllBuildings = async (dispatch: Dispatch) => {
       console.log(error);
     }
   }
+  
 };
 
 export const getBuildingFilters = async (dispatch: Dispatch, city: string, category: string, name: string) => {

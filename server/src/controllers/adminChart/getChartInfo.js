@@ -50,17 +50,17 @@ const adminChart = async (req, res) => {
         const dataChart = []
         cities.forEach((city) => {
             const data = {}
-            const category = categories.map(category => ({name: category.name, values: [0,0,0,0,0,0]}))
-            dataChart.push({cityName: city.name, categories: category})
+            const category = categories.map(category => ({name: category.name, data: [0,0,0,0,0,0]}))
+            dataChart.push({cityName: city.name, series: category})
         })
         reservations.forEach((reservation) => {
             for(let i=0; i<dataChart.length; i++){
                 if(reservation.office_reservation.office_building.building_city.name === dataChart[i].cityName){
-                    dataChart[i].categories.forEach((category) => {
-                        if(reservation.office_reservation.office_category.name === category.name){
+                    dataChart[i].series.forEach((serie) => {
+                        if(reservation.office_reservation.office_category.name === serie.name){
                             const month = new Date(reservation.date).getMonth()+1
                             const index = monthNum.indexOf(month)
-                            category.values[index] += reservation.amount
+                            serie.data[index] += reservation.amount
                             return
                         }
                     })
@@ -68,7 +68,7 @@ const adminChart = async (req, res) => {
                 }
             }
         })
-        return res.status(200).json(dataChart);
+        return res.status(200).json({cities: dataChart, categories: monthText});
     } catch (error) {
         return res.status(500).json({error: error.message})
     }

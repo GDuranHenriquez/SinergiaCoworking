@@ -24,7 +24,7 @@ const getAllOffices = async (req, res) => {
         if(building){
             const checkBuilding = await Building.findByPk(building)
             if(!checkBuilding){
-                return res.status(404).json({error: 'Edificio no registrado'})
+                return res.status(404).json({error: 'Sucursal no registrada'})
             }
             filters.basic.building = building
         }
