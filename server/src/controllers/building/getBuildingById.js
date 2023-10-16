@@ -21,7 +21,7 @@ const getBuildingById = async (req, res) => {
             ]});
 
         if(!building) {
-            return res.status(404).json({message: "No se encontro el edificio"})
+            return res.status(404).json({message: "No se encontró la sucursal"})
         }
         return res.status(200).json(building);
     } catch (error) {

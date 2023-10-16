@@ -51,7 +51,7 @@
     min-width: 100%;
     max-width: 100%;
     min-height: calc(100vh * 0.55);
-    max-height: calc(100vh * 0.55);
+    max-height: calc(100vh * 0.65);
     /* background-color: rgb(224, 218, 218); */
     border: 1px solid rgba(0, 0, 0, 0.2);
     object-fit: cover;

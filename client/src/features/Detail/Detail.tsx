@@ -273,7 +273,7 @@ function Detail() {
                         border: "1px solid rgba(0,0,0,0.3)",
                         borderColor: "black",
                         width: "50%",
-                        marginLeft: "180px",
+                        marginLeft: "24%",
                       }}
                       fullscreen={false}
                       disabledDate={disabledDate}
