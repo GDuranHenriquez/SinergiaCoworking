@@ -56,7 +56,7 @@ function Nosotros() {
           Sobre nosotros
         </Title>   */}
          </div>
-        <Card className={styles.parrafos1}  style={{ width: "40%",  borderColor: '#1F2551', marginTop: '100px' }}>
+        <Card className={styles.parrafos1}  style={{ width: "40%", marginTop: '100px' }}>
         <Title style={{marginTop:'5px', color: '#e9850b' }} level={4}>
           
           Nuestra Historia
@@ -74,7 +74,7 @@ function Nosotros() {
             apoyo mutuo.
           </Paragraph>
           </Card>
-          <Card className={styles.parrafos2}  style={{ width: "40%",  borderColor: '#1F2551' }}>
+          <Card className={styles.parrafos2}  style={{ width: "40%" }}>
           <Title style={{marginTop:'5px', color: '#e9850b'}} level={4}>
           
             Misión y Servicios
@@ -91,7 +91,7 @@ function Nosotros() {
           </Paragraph>
           </Card>
 
-          <Card className={styles.parrafos3}  style={{ width: "40%", borderColor: '#1F2551' }}>
+          <Card className={styles.parrafos3}  style={{ width: "40%" }}>
             <Title style={{ marginTop:'5px', color: '#e9850b' }} level={4}>
         
             Cultura Empresarial
@@ -116,7 +116,7 @@ function Nosotros() {
           <Col span={16}>
             <Card
               className={styles.containerQuienes}
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.945', width: '100%', borderColor: '#1F2551'  }}
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.945', width: '100%'  }}
             >
 
               <Title style={{ marginBottom: "40px", marginTop: '1px', color: '#1F2551'}} level={2}>
@@ -124,7 +124,7 @@ function Nosotros() {
               </Title>
               <Row gutter={16}>
                 {founders.map((founder, index) => (
-                  <Col key={index} span={7}>
+                  <Col key={index} span={8}>
                     <Avatar
                       size={80}
                       src={founder.image}
