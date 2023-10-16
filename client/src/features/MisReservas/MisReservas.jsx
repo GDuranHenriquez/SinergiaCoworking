@@ -18,6 +18,7 @@ const MyReservations = () => {
     const [selectedReservation, setSelectedReservation] = useState(null);
     const [userRating, setUserRating] = useState(0);
     const [userComment, setUserComment] = useState(''); 
+    const [formu] = Form.useForm();
   
 
     useEffect(() => {
@@ -25,6 +26,7 @@ const MyReservations = () => {
         axios.get(endpoint)
         .then(data => {
           setReservations(data.data)
+          console.log(data);
         })
     }, [ratingVisible])
 
@@ -32,7 +34,7 @@ const MyReservations = () => {
       stars: 0,
       comment: '',
       user,
-      reservation: '',
+      reservation: ""
     });
   
     const handleRate = (value) => {
@@ -42,15 +44,18 @@ const MyReservations = () => {
     const showRatingModal = (reservation) => {
       setSelectedReservation(reservation);
       setRatingVisible(true);
+      formu.setFieldValue("idOffice", reservation.id)
     };
+
   
     const handleRatingOk = async () => {
       try {
         const updatedForm = {
           ...form,
           stars: userRating,
+          reservation: formu.getFieldValue("idOffice")
         };
-    
+
         const response = await postReviews(dispatch, updatedForm);
         setRatingVisible(false);
     
@@ -77,13 +82,19 @@ const MyReservations = () => {
 
                 extra={
                   !reservation.score && (
-                    <Button onClick={() => showRatingModal(reservation)}>
+                    <Button id={reservation.id} onClick={() => showRatingModal(reservation)}>
                       Calificar
                     </Button>
                   )
                 }
               >
+                <div>
+                Edificio: {reservation.office.office_building.name}
+                Total Price: {reservation.totalPrice} USD
+                Categoria: {reservation.office.office_category.name}
                 Fecha de reserva: {reservation.date}
+                {reservation.office.office_officeImage.imageUrl}
+                </div>
                 <br />
                 {reservation.score && (
                   <div>
@@ -104,7 +115,7 @@ const MyReservations = () => {
           <p>Califica esta oficina:</p>
           <Rate value={userRating} onChange={handleRate} />
           <p>Deja un comentario:</p>
-          <Form>
+          <Form form={formu}>
             <Form.Item>
             <textarea
             value={form.comment}
@@ -112,10 +123,10 @@ const MyReservations = () => {
           />
             </Form.Item>
             <p>Ingresa el ID de la oficina:</p>
-            <Form.Item>
+            <Form.Item name="idOffice">
             <input
             type="text"
-            value={form.reservation}
+            value={reservations}
             onChange={(e) => setForm({ ...form, reservation: e.target.value })}
           />
             </Form.Item>
