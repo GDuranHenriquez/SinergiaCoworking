@@ -20,13 +20,13 @@ type imagen = {
 
 function CardOffice({ id, name, capacity, ratingAverage, office_officeImage }: Props) {
   return (
-    <div style={{ padding: "0px"}} className={styles.container}>
+    <div style={{ padding: "0px"}} className={styles.containerCard}>
       <Card 
         hoverable
         className={styles.cardContainer}
         bodyStyle={{padding:'0px'}}
         cover={
-          <div>{office_officeImage?.map((img) => <img style={{width:'100%', height:'230px'}}  src={img.imageUrl}></img>)}</div>
+          <div>{office_officeImage?.map((img) => <img className={styles.imgCard}  src={img.imageUrl}></img>)}</div>
         }
         id={id}
       >

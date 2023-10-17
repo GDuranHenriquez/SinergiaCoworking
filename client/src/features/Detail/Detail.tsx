@@ -401,8 +401,7 @@ function Detail() {
           {building.office_building.map((office) => (
             <div
               className={styles.officeDetailContainer}
-              onClick={() => getOfficeInfo(office.id)}
-              
+              onClick={() => getOfficeInfo(office.id)}             
             >
               <CardOffice
                 id={office.id}

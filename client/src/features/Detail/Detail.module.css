@@ -19,8 +19,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding-top: 2px;
-  padding-bottom: 6px;
+  
 }
 
 .comment {
@@ -75,6 +74,8 @@
 }
 
 .officeDetailContainer {
+  display: flex;
+  flex-wrap: nowrap;
   width: 30%;
 }
 
