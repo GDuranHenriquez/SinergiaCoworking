@@ -10,9 +10,29 @@
     background-color: #1F2551;
 }
 
+.search > span:hover {
+    background: none;
+    /* border:none; */
+    background-color: white;
+    border-radius: 8px;
+    /* height: 200px; */
+
+}
+
+/* .search > span > span > input:hover {
+    background: none;
+    border:none;
+    background-color: black;
+    border-radius: 8px;
+    height: 200px;
+
+} */
 
 
-.search{
-   height: 30px;
 
+.search:hover{
+    /* background-color: white; */
+    outline-color: none;
+    border: none;
+ 
 }

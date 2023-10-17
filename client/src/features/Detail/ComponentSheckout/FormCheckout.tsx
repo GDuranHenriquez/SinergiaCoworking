@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {  Form, Modal } from "antd";
 import { UserInfo } from "../../../components/protecterRoute/typesProtecterRoute";
-import { useEffect }  from 'react';
+import { useNavigate  } from 'react-router-dom';
 import { Stripe, StripeElements  } from '@stripe/stripe-js';
 import { CardElement, useElements, useStripe, } from '@stripe/react-stripe-js';
 import axios from 'axios';
@@ -30,6 +30,7 @@ function FormCheckout({ user, office, date, open, onCancel, itentPaiment, addres
   const stripe: Stripe | null = useStripe();
   const elements: StripeElements | null = useElements();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleOk = async () =>{
     try {
@@ -41,8 +42,13 @@ function FormCheckout({ user, office, date, open, onCancel, itentPaiment, addres
           const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + query;
           const sale = await axios.post(endPoint);
           if(sale.status === 200){
-            messageSuccess('Gracias por su reserva, su pago ha sido procesado');
-            handleCancel();
+            messageSuccess('El pago ha sido procesado con éxito');
+            setTimeout(() =>{
+              navigate('/reservas');
+              setIsLoading(false);
+              handleCancel();
+            }, 2000)
+            
           }else{
             if(sale.data.error){
               messageError(sale.data.error)

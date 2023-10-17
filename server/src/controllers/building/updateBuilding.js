@@ -4,11 +4,11 @@ const updateBuilding = async (req, res) => {
     try {
         const {id, name, address, lat, lng, city, imageUrl} = req.body
         if(!id){
-            return res.status(401).json({error: 'Falta id de edificio'})
+            return res.status(401).json({error: 'Falta id de la sucursal'})
         }
         const building = await Building.findOne({where: {id}, include: [{model: City, as: 'building_city'}]})
         if(!building){
-            return res.status(404).json({error: 'Edificio invalido'})
+            return res.status(404).json({error: 'Sucursal inválida'})
         }
         if(name && name !== building.name){
             building.name = name

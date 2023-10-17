@@ -31,6 +31,3 @@ client/*.sw?
 # Ignorar la carpeta build en el directorio server
 server/node_modules/
 server/.env
-client/.env.local
-client/.env.local
-client/.env.local

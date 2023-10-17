@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon, divIcon, point } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import icon from '../../assets/icons/placeHolder.png'
+import styles from './map.module.css';
 
 function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom = 7, buildings}) {
   const customIcon = new Icon({
@@ -19,18 +20,24 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
 
   let markers
   if(buildings && Array.isArray(buildings)){
-    markers = buildings.map(building => (
-      {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
-    ))
+    console.log(buildings);
+    markers = buildings.map(building => {
+      try {
+      return {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
+      } catch (err) {
+
+      }
+  })
   } else if(buildings){
     markers = [{geocode: [buildings.lat, buildings.lng], popUpText: buildings.name, popUpImg: buildings.imageUrl, popUpAddress: buildings.address}]
   }
-  return (
+  return (<div className={styles.ContainerMap}>
     <MapContainer
       center={position}
       zoom={zoom}
       scrollWheelZoom={false}
-      style={{ minHeight: "50vh", minWidth: "100vw" }}
+      className={styles.mapContainer}
+      /* style={{ minHeight: "50vh", width: '100vw' }} */
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -53,6 +60,8 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
         ))}
       </MarkerClusterGroup>
     </MapContainer>
+  </div>
+    
   )
 }
 

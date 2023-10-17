@@ -29,7 +29,7 @@ function Cards() {
   return (
     <div>
       
-      <Pagination style={{marginTop: '10px'}} defaultCurrent={1} total={allBuildings.length} defaultPageSize={DEFAULT_PAGE_SIZE} onChange={onChange} />
+      <Pagination style={{display:'flex', flexDirection:'row', marginTop: '30px', justifyContent:'center'}} defaultCurrent={1} total={allBuildings.length} defaultPageSize={DEFAULT_PAGE_SIZE} onChange={onChange} />
       <div className={styles.cardsContainer}>
         {buildingsToShow.map((building) => (
           <CardBuilding

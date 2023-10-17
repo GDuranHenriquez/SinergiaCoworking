@@ -9,19 +9,17 @@ import ProfilePage from "./pages/Profile/ProfilePage.jsx";
 import Review from "./pages/ReviewOffice/Review.tsx";
 import Detail from "../src/pages/Detail.tsx";
 import Nosotros from "./pages/Nosotros/Nosotros.tsx";
-import OfficeDetail from "./features/Detail/Detail2.tsx";
 import ReservasPage from "./pages/MisReservas/ReservasPage.jsx"
 import './App.css'
 import CreateBuilding from "./pagesAdmin/createBuilding/CreateBuildingPage.tsx";
 import CreateOfficePage from "./pagesAdmin/createOffice/CreateOffice.tsx";
-import EditBuildingPage from "./pagesAdmin/EditBuilding/EditBuilding.tsx";
-import EditOfficePage from "./pagesAdmin/EditOffice/EditOffice.tsx";
-import FormEditBuilding from "./components/FormEditBuilding/FormEditBuilding.tsx";
+import PageFormEditBuilding from "./pagesAdmin/pagesFormEditBuilding/PagesFormEditBuilding.tsx";
 import DataAdmin from "./pages/DataAdmin/DataAdmin.jsx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-
-
+import PageEditBuilding from "./pagesAdmin/EditBuilding/PageEditBuildin.tsx";
+import PagesFormEditOffice from "./pagesAdmin/pagesFormEditOffice/PagesFormEditOffice.tsx";
+import PagesEditOffice from "./pagesAdmin/EditOffice/PagesEditOffice.tsx";
 
 function App() {
   
@@ -64,6 +62,10 @@ function App() {
       element: <ProtectedRoute/>,
       children: [
         {
+          path: "/charts",
+          element: <DataAdmin/>
+        },
+        {
           path:'/crear-sucursal',
           element: <CreateBuilding/>
         },
@@ -73,15 +75,19 @@ function App() {
         },
         {
           path: '/editar-sucursal',
-          element: <EditBuildingPage/>
+          element: <PageEditBuilding/>
         },
         {
           path: '/editar-oficina',
-          element: <EditOfficePage/>
+          element: <PagesEditOffice/>
         },
         {
           path: '/building/:id/edit',
-          element: <FormEditBuilding/>
+          element: <PageFormEditBuilding/>
+        },
+        {
+          path: '/office/:id/edit',
+          element: <PagesFormEditOffice/>
         },
       ],
     },

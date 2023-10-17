@@ -1,8 +1,8 @@
-const { verifyRefreshToken } = require('./verifyTokens');
+const { decodeToken } = require('./verifyTokens');
 const {User} = require('../db')
 
 async function verifyAdmin(token){
-    const decoded = verifyRefreshToken(token);
+    const decoded = decodeToken(token);
     if(decoded){
       const user = decoded.user
       if(user.type === 'admin' || user.type === 'root'){

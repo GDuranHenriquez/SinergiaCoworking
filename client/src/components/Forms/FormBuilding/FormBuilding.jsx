@@ -52,7 +52,7 @@ const FormBuilding = () => {
       setIsSuccessModalVisible(true);
     } catch (error) {
       console.error('Error al crear la sucursal:', error);
-      setErrorModalContent(error.message || 'Error al crear la sucrusal');
+      setErrorModalContent(error.message || 'Error al crear la sucursal');
       setIsErrorModalVisible(true);
     }
   };
@@ -219,22 +219,22 @@ const FormBuilding = () => {
 
       {/* Modal de éxito */}
       <Modal
-        title="Sucursal creada con éxito"
+        title="Acción exitosa"
         open={isSuccessModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >
-        La sucursal se ha creado con éxito.
+        La sucursal ha sido creada con éxito.
       </Modal>
 
       {/* Modal de error */}
       <Modal
-        title="Error al crear la sucursal"
+        title="Error"
         open={isErrorModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
       >
-        {errorModalContent}
+     No se pudo crear la sucursal.
       </Modal>
     </div>
     <div className={styles.container}>
