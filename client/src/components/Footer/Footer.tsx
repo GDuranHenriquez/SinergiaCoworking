@@ -62,6 +62,7 @@ const FooterSection: React.FC = () => {
 const StyledFooter = styled(Footer)`
   background: #1f2551;
   color: white;
+  padding: 0;
 `;
 
 const FooterColumn = styled.div`

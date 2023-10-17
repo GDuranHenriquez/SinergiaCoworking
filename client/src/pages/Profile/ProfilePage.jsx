@@ -2,7 +2,6 @@ import MyProfile from "../../features/Profile/MyProfile";
 import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import FooterSection from "../../components/Footer/Footer";
-import { Row, Col } from 'antd';
 import styled from "styled-components";
 
 
