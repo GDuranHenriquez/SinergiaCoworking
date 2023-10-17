@@ -34,11 +34,21 @@ const FormOffice = () => {
       form.resetFields();
       setIdListImage([]);
       setSuccessModalVisible(true);
+      localStorage.removeItem('formOfficeData');
     } catch (error) {
       console.error('Error al crear la oficina:', error);
       setErrorModalVisible(true);
     }
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('formOfficeData');
+  
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      form.setFieldsValue(parsedData);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -133,23 +143,44 @@ const FormOffice = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Área"
+          label="Área (m²)"
           name="area"
-          rules={[{ required: true, message: 'Por favor ingresa el área' }]}
+          rules={[{ required: true, message: 'Por favor ingresa el área' },
+          {
+            validator: async (_, value) => {
+              if (isNaN(value)) {
+                throw new Error('El área debe ser un valor numérico');
+              }
+            },
+          },]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Capacidad"
           name="capacity"
-          rules={[{ required: true, message: 'Por favor ingresa la capacidad' }]}
+          rules={[{ required: true, message: 'Por favor ingresa la capacidad' },
+          {
+            validator: async (_, value) => {
+              if (isNaN(value)) {
+                throw new Error('La capacidad debe ser un valor numérico');
+              }
+            },
+          },]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Precio"
           name="price"
-          rules={[{ required: true, message: 'Por favor ingresa el precio' }]}
+          rules={[{ required: true, message: 'Por favor ingresa el precio' },
+          {
+            validator: async (_, value) => {
+              if (isNaN(value)) {
+                throw new Error('El precio debe ser un valor numérico');
+              }
+            },
+          },]}
         >
           <Input />
         </Form.Item>
