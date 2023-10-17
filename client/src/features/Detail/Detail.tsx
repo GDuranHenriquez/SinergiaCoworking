@@ -106,7 +106,7 @@ function Detail() {
   const [amount, setAmount] = useState(1);
   const [itentPaiment, setItentPaiment] = useState<ItentPaiment | null>(null);
   const [priceQuery, setPriceQuery] = useState<number>(0);
-
+  const [avalibleOpenSpace, setAvalibleOpenSpace] = useState<number  | null>(null)
   const user = auth.getUser();
   const useAuthenticator = auth.isAuthenticated;
   const isRoot = auth.isRoot;
@@ -148,6 +148,7 @@ function Detail() {
   }, []);
 
   const getOfficeInfo = (id: string) => {
+    setIsLoading(true)
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: "smooth", block: 'center', inline: 'start' });
     }
@@ -161,9 +162,11 @@ function Detail() {
         if (typeOffice !== "Open space") {
           setAmount(1);
         }
+        setIsLoading(false)
       })
       .catch((error) => {
         console.error("Error al cargar la oficina:", error);
+        setIsLoading(false)
       });
   };
 
@@ -219,6 +222,23 @@ function Detail() {
     }
 
 
+  }
+
+  const disponibilitiOpenSpace = async (office: string, date:string) => {
+    try {
+      const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + `/office/check-space/?office=${office}&date=${date}`;
+      const { data } = await axios.get(endPoint);      
+      return data.availableSpaces
+    } catch (error) {
+      if (typeof error === 'string') {
+        console.log(error)
+      } else if (error instanceof Error) {
+        const message = error.message
+        console.log(message)
+      } else {
+        console.log(error)
+      }
+    }
   }
 
   const reservarButton = async () => {
@@ -278,7 +298,22 @@ function Detail() {
 
   const handlePanelChange = (date: Dayjs) => {
     const dateSelec = date.format('YYYY-MM-DD')
+    if(selectedOffice){
+      if(selectedOffice.office_category.name === "Open space"){
+        setIsLoading(true);
+        disponibilitiOpenSpace(officeId, dateSelec).then((res) =>{
+          console.log(res)
+          setAvalibleOpenSpace(res);
+          setIsLoading(false);
+        }).catch((error) => {
+          console.error("Error al cargar la oficina:", error);
+          setIsLoading(false)
+        });
+      }
+    }
+    
     SetCalendarDate(dateSelec);
+    setIsLoading(false)
   };
 
   const handleAmount = (e) =>{
@@ -289,9 +324,12 @@ function Detail() {
       }
     }else if(e.target.name === 'iconsPlus'){
       const newAmount = amount + 1
-      if(newAmount <= 5){
-        setAmount(newAmount);
+      if(avalibleOpenSpace){
+        if(newAmount <= avalibleOpenSpace){
+          setAmount(newAmount);
+        }
       }
+      
     }
   }
 
@@ -319,7 +357,7 @@ function Detail() {
 
 
   return (
-    <div>
+    <div className={styles.containerMayor}>
       <NavBarNavigation />
       <div className={styles.containerMayor}>
         <div className={styles.container}>
@@ -342,7 +380,7 @@ function Detail() {
                 <p className={styles.addresss}>{building.address}</p>
               </Descriptions.Item>
 
-              {isRoot && useAuthenticator ? <Button
+              {/* {isRoot && useAuthenticator ? <Button
                 style={{
                   backgroundColor: "#E47F36",
                   color: "black",
@@ -351,10 +389,11 @@ function Detail() {
                 }}
                 type="primary"
                 htmlType="submit"
+                
               // disabled={Object.keys(disabledDate) ? true : false}
               >
                 Editar sucursal
-              </Button> : null}
+              </Button> : null} */}
             </div>
           </div>
         </div>
@@ -363,7 +402,7 @@ function Detail() {
           {building.office_building.map((office) => (
             <div
               className={styles.officeDetailContainer}
-              onClick={() => getOfficeInfo(office.id)}
+              onClick={() => getOfficeInfo(office.id)}             
             >
               <CardOffice
                 id={office.id}
@@ -435,6 +474,11 @@ function Detail() {
                       {" "}
                       Capacidad máxima: {selectedOffice.capacity} personas
                     </h4>
+                    {selectedOffice.office_category.name === "Open space" && avalibleOpenSpace !== null ? <h4 style={{ margin: "5px" }}>
+                      {" "}
+                      Cantidad de espacios disoinibles: {avalibleOpenSpace}
+                    </h4>: null}
+                    
                     <h4 style={{ margin: "3px" }}>
                       {" "}
                       USD {selectedOffice.price}
@@ -442,7 +486,7 @@ function Detail() {
                   </div>
                   <Rate disabled defaultValue={selectedOffice.ratingAverage} />
                   <br></br>
-                  <Button
+                  {/* {auth.isRoot? <Button
                     style={{
                       backgroundColor: "#E47F36",
                       color: "black",
@@ -454,7 +498,7 @@ function Detail() {
                   // disabled={Object.keys(disabledDate) ? true : false}
                   >
                     Editar oficina
-                  </Button>
+                  </Button>: null} */}
                 </div>
 
                 <div className={styles.capacityoffice}> </div>
@@ -488,8 +532,8 @@ function Detail() {
                           style={{ width: 290, margin: "6px" }}
                         >
                           <Meta
-                            avatar={<Avatar src={sc.user_score.imgUrl} />}
-                            title={sc.user_score.name}
+                            avatar={<Avatar src={sc.user_score?.imgUrl? sc.user_score.imgUrl: null} />}
+                            title={sc.user_score?.name}
                             description={
                               <div>
                                 {" "}

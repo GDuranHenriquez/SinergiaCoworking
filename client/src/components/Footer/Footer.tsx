@@ -30,7 +30,7 @@ const FooterSection: React.FC = () => {
             <h3>Contacto</h3>
             <ul>
               <li>
-                <MailOutlined /> Correo Electrónico: correo@ejemplo.com
+                <MailOutlined /> Correo: sinergiacowork797@gmail.com
               </li>
               <li>
                 <PhoneOutlined /> Teléfono: +123456789
@@ -62,7 +62,6 @@ const FooterSection: React.FC = () => {
 const StyledFooter = styled(Footer)`
   background: #1f2551;
   color: white;
-  padding: 24px 0;
 `;
 
 const FooterColumn = styled.div`
@@ -85,7 +84,7 @@ const SocialIcons = styled.div`
   font-size: 24px;
   a {
     color: white;
-    margin-right: 16px;
+    margin: 16px;
     transition: color 0.3s;
     &:hover {
       color: #1890ff;

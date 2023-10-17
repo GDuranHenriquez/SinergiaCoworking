@@ -32,7 +32,7 @@ const updateOffice = async (req, res) => {
         if(building && building !== office.building){
             const checkBuilding = await Building.findByPk(building)
             if(!checkBuilding){
-                return res.status(404).json({error: 'El id del edificio provisto no está registrado'})
+                return res.status(404).json({error: 'El id de sucursal provisto no está registrado'})
             }
             office.building = building
         }

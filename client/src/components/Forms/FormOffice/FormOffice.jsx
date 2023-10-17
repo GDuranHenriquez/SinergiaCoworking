@@ -14,6 +14,7 @@ import styled from './formOffice.module.css'
 }; */
 
 const FormOffice = () => {
+  const endpoint = import.meta.env.VITE_BASENDPOINT_BACK
   const [form] = Form.useForm();
   const [idListImage, setIdListImage] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -29,15 +30,25 @@ const FormOffice = () => {
       });
 
       const data = { ...values, images: urlArray };
-      await axios.post('https://sinergia-coworking.onrender.com/office', data);
+      await axios.post(`${endpoint}/office`, data);
       form.resetFields();
       setIdListImage([]);
       setSuccessModalVisible(true);
+      localStorage.removeItem('formOfficeData');
     } catch (error) {
       console.error('Error al crear la oficina:', error);
       setErrorModalVisible(true);
     }
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('formOfficeData');
+  
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      form.setFieldsValue(parsedData);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,7 +125,7 @@ const FormOffice = () => {
       border: '1px solid rgba(0,0,0,0.3)',
       boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
     }}>
-      <h2 style={{ color: "black" }}>Guarda una nueva oficina</h2>
+      <h2 style={{ color: "black" }}>Guardar nueva oficina</h2>
       <Form
         form={form}
         labelCol={{ span: 6 }}
@@ -132,23 +143,44 @@ const FormOffice = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Área"
+          label="Área (m²)"
           name="area"
-          rules={[{ required: true, message: 'Por favor ingresa el área' }]}
+          rules={[{ required: true, message: 'Por favor ingresa el área' },
+          {
+            validator: async (_, value) => {
+              if (isNaN(value)) {
+                throw new Error('El área debe ser un valor numérico');
+              }
+            },
+          },]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Capacidad"
           name="capacity"
-          rules={[{ required: true, message: 'Por favor ingresa la capacidad' }]}
+          rules={[{ required: true, message: 'Por favor ingresa la capacidad' },
+          {
+            validator: async (_, value) => {
+              if (isNaN(value)) {
+                throw new Error('La capacidad debe ser un valor numérico');
+              }
+            },
+          },]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Precio"
           name="price"
-          rules={[{ required: true, message: 'Por favor ingresa el precio' }]}
+          rules={[{ required: true, message: 'Por favor ingresa el precio' },
+          {
+            validator: async (_, value) => {
+              if (isNaN(value)) {
+                throw new Error('El precio debe ser un valor numérico');
+              }
+            },
+          },]}
         >
           <Input />
         </Form.Item>
@@ -211,7 +243,7 @@ const FormOffice = () => {
 
         <Form.Item label="Guardar">
           <Button type="primary" htmlType="submit">
-            Guardar Oficina
+            Guardar
           </Button>
         </Form.Item>
       </Form>

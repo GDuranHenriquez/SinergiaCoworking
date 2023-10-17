@@ -3,6 +3,7 @@ import { Menu, Dropdown, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import LinkButton from './LinkButton'; // Asegúrate de importar el componente LinkButton
 import CloseSeionButton from '../../features/Navigation/navBarNavigation/CloseSesionButton';
+import { useAuth } from '../../Authenticator/AuthPro'; 
 
 interface MenuItem {
   text: string;
@@ -15,7 +16,9 @@ interface UserDropdownMenuProps {
 }
 
 const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], LogoutFunction }) => {
- 
+  const auth = useAuth();
+  const user = auth.getUser();
+
   const menu = (
     <Menu style={{ paddingTop: '20px' ,backgroundColor: '#1F2551', cursor: 'pointer' }}>
       {menuItems.map((item, index) => (
@@ -26,10 +29,18 @@ const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], Log
     </Menu>
   );
 
+  const userAvatar = (
+    <Avatar
+      src={user?.imgUrl}
+      size="large"
+      style={{ cursor: 'pointer' }}
+    />
+  );
+
   return (
     <Dropdown overlay={menu} >
       <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-      <Avatar icon={<UserOutlined />} size="large" style={{ backgroundColor: '#E47F36', cursor: 'pointer' }} />
+      { user?.imgUrl? userAvatar : <Avatar icon={<UserOutlined />} size="large" style={{ backgroundColor: '#E47F36', cursor: 'pointer' }} />}
       </a>
     </Dropdown>
   );

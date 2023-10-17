@@ -1,13 +1,25 @@
+.containerMayorDetail{
+  width: 100%;
+}
 .containerMayor {
-  background-color: #f8f6f6; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  height: max-content;  
+  gap: 35px;
 }
 .container {
   display: flex;
   background-color: #fbae5b2e;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-
+  
 }
 
 .comment {
@@ -22,10 +34,10 @@
 .containerInfoBuild {
   display: flex;
   flex-direction: row;
-  width: fit-content;
+  width: 80%;
   height: fit-content;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   justify-self: center;
   justify-items: center;
   align-items: center;
@@ -62,14 +74,9 @@
 }
 
 .officeDetailContainer {
-  margin: 5px;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  justify-self: center;
-  justify-items: center;
   display: flex;
-
+  flex-wrap: nowrap;
+  width: 25%;
 }
 
 .msj {
@@ -79,11 +86,10 @@
 .containerInfoOffices {
   display: flex;
   flex-direction: row;
+  width: 80%;
+  gap: 30px;
   align-items: center;
-  align-content: center;
   justify-content: center;
-  justify-self: center;
-  justify-items: center;
 }
 .containerTernario {
   align-items: center;
@@ -249,4 +255,10 @@
 }
 #iconsMinus:hover{
   cursor: pointer;;
+}
+
+@media (min-width: 1250px) {
+  .officeDetailContainer{
+
+  }
 }

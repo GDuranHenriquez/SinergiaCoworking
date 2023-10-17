@@ -8,4 +8,9 @@ function verifyRefreshToken(token){
   return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
 };
 
-module.exports = { verifyAccessToken, verifyRefreshToken }
+function decodeToken(token){
+  const decodedToken = jwt.decode(token);
+  return decodedToken;
+}
+
+module.exports = { verifyAccessToken, verifyRefreshToken, decodeToken }

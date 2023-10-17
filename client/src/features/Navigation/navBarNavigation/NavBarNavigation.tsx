@@ -13,6 +13,7 @@ import axios from "axios";
 import Loading from "../../../components/Loading/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 
@@ -23,6 +24,7 @@ const NavBarNavigation: React.FC = () => {
   const [isOpenModalRegister, openModalRegister, closeModalRegister] = useModal(false);
   const [isOpenModalLogin, openModalLogin, closeModalLogin] = useModal(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(user)
@@ -45,6 +47,7 @@ const NavBarNavigation: React.FC = () => {
         auth.signOut();
       }
       setIsLoading(false);
+      navigate('/');
     } catch (error) {
       if (typeof error === 'string') {
         messageError(error)
@@ -71,6 +74,7 @@ const NavBarNavigation: React.FC = () => {
         { text: 'Crear sucursal', path: '/crear-sucursal' },
         { text: 'Editar oficina', path: '/editar-oficina' },
         { text: 'Editar sucursal', path: '/editar-sucursal' },
+        { text: 'Graficas Informativas', path: '/charts' },
         { text: 'Cerrar sesión', path: '#' }
       ]
     } else {
@@ -108,12 +112,12 @@ const NavBarNavigation: React.FC = () => {
         <Header style={{ background: '#1F2551', width: '100%', height: '100%', margin: 0, padding: 0 }}>
           <Menu
             mode="inline"
-            style={{ background: '#1F2551', height: '100%', display: 'flex', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'space-between' }}>
+            style={{ background: '#1F2551', height: '100%', display: 'flex', flexWrap:'nowrap', alignItems: 'center', justifyContent: 'center', }}>
             {/* <div>  <span style={{ color: 'white', marginRight: '16px',  }}>Sinergia Cowork</span></div> */}
 
-            <img style={{ width: '4.7%', height: '40px', marginTop: '5px' }} src={LogoPrincipal} />
+            <img style={{ width: '4.8%', height: '57%',  marginRight:'4%' }} src={LogoPrincipal} />
 
-            <div>
+            <div style={{display:'flex', flexDirection:'row', textAlign:'center', justifyItems:'center', marginLeft:'5%', marginRight:'13%'}}>
               <LinkButton text='Inicio' path='/' />
               <LinkButton text='Sucursales' path='/#sucursales' />
               <LinkButton text='Nosotros' path='/nosotros' />
@@ -122,10 +126,10 @@ const NavBarNavigation: React.FC = () => {
             <div className="accesLogin">
               {authenticated ? (
                 <div>
-                  <span style={{ color: 'white', marginRight: '16px' }}>
-                    Hola, {user?.name || 'Usuario'}
-                  </span>
                   <UserDropdownMenu LogoutFunction={logout} menuItems={getItemMenu(isRoot)} />
+                  <span style={{ color: 'white', marginLeft: '16px' }}>
+                    {user?.name || 'Usuario'}
+                  </span>
                 </div>
               ) : (
                 <>

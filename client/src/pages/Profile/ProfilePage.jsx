@@ -15,10 +15,10 @@ function ProfilePage() {
             <BackGroundGlobal></BackGroundGlobal>
             <NavBarNavigation></NavBarNavigation>
             <MyProfile />
+            </ContinerHomePage>
             <Footer>
                 <FooterSection></FooterSection>
             </Footer>
-            </ContinerHomePage>
         </div>
     )
 }
@@ -27,17 +27,16 @@ const ContinerHomePage = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding-top: calc(100vh * 0.1);
-  min-height: calc(100vh * (1 - 0.1));
+  justify-content: center;
+  padding-top: calc(100vh * 0.1 + 30px);
   width: 100%;`
 
 const Footer = styled.div`
-
+  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
-  margin-top: 50px;
   `
 
 export default ProfilePage;
