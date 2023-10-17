@@ -1,7 +1,7 @@
 .container{
     width: 100%;
     max-height: 500px;
-    background-color: rgb(228, 127, 54);
+    background-color: rgba(228, 127, 54, 0.874);
 }
 
 

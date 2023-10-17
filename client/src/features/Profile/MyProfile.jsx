@@ -139,8 +139,8 @@ const MyProfile = () => {
           <Text strong>Email: <Text>{user.email}</Text></Text>
         </div>
         <div style={{display:'flex', flexWrap:'nowrap', gap:'20px', marginTop:'30px'}}>
-          <Button type="primary" onClick={showConfirm}>Cambiar Contraseña</Button>
-          <Button style={{  }} onClick={() => setChangeImageVisible(true)}>Cambiar Imagen</Button>
+          <Button type="primary" onClick={showConfirm}>Cambiar contraseña</Button>
+          <Button style={{  }} onClick={() => setChangeImageVisible(true)}>Cambiar imagen</Button>
         </div>
         
       </Card>

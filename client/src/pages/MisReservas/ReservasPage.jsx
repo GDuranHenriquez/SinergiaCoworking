@@ -28,12 +28,12 @@ const ContinerHomePage = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding-top: calc(100vh * 0.25);
+  padding-top: calc(100vh * 0.1 + 25px);
   /* min-height: calc(100vh * (1 - 0.1)); */
   width: 100%;`
 
 const Footer = styled.div`
-  position:absolute;
+  position:relative;
   left: 0;
   bottom: 0;
   width: 100%;

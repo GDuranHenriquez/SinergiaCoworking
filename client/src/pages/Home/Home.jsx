@@ -11,6 +11,7 @@ import FooterSection from "../../components/Footer/Footer";
 import { useCustomDispatch, useCustomSelector } from "../../hooks/redux";
 import { getAllBuildings } from "../../redux/slices/building/actionsBuilding";
 import MapStatic from "../../components/Map/MapStatic"
+import ImgExtra from "../../features/ImgExtra";
 
 function HomePages() {
 
@@ -40,6 +41,9 @@ function HomePages() {
       <div id="ubicaciones" data-aos="fade-up" className="thirdPage">
         <MapStatic buildings={allBuildings}/>
       </div>
+      <div data-aos="fade-up">
+        <ImgExtra></ImgExtra>
+      </div>
       <Footer>
      <FooterSection></FooterSection>
      </Footer>  
@@ -53,18 +57,19 @@ const ContinerHomePage = styled.div`
   align-items: center;
   min-height: calc(100vh * (1 - 0.1));
   width: 100%;
-  /* padding-top: calc(100vh * 0.1); */
+  padding-top: calc(100vh * 0.16);
   .firstPage{
     width: 100%;
-    min-height: calc(100vh * (1 - 0.1));
+  
+    /* min-height: calc(100vh * (1 - 0.1)); */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
   .secondPage{
     /* background-color: rgba(31, 37, 81, 0.6); */
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    margin-top:50px;
     height: max-content;
   
   }

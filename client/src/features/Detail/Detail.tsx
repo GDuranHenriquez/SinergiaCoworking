@@ -380,7 +380,7 @@ function Detail() {
                 <p className={styles.addresss}>{building.address}</p>
               </Descriptions.Item>
 
-              {isRoot && useAuthenticator ? <Button
+              {/* {isRoot && useAuthenticator ? <Button
                 style={{
                   backgroundColor: "#E47F36",
                   color: "black",
@@ -389,10 +389,11 @@ function Detail() {
                 }}
                 type="primary"
                 htmlType="submit"
+                
               // disabled={Object.keys(disabledDate) ? true : false}
               >
                 Editar sucursal
-              </Button> : null}
+              </Button> : null} */}
             </div>
           </div>
         </div>
@@ -485,7 +486,7 @@ function Detail() {
                   </div>
                   <Rate disabled defaultValue={selectedOffice.ratingAverage} />
                   <br></br>
-                  {auth.isRoot? <Button
+                  {/* {auth.isRoot? <Button
                     style={{
                       backgroundColor: "#E47F36",
                       color: "black",
@@ -497,7 +498,7 @@ function Detail() {
                   // disabled={Object.keys(disabledDate) ? true : false}
                   >
                     Editar oficina
-                  </Button>: null}
+                  </Button>: null} */}
                 </div>
 
                 <div className={styles.capacityoffice}> </div>

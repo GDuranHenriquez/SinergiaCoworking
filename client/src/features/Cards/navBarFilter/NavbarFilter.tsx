@@ -91,9 +91,11 @@ const [filterName, setFilterName] = useState<string>("");
 
       <Search
         className={style.search}
-        placeholder="Búsqueda"
+        placeholder="Búsqueda" 
         onSearch={onSearch}
-        style={{ width: 300 }}
+        style={{ width: 250, height: 30}}
+        
+        
       />
     </div>
   );

@@ -125,7 +125,7 @@ const FormOffice = () => {
       border: '1px solid rgba(0,0,0,0.3)',
       boxShadow: '0px 0px 10px 1px rgb(0,0,0)',
     }}>
-      <h2 style={{ color: "black" }}>Guarda una nueva oficina</h2>
+      <h2 style={{ color: "black" }}>Guardar nueva oficina</h2>
       <Form
         form={form}
         labelCol={{ span: 6 }}
@@ -243,7 +243,7 @@ const FormOffice = () => {
 
         <Form.Item label="Guardar">
           <Button type="primary" htmlType="submit">
-            Guardar Oficina
+            Guardar
           </Button>
         </Form.Item>
       </Form>

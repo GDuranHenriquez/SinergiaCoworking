@@ -30,7 +30,7 @@ const FooterSection: React.FC = () => {
             <h3>Contacto</h3>
             <ul>
               <li>
-                <MailOutlined /> Correo Electrónico: correo@ejemplo.com
+                <MailOutlined /> Correo: sinergiacowork797@gmail.com
               </li>
               <li>
                 <PhoneOutlined /> Teléfono: +123456789

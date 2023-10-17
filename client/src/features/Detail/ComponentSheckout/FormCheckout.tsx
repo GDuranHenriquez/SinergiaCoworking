@@ -42,7 +42,7 @@ function FormCheckout({ user, office, date, open, onCancel, itentPaiment, addres
           const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + query;
           const sale = await axios.post(endPoint);
           if(sale.status === 200){
-            messageSuccess('Gracias por su reserva, su pago ha sido procesado');
+            messageSuccess('El pago ha sido procesado con éxito');
             setTimeout(() =>{
               navigate('/reservas');
               setIsLoading(false);
