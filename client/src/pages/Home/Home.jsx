@@ -69,7 +69,9 @@ const ContinerHomePage = styled.div`
   
   }
   .thirdPage{
-    padding-top: calc(100vh * 0.1)
+    padding-top: calc(100vh * 0.1);
+    width: 100%;
+    max-width: 100%;    
   }
 `;
 

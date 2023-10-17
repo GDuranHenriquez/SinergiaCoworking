@@ -1,3 +1,10 @@
+.containerList{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+
 .ContainerinfoReserva{
   display: flex;
   flex-wrap: nowrap;
@@ -26,3 +33,15 @@
   gap: 30px;
 }
 
+.modal{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 4%;
+}
+
+.textarea:focus{
+  outline: none;
+}

@@ -27,6 +27,7 @@ const ContinerHomePage = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   padding-top: calc(100vh * 0.1);
   min-height: calc(100vh * (1 - 0.1));
   width: 100%;`

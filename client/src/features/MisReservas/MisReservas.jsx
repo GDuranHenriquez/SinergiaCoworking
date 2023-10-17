@@ -57,6 +57,8 @@ const MyReservations = () => {
         };
 
         const response = await postReviews(dispatch, updatedForm);
+        formu.resetFields();
+        setUserRating(0);
         setRatingVisible(false);
     
       } catch (error) {
@@ -66,11 +68,17 @@ const MyReservations = () => {
     
   
     const handleRatingCancel = () => {
+      formu.resetFields();
+      setUserRating(0);
       setRatingVisible(false);
+    };
+
+    const resetForm = () => {
+      setForm({ ...form, comment: ''})
     };
   
     return (
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className={styles.containerList}>
         <List
           itemLayout="horizontal"
           dataSource={reservations}
@@ -79,7 +87,7 @@ const MyReservations = () => {
               <Card
                 style={{ width: '80%', margin: '0 auto', boxShadow:'0px 0px 10px 0px rgb(0, 0, 0)'}}
                 title={reservation.office.name}
-                headStyle={{background:'rgba(228, 127, 54, 0.7)'}}
+                headStyle={{background:'rgba(228, 127, 54, 0.2)'}}
                 extra={
                   !reservation.score && (
                     <Button id={reservation.id} onClick={() => showRatingModal(reservation)}>
@@ -116,26 +124,33 @@ const MyReservations = () => {
           open={ratingVisible}
           onOk={handleRatingOk}
           onCancel={handleRatingCancel}
+          width="30%"
         >
+          <div className={styles.modal}>
           <p>Califica esta oficina:</p>
           <Rate value={userRating} onChange={handleRate} />
           <p>Deja un comentario:</p>
-          <Form form={formu}>
-            <Form.Item>
+          <Form form={formu} style={{width:'80%'}}>
+            <Form.Item name='textTarea'>
             <textarea
             value={form.comment}
             onChange={(e) => setForm({ ...form, comment: e.target.value })}
+            style={{background:'white', color:'black', padding:'3px', width:'100%', borderRadius:'5px', border:'1px solid rgba(0,0,0,0.4)'}}
+            className={styles.textarea}
+            rows={5}
           />
-            </Form.Item>
-            <p>Ingresa el ID de la oficina:</p>
+            </Form.Item >
+            {/* <p>Ingresa el ID de la oficina:</p>
             <Form.Item name="idOffice">
             <input
             type="text"
             value={reservations}
             onChange={(e) => setForm({ ...form, reservation: e.target.value })}
           />
-            </Form.Item>
+            </Form.Item> */}
           </Form>
+          </div>
+          
         </Modal>
       </div>
     );

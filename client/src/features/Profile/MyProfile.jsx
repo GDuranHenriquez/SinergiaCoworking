@@ -131,17 +131,18 @@ const MyProfile = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Card style={{ width: '100%' }}>
-        <Avatar size={100} src={user.imgUrl || <UserOutlined />} style={{ margin: '0 auto' }} />
+      <Card style={{ width: '100%', padding:'5px', boxShadow: '0px 0px 10px 1px rgb(0,0,0)', }}>
+        <Avatar size={100} src={user.imgUrl || <UserOutlined />} style={{ margin: '0 auto', marginBottom:'10px' }} />
         <Title level={4} style={{ textAlign: 'center' }}>Mi Perfil</Title>
-        <Text strong>Nombre: </Text>
-        <Text>{user.name}</Text>
-        <br />
-        <Text strong>Email: </Text>
-        <Text>{user.email}</Text>
-        <br />
-        <Button type="primary" onClick={showConfirm}>Cambiar Contraseña</Button>
-        <Button style={{ marginLeft: 10 }} onClick={() => setChangeImageVisible(true)}>Cambiar Imagen</Button>
+        <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>
+          <Text strong >Nombre: <Text>{user.name}</Text></Text>
+          <Text strong>Email: <Text>{user.email}</Text></Text>
+        </div>
+        <div style={{display:'flex', flexWrap:'nowrap', gap:'20px', marginTop:'30px'}}>
+          <Button type="primary" onClick={showConfirm}>Cambiar Contraseña</Button>
+          <Button style={{  }} onClick={() => setChangeImageVisible(true)}>Cambiar Imagen</Button>
+        </div>
+        
       </Card>
 
       <Modal

@@ -357,7 +357,7 @@ function Detail() {
 
 
   return (
-    <div className={styles.containerMayorDetail}>
+    <div className={styles.containerMayor}>
       <NavBarNavigation />
       <div className={styles.containerMayor}>
         <div className={styles.container}>
@@ -402,6 +402,7 @@ function Detail() {
             <div
               className={styles.officeDetailContainer}
               onClick={() => getOfficeInfo(office.id)}
+              
             >
               <CardOffice
                 id={office.id}
