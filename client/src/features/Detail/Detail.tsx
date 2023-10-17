@@ -338,13 +338,13 @@ function Detail() {
       if(selectedOffice.office_category.name === "Open space"){
         return <div className={styles.counter}>                      
           <div className={styles.iconsMinus}>
-            <button id={styles.iconsMinus} name="iconsMinus" onClick={handleAmount}>-</button>
+            <button id={styles.iconsMinus} name="iconsMinus" onClick={handleAmount}>➖</button>
           </div>
           <div className={styles.amount}>
             <input type="text" inputMode="none" value={amount} />
           </div>
           <div className= {styles.iconsPlus}>
-            <button id={styles.iconsPlus} name="iconsPlus" onClick={handleAmount}>+</button>
+            <button id={styles.iconsPlus} name="iconsPlus" onClick={handleAmount}>➕</button>
           </div>
         </div>  
       }else{
