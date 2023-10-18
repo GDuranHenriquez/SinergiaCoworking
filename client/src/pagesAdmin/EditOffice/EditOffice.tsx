@@ -1,20 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Avatar, Modal, Space, Table, Tag } from "antd";
+import {  Modal, Space, Table, Tag } from "antd";
 import { Link } from "react-router-dom";
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
-import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
-import { Footer } from "antd/es/layout/layout";
-import FooterSection from "../../components/Footer/Footer";
-import { useCustomSelector, useCustomDispatch } from "../../hooks/redux";
-import { getDetailOffice } from "../../redux/slices/offices/actionOffice";
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 import {
-  Building,
-  Categories,
-  Image,
   Office,
-  Services,
 } from "../../redux/slices/offices/typeOffice";
 
 interface DataType {
@@ -37,7 +28,6 @@ interface service {
 }
 
 function EditOfficePage() {
-  const dispatch = useCustomDispatch();
 
   const [bottom, setBottom] = useState<TablePaginationPosition>("bottomCenter");
   const [offices, setOffices] = useState<Office[]>([]);
@@ -73,7 +63,7 @@ function EditOfficePage() {
       .post(
         import.meta.env.VITE_BASENDPOINT_BACK + `/office/change-status/${id}`
       )
-      .then((response) => {
+      .then((_response) => {
         setIsSuccessModalVisible(true);
       })
       .catch((error) => {

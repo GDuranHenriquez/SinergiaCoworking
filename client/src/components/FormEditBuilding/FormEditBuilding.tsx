@@ -1,5 +1,5 @@
 import { UploadOutlined } from "@ant-design/icons";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAllCities } from "../../redux/slices/city/actionsCity";
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
@@ -123,7 +123,7 @@ const FormEditBuilding = () => {
     file,
     onSuccess,
   }: {
-    file: UploadFile;
+    file: File;
     onSuccess: (response: any) => void;
   }) => {
     try {
