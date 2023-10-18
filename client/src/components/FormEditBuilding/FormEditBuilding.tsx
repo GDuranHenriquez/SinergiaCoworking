@@ -1,36 +1,23 @@
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import { getAllCities } from "../../redux/slices/city/actionsCity";
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
-
-import { useLocation, useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useLocation } from "react-router";
 import { useCustomSelector, useCustomDispatch } from "../../hooks/redux";
 import axios from "axios";
 import { uploadImageToCloudinary } from "../../utils/configCloudinary";
 import MapDinamic from "../Map/MapDinamic";
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
-import { City } from "../../redux/slices/city/typesCity";
 import Link from "antd/es/typography/Link";
 
-interface BuildingObject {
-  id: string;
-  name: string;
-  address: string;
-  imageUrl: string;
-  building_city: City[] | [];
-}
 
 const FormEditBuilding = () => {
-  let { state } = useLocation();
+  const { state } = useLocation();
   const dispatch = useCustomDispatch();
   const cities = useCustomSelector((state) => state.city.allCities);
   const [form] = Form.useForm();
-  const [locations, setLocations] = useState<{ id: string; name: string }[]>(
-    []
-  );
-  const [currentImage, setCurrentImage] = useState(state.imageUrl);
+
   const [address, setAddress] = useState(state.address);
   const [image, setImage] = useState(null);
   const [name, setName] = useState(state.name);
@@ -65,10 +52,7 @@ const FormEditBuilding = () => {
     setCity(cities[value - 1].name);
   };
 
-  const handleImageChange = (e: any) => {
-    setImage(e.target.value);
-  };
-
+  
   const save = async (values: any) => {
     try {
       let newImage = values.imageUrl;
@@ -76,12 +60,17 @@ const FormEditBuilding = () => {
         newImage = image;
       }
       const data = { ...values, id: state.id, imageUrl: newImage };
-      console.log(data);
       await axios.put("https://sinergia-coworking.onrender.com/building", data);
       setIsSuccessModalVisible(true);
     } catch (error) {
-      console.error("Error al modificar la sucursal:", error);
-      setIsErrorModalContent(error.message || "Error al modificar la sucursal");
+      if(typeof error === 'string'){
+        setIsErrorModalContent(error || "Error al modificar la sucursal");
+      }else if(error instanceof Error){
+        const message = error.message
+        setIsErrorModalContent(message || "Error al modificar la sucursal");
+      } else {
+        console.log(error)
+      }         
       setIsErrorModalVisible(true);
     }
   };
@@ -96,6 +85,7 @@ const FormEditBuilding = () => {
         url: state.imageUrl,
       },
     ]);
+    setImage(state.imageUrl);
     setFormPosition({ lat: state.lat, lng: state.lng });
     setFinish(true);
   }, []);
@@ -124,10 +114,9 @@ const FormEditBuilding = () => {
     return e?.fileList;
   };
 
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(true);
-
   const handleImageRemove = () => {
     setImage(null);
+    setDefaultListImage(undefined);
   };
 
   const customRequest = async ({
@@ -139,6 +128,7 @@ const FormEditBuilding = () => {
   }) => {
     try {
       const response = await uploadImageToCloudinary(file);
+      setDefaultListImage(undefined);
       setImage(response);
       onSuccess(response);
       return null;
@@ -275,7 +265,7 @@ const FormEditBuilding = () => {
               accept="image/*"
               onRemove={handleImageRemove}
             >
-              {!defaultListImage && (
+              {!image && (
                 <Button icon={<UploadOutlined />}>Cargar imagen</Button>
               )}
             </Upload>
