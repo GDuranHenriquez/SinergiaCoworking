@@ -3,7 +3,8 @@ import { BuildingState, ObjectBuilding } from './typesBuilding';
 
 
 const initialState: BuildingState = {
-  allBuildings: []
+  allBuildings: [],
+  noDeletedBuildings: [],
 }
 
 const buildingSlices = createSlice({
@@ -12,11 +13,14 @@ const buildingSlices = createSlice({
   reducers: {
     setAllBuilding: (state, action: PayloadAction<ObjectBuilding[] | []>) => {
       state.allBuildings = action.payload;
+    },
+    setNoDeletedBuildings: (state, action: PayloadAction<ObjectBuilding[] | []>) => {
+      state.noDeletedBuildings = action.payload;
     }
   }
 });
 
 
-export const { setAllBuilding } = buildingSlices.actions;
+export const { setAllBuilding, setNoDeletedBuildings } = buildingSlices.actions;
 
 export default buildingSlices.reducer;
