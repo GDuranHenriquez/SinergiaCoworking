@@ -41,7 +41,8 @@ function HomePages() {
       <div id="ubicaciones" data-aos="fade-up" className="thirdPage">
         <MapStatic buildings={allBuildings}/>
       </div>
-      <div data-aos="fade-up">
+
+      <div data-aos="fade-up" style={{width:'100%'}}>
         <ImgExtra></ImgExtra>
       </div>
       <Footer>
