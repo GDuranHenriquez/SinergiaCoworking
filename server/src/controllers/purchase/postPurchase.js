@@ -33,7 +33,7 @@ const postPurchase = async (req, res) => {
         const response = await Reservation.findOne({where: {id: reservation.id}, include: [{model: Office, as: 'office_reservation', include:[{model: Building, as: 'office_building'}]}]})
         
         
-        sendRentSpaceToUser(checkUser.email, checkUser.name, typeOffice, price, amount, address )
+        sendRentSpaceToUser(checkUser.email, checkUser.name, typeOffice, response.office_reservation.name, reservation.date, purchase.date, price, amount, response.office_reservation.price, response.office_reservation.office_building.address)
         return res.status(200).json(response)
         
     } catch (error) {
