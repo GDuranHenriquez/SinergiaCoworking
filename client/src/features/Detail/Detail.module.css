@@ -171,7 +171,11 @@
 }
 .servicesoffice {
   color: black;
-  background-color: #fbae5b2e;
+  /* background-color: #fbae5b2e; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
   
 }
 
