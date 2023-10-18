@@ -29,16 +29,17 @@ interface service {
 
 function EditOfficePage() {
 
-  const [bottom, setBottom] = useState<TablePaginationPosition>("bottomCenter");
+  const [bottom, _setBottom] = useState<TablePaginationPosition>("bottomCenter");
   const [offices, setOffices] = useState<Office[]>([]);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
-  const [errorIsModalContent, setIsErrorModalContent] = useState("");
+  const [_errorIsModalContent, setIsErrorModalContent] = useState("");
   const [shouldRefresh, setShouldRefresh] = useState(false);
 
   useEffect(() => {
     setShouldRefresh(false);
     const token = localStorage.getItem("token");
+    
     if (token) {
       const config = {
         headers: {
@@ -57,8 +58,7 @@ function EditOfficePage() {
     }
   }, [shouldRefresh]);
 
-  const deleteFunction = (id: any) => {
-    console.log(id);
+  const deleteFunction = (id: string) => {
     axios
       .post(
         import.meta.env.VITE_BASENDPOINT_BACK + `/office/change-status/${id}`
@@ -67,9 +67,15 @@ function EditOfficePage() {
         setIsSuccessModalVisible(true);
       })
       .catch((error) => {
-        console.error("Error al realizar la acción:", error);
-        setIsErrorModalContent(error.message || "Error al realizar la acción");
-        setIsErrorModalVisible(true);
+        if(typeof error === 'string'){
+          console.error("Error al realizar la acción:", error);
+        }else if(error instanceof Error){
+          setIsErrorModalContent(error.message || "Error al realizar la acción");
+          setIsErrorModalVisible(true);
+        } else {
+          setIsErrorModalContent(error.message || "Error al realizar la acción");
+        }       
+        
       });
   };
 

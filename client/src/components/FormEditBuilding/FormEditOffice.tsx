@@ -2,7 +2,7 @@ import {  UploadOutlined } from "@ant-design/icons";
 import  { useState, useEffect } from "react";
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
-
+import { UploadRequestOption } from 'antd/lib/upload/interface';
 import { useLocation } from "react-router";
 import axios from "axios";
 import { uploadImageToCloudinary } from "../../utils/configCloudinary";
@@ -131,7 +131,7 @@ const FormEditOffice = () => {
     file,
     onSuccess,
   }: {
-    file: UploadFile;
+    file: File;
     onSuccess: (response: any) => void;
   }) => {
     try {
@@ -143,6 +143,11 @@ const FormEditOffice = () => {
       console.error("Error al cargar la imagen:", error);
     }
   };
+
+  const customRequestUp = (options: UploadRequestOption<any>) =>{
+    const { file, onSuccess } = options;
+    customRequest({file, onSuccess})
+  }
   return (<>
       {finish? 
       <div
@@ -284,7 +289,7 @@ const FormEditOffice = () => {
           <Form.Item style={{ marginLeft: "0%", width: "100%" }}>
             <Upload
               defaultFileList={defaultListImage}
-              customRequest={customRequest as any}
+              customRequest={customRequestUp}
               maxCount={1}
               listType="picture"
               accept="image/*"

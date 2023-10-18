@@ -23,10 +23,10 @@ function EditBuildingPage() {
   const listBuildings = useCustomSelector(
     (state) => state.buildin.allBuildings
   );
-  const [bottom, setBottom] = useState<TablePaginationPosition>("bottomCenter");
+  const [bottom, _setBottom] = useState<TablePaginationPosition>("bottomCenter");
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
-  const [errorIsModalContent, setIsErrorModalContent] = useState("");
+  const [_errorIsModalContent, setIsErrorModalContent] = useState("");
 
   useEffect(() => {
     getAllBuildings(dispatch);

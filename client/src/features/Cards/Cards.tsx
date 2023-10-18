@@ -13,8 +13,7 @@ function Cards() {
   const [buildingsToShow, setBuildingsToShow] = useState<ObjectBuilding[]>([]);
 
    useEffect(() => {
-    setBuildingsToShow(getBuildingsToShow(allBuildings, 1, DEFAULT_PAGE_SIZE))
-    console.log(allBuildings)
+    setBuildingsToShow(getBuildingsToShow(allBuildings, 1, DEFAULT_PAGE_SIZE));
   }, [allBuildings]); 
 
   const getBuildingsToShow = (buildings: ObjectBuilding[], page: number, size: number) => {

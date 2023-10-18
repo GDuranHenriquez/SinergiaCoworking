@@ -158,11 +158,11 @@ function FormCheckout({ user, office, date, open, onCancel, itentPaiment, addres
             <label>Precio: </label> <span>${office?.price} /u</span>
           </div>
           <div className={styled.infoUser}>
-            <label>Total precio: </label> <span>${office?.price * amount}</span>
+            <label>Total precio: </label> <span>${office?.price?  office?.price * amount: 0}</span>
           </div></>
       }else{
         <><div className={styled.infoUser}>
-          <label>Precio: </label> <span>${office?.price * amount}</span>
+          <label>Precio: </label> <span>${office?.price && office?.price * amount}</span>
         </div></>
       }
     }
