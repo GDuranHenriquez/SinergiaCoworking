@@ -9,10 +9,8 @@ function IconDescription({ data }: { data?: DataMayus }) {
   }
   return (
     <div>
-      <div>{data.icon}</div>
-      <div>
-        <span>{data.description}</span>
-      </div>
+      <div>{data.icon }{data.description}</div>
+      
     </div>
   );
 }

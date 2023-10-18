@@ -403,10 +403,8 @@ function Detail() {
             <img
               id={styles.imagenn}
               style={{
-                maxHeight: "400px",
-                width: "100%",
-                borderRadius: "7px",
-                border: "1px solid #25252570",
+                height: "245px",
+                width: "45%",
               }}
               alt="example"
               src={building.imageUrl}
@@ -501,8 +499,7 @@ function Detail() {
                       style={{
                         width: "100%",
                         height: "80%",
-                        border: "1px solid #dfe1e2",
-                        borderRadius: "7px",
+                        borderRadius: "0px 7px 0px 7px",
                       }}
                       src={img.imageUrl}
                     ></img>
@@ -538,6 +535,20 @@ function Detail() {
                   >
                     Editar oficina
                   </Button>: null} */}
+                <div className={styles.servicesoffice}>
+                  <h5>
+                    {/* <h2>¿Por qué elegir Sinergia?</h2> */}
+                    <div className={styles.servicio}>
+                      {selectedOffice?.services?.map((service) => (
+                        <IconDescription 
+                        data={getInfoDataServicios(
+                            service.name.toLowerCase()
+                          )}
+                        ></IconDescription>
+                      ))}
+                    </div>
+                  </h5>
+                </div>
                 </div>
 
                 <div className={styles.capacityoffice}> </div>
@@ -547,20 +558,6 @@ function Detail() {
 
             {officeId && selectedOffice && (
               <div className={styles.abajo}>
-                <div className={styles.servicesoffice}>
-                  <h5>
-                    {/* <h2>¿Por qué elegir Sinergia?</h2> */}
-                    <div className={styles.servicio}>
-                      {selectedOffice?.services?.map((service) => (
-                        <IconDescription
-                          data={getInfoDataServicios(
-                            service.name.toLowerCase()
-                          )}
-                        ></IconDescription>
-                      ))}
-                    </div>
-                  </h5>
-                </div>
                 <div>
                   <Space direction="vertical" size={15}>
                     <div className={styles.scoreoffice}>
