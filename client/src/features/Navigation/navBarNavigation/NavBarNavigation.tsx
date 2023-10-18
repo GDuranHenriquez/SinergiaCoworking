@@ -117,11 +117,12 @@ const NavBarNavigation: React.FC = () => {
 
             <img style={{ width: '4.8%', height: '57%',  marginRight:'4%' }} src={LogoPrincipal} />
 
-            <div style={{display:'flex', flexDirection:'row', textAlign:'center', justifyItems:'center', marginLeft:'5%', marginRight:'13%'}}>
+            <div style={{display:'flex', flexDirection:'row', textAlign:'center', justifyItems:'center', marginLeft:'5%', marginRight:'13%', gap:'70px'}}>
               <LinkButton text='Inicio' path='/' />
               <LinkButton text='Sucursales' path='/#sucursales' />
+              <LinkButton text='Ubicaciones' path='/#ubicaciones' />
               <LinkButton text='Nosotros' path='/nosotros' />
-              <LinkButton text='Ubicaciones' path='/#ubicaciones' /></div>
+              </div>
 
             <div className="accesLogin">
               {authenticated ? (

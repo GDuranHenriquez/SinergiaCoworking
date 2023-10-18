@@ -1,28 +1,19 @@
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import React, { useState, useEffect } from "react";
-import { getAllCities } from "../../redux/slices/city/actionsCity";
+import {  UploadOutlined } from "@ant-design/icons";
+import  { useState, useEffect } from "react";
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
 
-import { useLocation, useParams } from "react-router";
-import { useDispatch } from "react-redux";
-import { useCustomSelector, useCustomDispatch } from "../../hooks/redux";
+import { useLocation } from "react-router";
 import axios from "axios";
 import { uploadImageToCloudinary } from "../../utils/configCloudinary";
-import MapDinamic from "../Map/MapDinamic";
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
 import { Office } from "../../redux/slices/offices/typeOffice";
-import {
-  Services,
-  Image,
-  Categories,
-} from "../../redux/slices/offices/typeOffice";
 import { fetchCategories, fetchServices } from "../Forms/FormOffice/Utils";
 import Link from "antd/es/typography/Link";
 
 const FormEditOffice = () => {
   const [form] = Form.useForm();
-  let { state } = useLocation();
+  const { state } = useLocation();
 
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
@@ -35,9 +26,7 @@ const FormEditOffice = () => {
   const [services, setServices] = useState([]);
   const [image, setImage] = useState(null);
   const [office, setOffice] =  useState<Office>();
-  const [defaultListImage, setDefaultListImage] = useState<
-  UploadFile<any>[] | undefined
->(undefined);
+  const [defaultListImage, setDefaultListImage] = useState<UploadFile<any>[] | undefined>(undefined);
 
 
 
