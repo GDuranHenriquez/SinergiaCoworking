@@ -191,6 +191,7 @@
   width: 100%;
   flex-wrap: nowrap;
   background-color: #ffff;
+  min-width: 100%
 }
 
 .counter{

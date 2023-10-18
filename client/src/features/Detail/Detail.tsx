@@ -563,10 +563,12 @@ function Detail() {
                     <div className={styles.scoreoffice}>
                       {" "}
                       {selectedOffice?.office_score? arrayScore?.map((sc, index) => (
+                        // <div style={{width:'100%'}}>
                         <Card
                           key={index}
                           size="small"
-                          style={{ width: '25%', margin: "6px" }}
+                          bodyStyle={{width:'100%'}}
+                          style={{ width: '100%', margin: "6px"}}
                         >
                           {selectedOffice?.office_score? <Meta
                             avatar={<Avatar src={selectedOffice?.office_score[sc].user_score?.imgUrl? selectedOffice?.office_score[sc].user_score.imgUrl: null} />}
@@ -583,6 +585,7 @@ function Detail() {
                             }
                           />: null}
                         </Card>
+                        // </div>
                       )) : null}
                     </div>
                   </Space>
