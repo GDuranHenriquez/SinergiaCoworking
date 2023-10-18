@@ -113,12 +113,7 @@ const MyProfile = () => {
       });
       if(data.status === 200){
         const updateUser = data.data.userUpdate;
-        const updateNewUser = {
-          user: updateUser,
-          accessToken: auth.getAccessToken(),
-          refreshToken: auth.getRefreshToken()
-        }
-        auth.saveUser(updateNewUser);
+        auth.saveDataUser(updateUser);
       }
       setIsLoading(false);
       onSuccess(response);

@@ -127,9 +127,19 @@ const FormEditOffice = () => {
       await axios.put("https://sinergia-coworking.onrender.com/office", data);
       setIsSuccessModalVisible(true);
     } catch (error) {
-      console.error("Error al modificar la oficina:", error);
-      setIsErrorModalContent(error.message || "Error al modificar la oficina");
-      setIsErrorModalVisible(true);
+      if(typeof error === 'string'){
+        console.error("Error al modificar la oficina:", error);
+        setIsErrorModalContent(error || "Error al modificar la oficina");
+        setIsErrorModalVisible(true);
+      }else if(error instanceof Error){
+        const message = error.message
+        console.error("Error al modificar la oficina:", message);
+        setIsErrorModalContent(message || "Error al modificar la oficina");
+        setIsErrorModalVisible(true);
+      } else {
+        console.log(error)
+      }  
+      
     }
   };
 
