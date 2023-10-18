@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getBuildingFilters } from "../../../redux/slices/building/actionsBuilding";
 import { useCustomDispatch } from "../../../hooks/redux";
+import React from "react";
 
 function NavbarFilter() {
 
@@ -41,6 +42,13 @@ const [filterName, setFilterName] = useState<string>("");
           console.error("Error al cargar las categorias:", error);
         });
   }, []);
+
+  const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterName(e.target.value);
+    if(e.target.value === ''){
+      getBuildingFilters(dispatch, filterCity, filterCategory, e.target.value)
+    }
+  }
 
   const onSearch = (value: string) => {
     setFilterName(value)
@@ -94,7 +102,7 @@ const [filterName, setFilterName] = useState<string>("");
         placeholder="Búsqueda" 
         onSearch={onSearch}
         style={{ width: 250, height: 30}}
-        
+        onChange={searchOnChange}
         
       />
     </div>

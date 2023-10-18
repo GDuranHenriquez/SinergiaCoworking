@@ -179,9 +179,8 @@
 
 .scoreoffice {
   display: flex;
-  flex-direction: row;
-  flex-wrap:wrap;
-
+  width: 100%;
+  flex-wrap: nowrap;
   background-color: #ffff;
 }
 

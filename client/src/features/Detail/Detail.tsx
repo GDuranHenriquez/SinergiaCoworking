@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import NavBarNavigation from "../Navigation/navBarNavigation/NavBarNavigation";
-import { Descriptions, Calendar, Button, CalendarProps } from "antd";
+import { Descriptions, Calendar, Button } from "antd";
 import styles from "./Detail.module.css";
 import axios from "axios";
 import CardOffice from "./CardOffice";
@@ -19,8 +19,6 @@ import FormCheckout from "./ComponentSheckout/FormCheckout";
 import Loading from "../../components/Loading/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { HiOutlineMinusCircle } from "react-icons/hi";
 
 /* import { ObjectBuilding } from "../../redux/slices/building/typesBuilding"; */
 interface BuildingObject {
@@ -42,6 +40,9 @@ type Offices = {
 type Reservation = {
   id: string;
   date: Date;
+  amount: number;
+  purchase: string;
+  office: string
 };
 
 type Imagen = {
@@ -49,6 +50,11 @@ type Imagen = {
   imageUrl?: string;
   office?: string;
 };
+
+type OfficeCategory = {
+  id: number;
+  name: string
+}
 
 export type OfficeInfo = {
   id?: string;
@@ -60,6 +66,7 @@ export type OfficeInfo = {
   services?: ServicesOffice[];
   office_score?: ScoreOffice[];
   office_reservation?: Reservation[] | [];
+  office_category: OfficeCategory
 };
 
 type ImageOffice = {
@@ -108,8 +115,7 @@ function Detail() {
   const [priceQuery, setPriceQuery] = useState<number>(0);
   const [avalibleOpenSpace, setAvalibleOpenSpace] = useState<number  | null>(null)
   const user = auth.getUser();
-  const useAuthenticator = auth.isAuthenticated;
-  const isRoot = auth.isRoot;
+  const [arrayScore, setArrayScore] = useState<Array<number>| null>(null);
   const { id } = useParams<{ id: string }>();
   const [building, setBuilding] = useState<BuildingObject>({
     name: "",
@@ -157,8 +163,24 @@ function Detail() {
       .get(import.meta.env.VITE_BASENDPOINT_BACK + `/office/${id}`)
       .then((response) => {
         setOfficeId(id);
+        /* selectedOffice?.office_score? */
         setSelectedOffice(response.data);
-        const typeOffice = selectedOffice.office_category.name
+        const officeDetail = response.data.office_score;
+        const randomScore = [];
+        if(officeDetail.length <= 4){
+          for(let i = 0; i < officeDetail.length; i++){
+            const index = i;
+            randomScore.push(index)
+          }
+        }else{
+          for(let i = officeDetail.length - 1; i >= officeDetail.length -4 ; i--){
+            const index = i;
+            randomScore.push(index)
+          }
+        }
+        
+        setArrayScore(randomScore);
+        const typeOffice = selectedOffice?.office_category.name
         if (typeOffice !== "Open space") {
           setAmount(1);
         }
@@ -178,22 +200,49 @@ function Detail() {
     if (!selectedOffice) {
       return false;
     }
-    let currentDate = current.toISOString();
+    let currentDate = current.format('YYYY-MM-DD');
     currentDate = currentDate.substring(0, 10);
-    for (
-      let index = 0;
-      index < selectedOffice.office_reservation.length;
-      index++
-    ) {
-      const element = selectedOffice.office_reservation[index];
 
-      let date = "" + element.date;
-      date = date.substring(0, 10);
+    let numberReserve = 0;
+    if(selectedOffice.office_category.name === 'Open space'){
+      if(selectedOffice.office_reservation){
+        for (
+          let index = 0;
+          index < selectedOffice.office_reservation.length;
+          index++
+          ) {
+            const element = selectedOffice.office_reservation[index];
+            let date = "" + element.date;
+            date = date.substring(0, 10);
 
-      if (date == currentDate) {
-        return true;
+          if (date  === currentDate) {
+            numberReserve = numberReserve + element.amount;
+          }
+        }
+        if( numberReserve === selectedOffice.capacity){
+          return true;
+        }
       }
-    }
+      
+
+    }else{
+        if( selectedOffice.office_reservation){
+          for (
+            let index = 0;
+            index < selectedOffice.office_reservation.length;
+            index++
+          ) {
+            const element = selectedOffice.office_reservation[index];
+      
+            let date = "" + element.date;
+            date = date.substring(0, 10);
+      
+            if (date == currentDate) {
+              return true;
+            }
+          }
+        }    
+      }     
 
     return current && current < dayjs().endOf("day");
   };
@@ -248,7 +297,7 @@ function Detail() {
       const sendQuery = {
         description: selectedOffice?.name,
         amount: amount,
-        amountPrice: selectedOffice?.price * amount,
+        amountPrice: selectedOffice?.price ? selectedOffice.price * amount : undefined,
         date: calendarDate,
         office: officeId
       }
@@ -302,7 +351,6 @@ function Detail() {
       if(selectedOffice.office_category.name === "Open space"){
         setIsLoading(true);
         disponibilitiOpenSpace(officeId, dateSelec).then((res) =>{
-          console.log(res)
           setAvalibleOpenSpace(res);
           setIsLoading(false);
         }).catch((error) => {
@@ -316,13 +364,14 @@ function Detail() {
     setIsLoading(false)
   };
 
-  const handleAmount = (e) =>{
-    if(e.target.name === 'iconsMinus'){
+  const handleAmount = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
+    const target = e.target as HTMLButtonElement;
+    if(target.name === 'iconsMinus'){
       const newAmount = amount -1
       if(newAmount >= 1){
         setAmount(newAmount);
       }
-    }else if(e.target.name === 'iconsPlus'){
+    }else if(target.name === 'iconsPlus'){
       const newAmount = amount + 1
       if(avalibleOpenSpace){
         if(newAmount <= avalibleOpenSpace){
@@ -476,7 +525,7 @@ function Detail() {
                     </h4>
                     {selectedOffice.office_category.name === "Open space" && avalibleOpenSpace !== null ? <h4 style={{ margin: "5px" }}>
                       {" "}
-                      Cantidad de espacios disoinibles: {avalibleOpenSpace}
+                      Cantidad de espacios disponibles: {avalibleOpenSpace}
                     </h4>: null}
                     
                     <h4 style={{ margin: "3px" }}>
@@ -526,27 +575,28 @@ function Detail() {
                   <Space direction="vertical" size={15}>
                     <div className={styles.scoreoffice}>
                       {" "}
-                      {selectedOffice?.office_score?.map((sc) => (
+                      {selectedOffice?.office_score? arrayScore?.map((sc, index) => (
                         <Card
+                          key={index}
                           size="small"
-                          style={{ width: 290, margin: "6px" }}
+                          style={{ width: '25%', margin: "6px" }}
                         >
-                          <Meta
-                            avatar={<Avatar src={sc.user_score?.imgUrl? sc.user_score.imgUrl: null} />}
-                            title={sc.user_score?.name}
+                          {selectedOffice?.office_score? <Meta
+                            avatar={<Avatar src={selectedOffice?.office_score[sc].user_score?.imgUrl? selectedOffice?.office_score[sc].user_score.imgUrl: null} />}
+                            title={selectedOffice?.office_score[sc].user_score?.name}
                             description={
                               <div>
                                 {" "}
-                                <Rate disabled defaultValue={sc.score} />
+                                <Rate disabled defaultValue={selectedOffice?.office_score[sc].score} />
                                 <br></br>
                                 <div className={styles.comment}>
-                                  {sc.comment}
+                                  {selectedOffice?.office_score[sc].comment}
                                 </div>
                               </div>
                             }
-                          />
+                          />: null}
                         </Card>
-                      ))}
+                      )) : null}
                     </div>
                   </Space>
                 </div>
