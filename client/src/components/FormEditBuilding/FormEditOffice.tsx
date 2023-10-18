@@ -9,7 +9,6 @@ import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarN
 import { Office } from "../../redux/slices/offices/typeOffice";
 import { fetchCategories, fetchServices } from "../Forms/FormOffice/Utils";
 import Link from "antd/es/typography/Link";
-import { UploadProps } from 'antd/lib/upload/interface';
 
 const FormEditOffice = () => {
   const [form] = Form.useForm();
@@ -17,7 +16,7 @@ const FormEditOffice = () => {
 
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
-  const [errorIsModalContent, setIsErrorModalContent] = useState("");
+  const [_errorIsModalContent, setIsErrorModalContent] = useState("");
   const [finish, setFinish] = useState(false);
   const [name, setName] = useState();
   const [capacity, setCapacity] = useState();
@@ -40,9 +39,6 @@ const FormEditOffice = () => {
   const handlePriceChange = (e: any) => {
     setPrice(e.target.value);
   };
-  const handleCategoryChange = (e: any) => {
-    setCategory(e.target.value);
-  };
 
   const handleModalOk = () => {
     setIsSuccessModalVisible(false);
@@ -56,7 +52,14 @@ const FormEditOffice = () => {
       setServices(services);
       setCategory(categories);
     } catch (error) {
-      console.error("Error al cargar opciones:", error);
+      if(typeof error === 'string'){
+        console.error("Error al realizar la acción:", error);
+      }else if(error instanceof Error){
+        const message = error.message
+        console.error("Error al realizar la acción:", message);
+      } else {
+        console.log(error)
+      }    
     }
   };
   useEffect(() => {
@@ -79,7 +82,15 @@ const FormEditOffice = () => {
         }
       })
       .catch((error) => {
-        console.error("Error al realizar la acción:", error);
+        if(typeof error === 'string'){
+          console.error("Error al realizar la acción:", error);
+        }else if(error instanceof Error){
+          const message = error.message
+          console.error("Error al realizar la acción:", message);
+        } else {
+          console.log(error)
+        }    
+        
       });
   }, []);
 
@@ -88,7 +99,7 @@ const FormEditOffice = () => {
     form.setFieldValue("capacity", office?.capacity);
     form.setFieldValue("price", office?.price);
     form.setFieldValue("category", office?.category);
-    let svcs: number[]=[];
+    const svcs: number[]=[];
     office?.services?.map((s) => {
       svcs.push(s.id)
     })
@@ -109,7 +120,7 @@ const FormEditOffice = () => {
       if (image) {
         newImage = image;
       }
-      let imgArray = [];
+      const imgArray = [];
       imgArray.push(newImage);
       const data = { ...values, id: state.id, images: imgArray};
      
