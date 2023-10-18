@@ -14,6 +14,7 @@ function Cards() {
 
    useEffect(() => {
     setBuildingsToShow(getBuildingsToShow(allBuildings, 1, DEFAULT_PAGE_SIZE))
+    console.log(allBuildings)
   }, [allBuildings]); 
 
   const getBuildingsToShow = (buildings: ObjectBuilding[], page: number, size: number) => {
@@ -31,14 +32,17 @@ function Cards() {
       
       <Pagination style={{display:'flex', flexDirection:'row', marginTop: '30px', justifyContent:'center'}} defaultCurrent={1} total={allBuildings.length} defaultPageSize={DEFAULT_PAGE_SIZE} onChange={onChange} />
       <div className={styles.cardsContainer}>
-        {buildingsToShow.map((building) => (
-          <CardBuilding
-          id={building.id}
-            title={building.name}
-            description={building.address}
-            image={building.imageUrl}
-          ></CardBuilding>
-        ))}
+        {buildingsToShow.map((building) =>{
+          if(!building.deleted){
+            return <CardBuilding
+                      id={building.id}
+                        title={building.name}
+                        description={building.address}
+                        image={building.imageUrl}
+                      ></CardBuilding>
+          }
+          }
+        )}
        
         </div>
         {buildingsToShow.length == 0 && <div className={styles.msj}> No se han encontrado resultados para esta búsqueda. </div>}
