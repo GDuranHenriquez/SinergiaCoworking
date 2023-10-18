@@ -1,0 +1,50 @@
+.containerChartData{
+  width: 95%;
+  height: 50vh;
+  color: black;
+}
+.containerChartData > h1{
+  color: black;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 30px;
+}
+.chart{
+  width: 300;
+}
+.containerChart{
+  width: 100%;
+}
+
+.description{
+  margin-top: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (min-width: 1400px) {
+  .containerChartData{
+    max-width: 1400px;
+    width: 1400px;
+    height: 50vh;
+    color: black;
+  }
+  .containerChartData > h1{
+    color: black;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 30px;
+  }
+  .chart{
+    width: 300;
+  }
+  .containerChart{
+    width: 100%;
+  }
+  
+  .description{
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}

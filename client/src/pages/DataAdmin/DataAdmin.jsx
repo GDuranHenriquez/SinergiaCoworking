@@ -1,9 +1,6 @@
 import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
-import FooterSection from "../../components/Footer/Footer";
-import { Row, Col } from 'antd';
 import styled from "styled-components";
-import ResumenMensual from "../../features/ResumenMensual/ResumenMensual";
 import AdminChartContainer from "../../features/AdminChart/AdminChartContainer";
 
 
@@ -17,9 +14,9 @@ function DataAdmin() {
               <NavBarNavigation></NavBarNavigation>
               <AdminChartContainer/>
             </ContinerHomePage>
-            <Footer>
+            {/* <Footer>
                 <FooterSection></FooterSection>
-            </Footer>
+            </Footer> */}
         </div>
     )
 }
@@ -31,10 +28,11 @@ const ContinerHomePage = styled.div`
   justify-content: space-around;
   padding-top: calc(100vh * 0.1);
   min-height: calc(100vh * (1 - 0.34));
-  max-width: 100vw;
-  width: 100%;`
+  max-width: 100%;
+  width: 100%;
+`
 
-const Footer = styled.div`
+/* const Footer = styled.div`
 
   left: 0;
   bottom: 0;
@@ -42,5 +40,5 @@ const Footer = styled.div`
   width: 100%;
   text-align: center;
   margin-top: 10px;
-  `
+  ` */
 export default DataAdmin;

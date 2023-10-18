@@ -7,7 +7,7 @@ interface Props{
 }
 
 function LinkBotton({text, path} : Props){
-  return  <Button type='link' style={{ marginLeft: '70px', color:"#FFFF", fontSize:'16px' }} href={path} >{text}</Button> 
+  return  <Button type='link' style={{ marginLeft: '0px', textDecoration:'none', color:"#FFFF", fontSize:'16px' }} href={path} >{text}</Button> 
 }
 
 

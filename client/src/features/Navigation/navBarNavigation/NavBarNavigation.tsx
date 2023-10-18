@@ -133,8 +133,8 @@ const NavBarNavigation: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  <AccesButton text="REGISTRO" click={openModalRegister} />
-                  <AccesButton text="ACCEDER" click={openModalLogin} />
+                  <AccesButton name="register" text="REGISTRO" click={openModalRegister} />
+                  <AccesButton name="login" text="ACCEDER" click={openModalLogin} />
                 </>
               )}
             </div>
