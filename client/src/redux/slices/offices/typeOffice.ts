@@ -1,6 +1,6 @@
 
 export interface OfficeState{
-  detatilOffice: Office;
+  detatilOffice: Office | object;
 }
 
 export type Office = {
@@ -32,7 +32,8 @@ export type Categories = {
  
 export type Image = {
   id:number;
-  imageUrl: string
+  imageUrl: string;
+  office?: string;
 }
 
 export type Building = {

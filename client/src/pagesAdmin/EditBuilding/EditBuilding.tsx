@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Avatar, Button, Modal, Space, Table, Tag } from "antd";
+import { Modal, Space, Table } from "antd";
 import { Link } from "react-router-dom";
-import BackGroundGlobal from "../../components/backgrounds/BackgroundGlobal";
-import { Footer } from "antd/es/layout/layout";
-import FooterSection from "../../components/Footer/Footer";
 import { useCustomSelector, useCustomDispatch } from "../../hooks/redux";
 import { getAllBuildings } from "../../redux/slices/building/actionsBuilding";
-import { log } from "console";
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 
 interface DataType {
   key: React.Key;
@@ -42,7 +38,7 @@ function EditBuildingPage() {
       .post(
         import.meta.env.VITE_BASENDPOINT_BACK + `/building/change-status/${id}`
       )
-      .then((response) => {
+      .then((_response) => {
         setIsSuccessModalVisible(true);
       })
       .catch((error) => {

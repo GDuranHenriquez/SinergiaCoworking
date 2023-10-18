@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import styles from "./CardOffice.module.css";
 import { Rate } from "antd";
+import { Image } from "../../redux/slices/offices/typeOffice";
 
 const { Meta } = Card;
 
@@ -9,14 +10,8 @@ interface Props {
   name: string;
   capacity: number;
   ratingAverage: number;
-  office_officeImage: imagen[] | [];
+  office_officeImage: Image[] | [];
 }
-
-type imagen = {
-  id?: string;
-  imageUrl?: string;
-  office?: string;
-};
 
 function CardOffice({ id, name, capacity, ratingAverage, office_officeImage }: Props) {
   return (
