@@ -101,7 +101,7 @@ const [filterName, setFilterName] = useState<string>("");
         className={style.search}
         placeholder="Búsqueda" 
         onSearch={onSearch}
-        style={{ width: 250, height: 30}}
+        style={{ width: 250, height: 30,}}
         onChange={searchOnChange}
         
       />
