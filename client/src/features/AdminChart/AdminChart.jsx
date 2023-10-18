@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
+import styles from './chart.module.css';
 
 class AdminChart extends Component {
   constructor(props) {
@@ -21,14 +22,15 @@ class AdminChart extends Component {
     return (
       <div className="app">
         <div className="row">
-          <div className="mixed-chart">
+          <div className="mixed-chart containerChart">
             <Chart
               options={this.state.options}
               series={this.state.series}
               type="bar"
-              width={"500"}
+              /* width={100} */
               height={'auto'}
-            
+              className={styles.chart}
+              /* style={{width:'300px'}} */
             />
           </div>
         </div>

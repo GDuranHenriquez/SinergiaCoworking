@@ -20,8 +20,8 @@ const FooterSection: React.FC = () => {
             <h3>Ubicaciones</h3>
             <ul>
               <li>Buenos Aires</li>
-              <li>Rosario </li>
               <li>Mendoza</li>
+              <li>Rosario </li>
             </ul>
           </FooterColumn>
         </Col>
@@ -30,10 +30,10 @@ const FooterSection: React.FC = () => {
             <h3>Contacto</h3>
             <ul>
               <li>
-                <MailOutlined /> Correo: sinergiacowork797@gmail.com
+              <PhoneOutlined /> +142826759
               </li>
               <li>
-                <PhoneOutlined /> Teléfono: +123456789
+              <MailOutlined /> s.cowork@sinergia.com
               </li>
             </ul>
           </FooterColumn>
@@ -62,6 +62,7 @@ const FooterSection: React.FC = () => {
 const StyledFooter = styled(Footer)`
   background: #1f2551;
   color: white;
+  padding: 0;
 `;
 
 const FooterColumn = styled.div`

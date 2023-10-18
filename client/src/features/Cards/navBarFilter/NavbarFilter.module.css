@@ -10,29 +10,27 @@
     background-color: #1F2551;
 }
 
-.search > span:hover {
-    background: none;
-    /* border:none; */
+.search > span> span:hover {
+    background:fixed;
+    
     background-color: white;
     border-radius: 8px;
-    /* height: 200px; */
+    pointer-events:none;
 
 }
 
 /* .search > span > span > input:hover {
-    background: none;
-    border:none;
-    background-color: black;
-    border-radius: 8px;
-    height: 200px;
+    pointer-events: none;
 
+}
+.search:hover{
+    pointer-events: none;
+    outline-color: none; 
 } */
 
-
-
-.search:hover{
-    /* background-color: white; */
-    outline-color: none;
-    border: none;
- 
+.search > span {
+    background:fixed;    
+    background-color: white;
+    border-radius: 8px;
+    pointer-events:all;
 }

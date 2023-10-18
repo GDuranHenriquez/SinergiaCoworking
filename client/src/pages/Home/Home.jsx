@@ -57,6 +57,8 @@ const ContinerHomePage = styled.div`
   align-items: center;
   min-height: calc(100vh * (1 - 0.1));
   width: 100%;
+  padding: 0;
+  margin: 0;
   padding-top: calc(100vh * 0.16);
   .firstPage{
     width: 100%;
