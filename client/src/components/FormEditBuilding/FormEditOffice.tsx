@@ -129,7 +129,7 @@ const FormEditOffice = () => {
     } catch (error) {
       if(typeof error === 'string'){
         console.error("Error al modificar la oficina:", error);
-        setIsErrorModalContent(error.message || "Error al modificar la oficina");
+        setIsErrorModalContent(error || "Error al modificar la oficina");
         setIsErrorModalVisible(true);
       }else if(error instanceof Error){
         const message = error.message
