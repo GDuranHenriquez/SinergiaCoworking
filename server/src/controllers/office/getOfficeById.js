@@ -1,4 +1,5 @@
 const {Category, Office, OfficeImage, Score, Service, Reservation, User} = require('../../db')
+const {Op} = require('sequelize')
 const {getTokenFromHeader} = require('../../token/getTokenFromHeader')
 const {verifyAdmin} = require('../../auth/verifyAdmin')
 
@@ -14,12 +15,14 @@ const getOfficeById = async (req, res) => {
         if(!isAdmin){
             filters.deleted = false
         }
-        const office = await Office.findOne({where: filters, 
+        let actualDate = new Date()
+        actualDate = new Date(`${actualDate.getFullYear()}-${actualDate.getMonth()+1}-${actualDate.getDate()-1}`)
+        const office = await Office.findOne({where: filters,
             include: [
                 {model: Service, through: {attributes: []}},
                 {model: Category, as: 'office_category'},
                 {model: OfficeImage, as: 'office_officeImage'},
-                {model: Reservation, as: 'office_reservation'},
+                {model: Reservation, as: 'office_reservation', where: {date: {[Op.gt]: actualDate}}, required: false},
                 {model: Score, as: 'office_score', include: [{model: User, as: 'user_score', attributes:['name', 'imgUrl']}]}
             ]});
 

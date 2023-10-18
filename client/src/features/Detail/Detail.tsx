@@ -19,23 +19,17 @@ import FormCheckout from "./ComponentSheckout/FormCheckout";
 import Loading from "../../components/Loading/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Office } from "../../redux/slices/offices/typeOffice";
 /* import { ObjectBuilding } from "../../redux/slices/building/typesBuilding"; */
 interface BuildingObject {
   id: string;
   name: string;
   address: string;
   imageUrl: string;
-  office_building: Offices[] | [];
+  office_building: Office[] | [];
 }
 
-type Offices = {
-  id: string;
-  name: string;
-  capacity: number;
-  ratingAverage: number;
-  office_officeImage: Imagen[] | [];
-};
+
 
 type Reservation = {
   id: string;
@@ -45,11 +39,6 @@ type Reservation = {
   office: string
 };
 
-type Imagen = {
-  id?: string;
-  imageUrl?: string;
-  office?: string;
-};
 
 type OfficeCategory = {
   id: number;
@@ -451,15 +440,16 @@ function Detail() {
           {building.office_building.map((office) => (
             <div
               className={styles.officeDetailContainer}
-              onClick={() => getOfficeInfo(office.id)}             
+              onClick={() => getOfficeInfo(office.id? office.id:'')}             
             >
-              <CardOffice
-                id={office.id}
-                name={office.name}
-                capacity={office.capacity}
+             <CardOffice
+                id={office.id? office.id : ''}
+                name={office.name? office.name:''}
+                capacity={office.capacity? Number(office.capacity): 0}
                 ratingAverage={office.ratingAverage}
-                office_officeImage={office.office_officeImage}
+                office_officeImage={office.office_officeImage? office.office_officeImage: []}
               ></CardOffice>
+              
             </div>
           ))}
         </div>

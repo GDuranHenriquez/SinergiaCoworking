@@ -38,7 +38,7 @@ function FormCheckout({ user, office, date, open, onCancel, itentPaiment, addres
       if(itentPaiment){
         const result = await confirmPayment(itentPaiment.client_secret);
         if(result?.paymentIntent && result?.paymentIntent?.status === 'succeeded'){
-          const query = `/purchase/?user=${user?.id}&office=${office?.id}&date=${date}&stripe=${result.paymentIntent.id}&price=${price}&amount=${amount}&typeOffice=${office.office_category.name}&address=${address}`
+          const query = `/purchase/?user=${user?.id}&office=${office?.id}&date=${date}&stripe=${result.paymentIntent.id}&price=${price}&amount=${amount}&typeOffice=${office?.office_category.name}&address=${address}`
           const endPoint = import.meta.env.VITE_BASENDPOINT_BACK + query;
           const sale = await axios.post(endPoint);
           if(sale.status === 200){
