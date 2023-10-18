@@ -28,7 +28,7 @@ const FormEditBuilding = () => {
   const [defaultListImage, setDefaultListImage] = useState<UploadFile<any>[] | undefined>(undefined);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
-  const [errorIsModalContent, setIsErrorModalContent] = useState("");
+  const [_errorIsModalContent, setIsErrorModalContent] = useState("");
 
   useEffect(() => {
     getAllCities(dispatch);
@@ -107,12 +107,6 @@ const FormEditBuilding = () => {
     });
   }, [formAddress]);
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
 
   const handleImageRemove = () => {
     setImage(null);

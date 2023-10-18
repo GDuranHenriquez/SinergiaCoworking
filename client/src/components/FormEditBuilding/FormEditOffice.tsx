@@ -2,7 +2,6 @@ import {  UploadOutlined } from "@ant-design/icons";
 import  { useState, useEffect } from "react";
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
-import { UploadRequestOption } from 'antd/lib/upload/interface';
 import { useLocation } from "react-router";
 import axios from "axios";
 import { uploadImageToCloudinary } from "../../utils/configCloudinary";
@@ -10,6 +9,7 @@ import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarN
 import { Office } from "../../redux/slices/offices/typeOffice";
 import { fetchCategories, fetchServices } from "../Forms/FormOffice/Utils";
 import Link from "antd/es/typography/Link";
+import { UploadProps } from 'antd/lib/upload/interface';
 
 const FormEditOffice = () => {
   const [form] = Form.useForm();
@@ -144,8 +144,8 @@ const FormEditOffice = () => {
     }
   };
 
-  const customRequestUp = (options: UploadRequestOption<any>) =>{
-    const { file, onSuccess } = options;
+  const customRequestUp = (_options: any ) =>{
+    const { file, onSuccess } = _options;
     customRequest({file, onSuccess})
   }
   return (<>
