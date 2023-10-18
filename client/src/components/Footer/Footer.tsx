@@ -14,7 +14,7 @@ const { Footer } = Layout;
 const FooterSection: React.FC = () => {
   return (
     <StyledFooter>
-      <Row gutter={[16, 16]}>
+      <Row style={{margin: 0}} gutter={[16, 16]}>
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
           <FooterColumn>
             <h3>Ubicaciones</h3>
