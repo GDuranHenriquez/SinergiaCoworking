@@ -5,11 +5,13 @@ import { useAuth } from '../../Authenticator/AuthPro';
 import { uploadImageToCloudinary } from '../../utils/configCloudinary';
 import axios from 'axios';
 import Loading from '../../components/Loading/Loading';
+import { useNavigate } from 'react-router';
 
 const { Title, Text } = Typography;
 
 const MyProfile = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const [_changePasswordVisible, setChangePasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [changeImageVisible, setChangeImageVisible] = useState(false);
@@ -22,6 +24,9 @@ const MyProfile = () => {
   useEffect(() => {
     const token = auth.getAccessToken();
     setAccessToken(token);
+    if(!auth.getUser()){
+      navigate('/');
+    }
   }, []);
 
   const handlePasswordChange = async (values) => {
