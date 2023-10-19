@@ -14,9 +14,9 @@ function ProfilePage() {
               <BackGroundGlobal></BackGroundGlobal>
               <NavBarNavigation></NavBarNavigation>
               <MyReservations/>
-              <Footer>
+              {/* <Footer>
                 <FooterSection></FooterSection>
-              </Footer>
+              </Footer> */}
             </ContinerHomePage>
             
         </div>

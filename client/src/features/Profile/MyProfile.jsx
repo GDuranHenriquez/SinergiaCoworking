@@ -104,6 +104,7 @@ const MyProfile = () => {
     try {
       setIsLoading(true);
       const response = await uploadImageToCloudinary(file);
+      console.log(response)
       // Actualiza la imagen de perfil en Cloudinary
       const data = await axios.put('https://sinergia-coworking.onrender.com/update-user/', { imgUrl: response }, {
         headers: {
