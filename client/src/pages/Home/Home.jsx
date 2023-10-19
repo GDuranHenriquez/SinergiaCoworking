@@ -39,11 +39,9 @@ function HomePages() {
         <NavbarFilter></NavbarFilter>
         <Cards></Cards>   
       </div>
-      { noDeletedBuildings.length > 0 ? 
         <div id="ubicaciones" data-aos="fade-up" className="thirdPage">
           <MapStatic buildings={noDeletedBuildings}/>
         </div>
-       : null}
       <div data-aos="fade-up" style={{width:'100%'}}>
         <ImgExtra></ImgExtra>
       </div>
