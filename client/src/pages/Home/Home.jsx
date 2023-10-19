@@ -16,7 +16,8 @@ import ImgExtra from "../../features/ImgExtra";
 function HomePages() {
 
   const dispatch = useCustomDispatch();
-  const { allBuildings } = useCustomSelector((state) => state.buildin);
+  const allBuildings = useCustomSelector((state) => state.buildin.allBuildings);
+  const noDeletedBuildings = useCustomSelector((state) => state.buildin.noDeletedBuildings);
   
   useEffect(() => {
     AOS.init({delay: 250, duration: 1000,});
@@ -38,10 +39,11 @@ function HomePages() {
         <NavbarFilter></NavbarFilter>
         <Cards></Cards>   
       </div>
-      <div id="ubicaciones" data-aos="fade-up" className="thirdPage">
-        <MapStatic buildings={allBuildings}/>
-      </div>
-
+      { noDeletedBuildings.length > 0 ? 
+        <div id="ubicaciones" data-aos="fade-up" className="thirdPage">
+          <MapStatic buildings={noDeletedBuildings}/>
+        </div>
+       : null}
       <div data-aos="fade-up" style={{width:'100%'}}>
         <ImgExtra></ImgExtra>
       </div>

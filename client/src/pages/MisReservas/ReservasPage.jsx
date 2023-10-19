@@ -33,11 +33,12 @@ const ContinerHomePage = styled.div`
   width: 100%;`
 
 const Footer = styled.div`
-  position:relative;
+  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
+  margin: 0;
   margin-top: 50px;
   `
 

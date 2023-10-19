@@ -1,6 +1,7 @@
 
 export interface BuildingState{
   allBuildings: ObjectBuilding[] | [];
+  noDeletedBuildings: ObjectBuilding[] | [];
 }
 
 export type ObjectBuilding = {

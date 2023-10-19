@@ -3,13 +3,14 @@ import { Icon, divIcon, point } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import icon from '../../assets/icons/placeHolder.png'
 import styles from './map.module.css';
+import { useEffect, useState } from "react";
 
 function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom = 7, buildings}) {
   const customIcon = new Icon({
     iconUrl: icon,
     iconSize: [38, 38]
   });
-  
+  const [markers, setMarkers] = useState([])
   const createClusterCustomIcon = function (cluster) {
     return new divIcon({
       html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
@@ -17,27 +18,32 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
       iconSize: point(33, 33, true)
     });
   };
-
-  let markers
-  if(buildings && Array.isArray(buildings)){
-    console.log(buildings);
-    markers = buildings.map(building => {
-      try {
-      return {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
-      } catch (err) {
-
+  function createMakers(data) {
+    if(data.length > 0) {
+      if(data && Array.isArray(data)){
+        const markersArr = data.map((building) => {
+          try {
+            return {geocode: [building.lat, building.lng], popUpText: building.name, popUpImg: building.imageUrl, popUpAddress: building.address}
+          } catch (err) {
+            console.log(err)
+          }
+        })
+        setMarkers(markersArr)
+      } else if(data && !Array.isArray(data)){
+        const markersArr = [{geocode: [data.lat, data.lng], popUpText: data.name, popUpImg: data.imageUrl, popUpAddress: data.address}]
+        setMarkers(markersArr)
       }
-  })
-  } else if(buildings){
-    markers = [{geocode: [buildings.lat, buildings.lng], popUpText: buildings.name, popUpImg: buildings.imageUrl, popUpAddress: buildings.address}]
+    }  
   }
+  useEffect(() => {
+    createMakers(buildings)
+  }, [buildings])
   return (<div className={styles.ContainerMap}>
     <MapContainer
       center={position}
       zoom={zoom}
       scrollWheelZoom={false}
       className={styles.mapContainer}
-      /* style={{ minHeight: "50vh", width: '100vw' }} */
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -47,8 +53,8 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
         chunkedLoading
         iconCreateFunction={createClusterCustomIcon}
       >
-        {markers.map((marker) => (
-          <Marker position={marker.geocode} icon={customIcon} draggable={true} autoPan={true}>
+        {markers.length > 0 ? markers.map((marker) => (
+          <Marker position={marker.geocode} icon={customIcon} draggable={false} autoPan={true}>
             <Popup>
             <div style={{width: '200px', height:'250px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img style={{width: "10rem", height: "10rem"}} src={marker.popUpImg} />
@@ -57,7 +63,7 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
               </div>
             </Popup>
           </Marker>
-        ))}
+        )) : null}
       </MarkerClusterGroup>
     </MapContainer>
   </div>

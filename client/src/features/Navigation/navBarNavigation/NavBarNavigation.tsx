@@ -26,10 +26,6 @@ const NavBarNavigation: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(user)
-  }, [])
-
   const user = auth.getUser()
 
   const logout = async () => {
