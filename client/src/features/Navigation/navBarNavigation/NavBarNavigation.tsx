@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LinkButton from "./LinkButton";
 import AccesButton from "./AccesButton";
 import LogoPrincipal from "../../../../src/assets/LogoSc.png";
