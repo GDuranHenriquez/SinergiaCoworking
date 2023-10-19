@@ -10,7 +10,6 @@ const { Title, Text } = Typography;
 
 const MyProfile = () => {
   const auth = useAuth();
-  const user = auth.getUser();
   const [_changePasswordVisible, setChangePasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [changeImageVisible, setChangeImageVisible] = useState(false);
@@ -127,11 +126,11 @@ const MyProfile = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Card style={{ width: '100%', padding:'5px', boxShadow: '0px 0px 10px 1px rgb(0,0,0)', }}>
-        <Avatar size={100} src={user.imgUrl || <UserOutlined />} style={{ margin: '0 auto', marginBottom:'10px' }} />
+        <Avatar size={100} src={auth.getUser().imgUrl || <UserOutlined />} style={{ margin: '0 auto', marginBottom:'10px' }} />
         <Title level={4} style={{ textAlign: 'center' }}>Mi Perfil</Title>
         <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>
-          <Text strong >Nombre: <Text>{user.name}</Text></Text>
-          <Text strong>Email: <Text>{user.email}</Text></Text>
+          <Text strong >Nombre: <Text>{auth.getUser().name}</Text></Text>
+          <Text strong>Email: <Text>{auth.getUser().email}</Text></Text>
         </div>
         <div style={{display:'flex', flexWrap:'nowrap', gap:'20px', marginTop:'30px'}}>
           <Button type="primary" onClick={showConfirm}>Cambiar contraseña</Button>
