@@ -126,7 +126,7 @@ const MyProfile = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {auth.getUser().imgUrl ? <Card style={{ width: '100%', padding:'5px', boxShadow: '0px 0px 10px 1px rgb(0,0,0)', }}>
+      {auth.getUser() ? <Card style={{ width: '100%', padding:'5px', boxShadow: '0px 0px 10px 1px rgb(0,0,0)', }}>
         <Avatar size={100} src={auth.getUser().imgUrl || <UserOutlined />} style={{ margin: '0 auto', marginBottom:'10px' }} />
         <Title level={4} style={{ textAlign: 'center' }}>Mi Perfil</Title>
         <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>
