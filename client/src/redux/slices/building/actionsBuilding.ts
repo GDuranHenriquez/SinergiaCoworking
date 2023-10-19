@@ -1,6 +1,7 @@
 import axios from "axios";
-import { setAllBuilding } from ".";
+import { setAllBuilding, setNoDeletedBuildings } from ".";
 import { Dispatch } from "../../store/store";
+import { ObjectBuilding } from "./typesBuilding";
 
 
 export const getAllBuildings = async (dispatch: Dispatch) => {
@@ -15,8 +16,14 @@ export const getAllBuildings = async (dispatch: Dispatch) => {
       },
     };
     const { data } = await axios.get(endpoint, config); 
-    
     dispatch(setAllBuilding(data));
+    const dataFiltered: Array<ObjectBuilding> = []
+    data.forEach((building: ObjectBuilding) => {
+      if(!building.deleted){
+        dataFiltered.push(building)
+      } 
+    })
+    dispatch(setNoDeletedBuildings(dataFiltered))
   } else {
 
     const { data } = await axios.get(endpoint); 

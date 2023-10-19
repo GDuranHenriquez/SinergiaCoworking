@@ -17,7 +17,6 @@ interface UserDropdownMenuProps {
 
 const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], LogoutFunction }) => {
   const auth = useAuth();
-  const user = auth.getUser();
 
   const menu = (
     <Menu style={{ paddingTop: '20px' ,backgroundColor: '#1F2551', cursor: 'pointer' }}>
@@ -31,7 +30,7 @@ const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], Log
 
   const userAvatar = (
     <Avatar
-      src={user?.imgUrl}
+      src={auth.getUser()?.imgUrl}
       size="large"
       style={{ cursor: 'pointer' }}
     />
@@ -40,7 +39,7 @@ const UserDropdownMenu: React.FC<UserDropdownMenuProps> = ({ menuItems = [], Log
   return (
     <Dropdown overlay={menu} >
       <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-      { user?.imgUrl? userAvatar : <Avatar icon={<UserOutlined />} size="large" style={{ backgroundColor: '#E47F36', cursor: 'pointer' }} />}
+      { auth.getUser()?.imgUrl? userAvatar : <Avatar icon={<UserOutlined />} size="large" style={{ backgroundColor: '#E47F36', cursor: 'pointer' }} />}
       </a>
     </Dropdown>
   );

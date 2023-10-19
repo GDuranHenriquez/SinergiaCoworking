@@ -16,13 +16,11 @@ const AuthContext = createContext({
   getRefreshToken: () => {},
   getUser: () => ({} as UserInfo | undefined),
   getAccess: () => {},
-  signOut: () => {}
+  signOut: () => {},
+  saveDataUser: (_user: UserInfo) => {},
 });
 
 
-
-// Crear el contexto con los tipos definidos
-/* const AuthContext = React.createContext<AuthContextType | undefined>(undefined); */
 
 export function AuthProvider({ children }: AuthProviderProps) {
 
@@ -31,8 +29,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserInfo>()
   const [accessToken, setAccessToken] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true); 
-
-  
+ 
 
   async function requestNewAccessToken(refreshToken: string) {
     try {
@@ -54,6 +51,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return null;
     }
   }
+
+  const saveDataUser = (user: UserInfo) => {
+    setUser(user);
+  };
 
   async function checkAuth() {
     if (accessToken) {
@@ -162,7 +163,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken, signOut, getUser, getAccess, isRoot }}>
+      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken, signOut, getUser, getAccess, isRoot, saveDataUser }}>
       {isLoading? <Loading/> : children}
     </AuthContext.Provider>
   );

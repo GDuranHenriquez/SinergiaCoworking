@@ -11,9 +11,9 @@ function ProfilePage() {
     return (
         <div>
             <ContinerHomePage>
-            <BackGroundGlobal></BackGroundGlobal>
-            <NavBarNavigation></NavBarNavigation>
-            <MyProfile />
+              <BackGroundGlobal></BackGroundGlobal>
+              <NavBarNavigation></NavBarNavigation>
+              <MyProfile />
             </ContinerHomePage>
             <Footer>
                 <FooterSection></FooterSection>
@@ -31,7 +31,7 @@ const ContinerHomePage = styled.div`
   width: 100%;`
 
 const Footer = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;

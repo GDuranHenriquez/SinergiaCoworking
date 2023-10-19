@@ -10,23 +10,10 @@
     background-color: #1F2551;
 }
 
-.search > span> span:hover {
-    background:fixed;
-    
-    background-color: white;
-    border-radius: 8px;
-    pointer-events:none;
-
+.search > span:hover {
+    pointer-events:all;
 }
 
-/* .search > span > span > input:hover {
-    pointer-events: none;
-
-}
-.search:hover{
-    pointer-events: none;
-    outline-color: none; 
-} */
 
 .search > span {
     background:fixed;    
@@ -34,3 +21,7 @@
     border-radius: 8px;
     pointer-events:all;
 }
+.search > span> button:hover{
+    pointer-events:all;
+}
+

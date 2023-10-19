@@ -26,12 +26,6 @@ const NavBarNavigation: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(user)
-  }, [])
-
-  const user = auth.getUser()
-
   const logout = async () => {
     setIsLoading(true);
     try {
@@ -129,7 +123,7 @@ const NavBarNavigation: React.FC = () => {
                 <div>
                   <UserDropdownMenu LogoutFunction={logout} menuItems={getItemMenu(isRoot)} />
                   <span style={{ color: 'white', marginLeft: '16px' }}>
-                    {user?.name || 'Usuario'}
+                    {auth.getUser()?.name || 'Usuario'}
                   </span>
                 </div>
               ) : (
