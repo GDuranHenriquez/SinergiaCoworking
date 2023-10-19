@@ -12,13 +12,14 @@ function ProfilePage() {
     return (
         <div>
             <ContinerHomePage>
-            <BackGroundGlobal></BackGroundGlobal>
-            <NavBarNavigation></NavBarNavigation>
-            <MyReservations/>
+              <BackGroundGlobal></BackGroundGlobal>
+              <NavBarNavigation></NavBarNavigation>
+              <MyReservations/>
+              <Footer>
+                  <FooterSection></FooterSection>
+              </Footer>
             </ContinerHomePage>
-            <Footer>
-                <FooterSection></FooterSection>
-            </Footer>
+            
         </div>
     )
 }
@@ -33,7 +34,7 @@ const ContinerHomePage = styled.div`
   width: 100%;`
 
 const Footer = styled.div`
-  position: absolute;
+  position: relative;
   left: 0;
   bottom: 0;
   width: 100%;
