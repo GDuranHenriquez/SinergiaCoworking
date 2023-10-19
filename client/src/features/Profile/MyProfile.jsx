@@ -11,7 +11,7 @@ const { Title, Text } = Typography;
 const MyProfile = () => {
   const auth = useAuth();
   const user = auth.getUser();
-  const [changePasswordVisible, setChangePasswordVisible] = useState(false);
+  const [_changePasswordVisible, setChangePasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [changeImageVisible, setChangeImageVisible] = useState(false);
   const [accessToken, setAccessToken] = useState('');
