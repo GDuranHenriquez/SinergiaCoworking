@@ -3,7 +3,6 @@ import { Card, Col, Row } from 'antd';
 import AdminChart from "./AdminChart"
 import axios from 'axios';
 import styles from './chart.module.css';
-import city from '../../redux/slices/city';
 
 const AdminChartContainer = () => {
     const endpoint = import.meta.env.VITE_BASENDPOINT_BACK
@@ -18,7 +17,7 @@ const AdminChartContainer = () => {
     }, [])
     return (
         <div className={styles.containerChartData}>
-            <h1>Estadísticas de espacios/ciudad</h1>
+            <h1>Estadísticas de reservas por ciudad</h1>
             <Row gutter={10}>
                 {data.cities?.map((city) => {
                     return <Col span={8}>
@@ -29,7 +28,7 @@ const AdminChartContainer = () => {
                 })}
             </Row>
             <div className={styles.description}>
-                <span>Histograma de frecuencia de reservas realizadas en los ultimos seis meses en las ciudades de { data.cities?.map((city, index) => <span>{city.cityName}{index < data.cities.length -1? <span>, </span>:<span>.</span>}</span>) } </span>
+                <span>Histograma de frecuencia de reservas realizadas en los últimos seis meses en las ciudades de { data.cities?.map((city, index) => <span>{city.cityName}{index < data.cities.length -1? <span>, </span>:<span>.</span>}</span>) } </span>
             </div>
         </div>
         

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Input, Select, Switch, Upload, Modal } from 'antd';
+import { Button, Form, Input, Select, Upload, Modal } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { uploadImageToCloudinary } from '../../../utils/configCloudinary';
 import { fetchServices, fetchCategories, fetchBuildings } from './Utils';
-import styled from './formOffice.module.css'
 
 /* const normFile = (e) => {
   if (Array.isArray(e)) {
@@ -128,8 +127,8 @@ const FormOffice = () => {
       <h2 style={{ color: "black" }}>Guardar nueva oficina</h2>
       <Form
         form={form}
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 14 }}
+        labelCol={{ span: 3 }}
+        wrapperCol={{ span: 24 }}
         layout="horizontal"
         style={{width: '100%'}}
         onFinish={handleSubmit}
@@ -241,20 +240,14 @@ const FormOffice = () => {
           </Upload>
         </Form.Item>
 
-        <Form.Item label="Guardar">
+        <Form.Item style={{ marginTop: '30px'}}>
           <Button type="primary" htmlType="submit">
             Guardar
           </Button>
         </Form.Item>
       </Form>
     </div>
-    <div className={styled.carouselContainer}>
-        {idListImage.map((data, index) => (
-          <div key={index} className={styled.imgContainer}>
-            <img  className={styled.img}  src={data.url} alt={data.name} />
-          </div>
-        ))}
-    </div>
+    
     <Modal
         title="Oficina creada con éxito"
         visible={successModalVisible}

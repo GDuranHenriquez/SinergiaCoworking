@@ -4,8 +4,6 @@ import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarN
 import FooterSection from "../../components/Footer/Footer";
 import styled from "styled-components";
 
-
-
 function ProfilePage() {
 
     return (

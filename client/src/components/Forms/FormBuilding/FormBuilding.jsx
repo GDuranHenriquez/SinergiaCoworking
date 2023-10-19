@@ -107,8 +107,7 @@ const FormBuilding = () => {
 
 
   return (<div style={{
-    width: '100%',
-   
+    width: '80%',   
     padding: '20px',
     display: 'flex',
     flexDirection: 'column',

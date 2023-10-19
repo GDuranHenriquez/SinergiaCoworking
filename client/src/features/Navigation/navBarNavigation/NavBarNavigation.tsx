@@ -68,7 +68,7 @@ const NavBarNavigation: React.FC = () => {
         { text: 'Crear sucursal', path: '/crear-sucursal' },
         { text: 'Editar oficina', path: '/editar-oficina' },
         { text: 'Editar sucursal', path: '/editar-sucursal' },
-        { text: 'Graficas Informativas', path: '/charts' },
+        { text: 'Gráficas informativas', path: '/charts' },
         { text: 'Cerrar sesión', path: '#' }
       ]
     } else {

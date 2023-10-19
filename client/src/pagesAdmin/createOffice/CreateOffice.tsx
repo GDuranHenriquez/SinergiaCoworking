@@ -4,7 +4,6 @@ import { styled } from "styled-components";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import NavBarNavigation from "../../features/Navigation/navBarNavigation/NavBarNavigation";
-import FooterSection from "../../components/Footer/Footer";
 import FormOffice from "../../components/Forms/FormOffice/FormOffice";
 
 function CreateOfficePage() {
@@ -20,9 +19,9 @@ function CreateOfficePage() {
         <div className="containerFormOffice">
           <FormOffice/>
         </div>
-      <Footer>
+      {/* <Footer>
         <FooterSection></FooterSection>
-     </Footer>  
+     </Footer>  */} 
     </ContinerHomePage>
   );
 }
@@ -59,13 +58,13 @@ const ContinerHomePage = styled.div`
   }
 `;
 
-const Footer = styled.div`
+/* const Footer = styled.div`
 
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
   margin-top: 50px;
-  `
+  ` */
 
 export default CreateOfficePage;
