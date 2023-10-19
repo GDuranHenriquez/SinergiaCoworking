@@ -53,7 +53,7 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
         chunkedLoading
         iconCreateFunction={createClusterCustomIcon}
       >
-        {markers.length > 0 ? markers.map((marker) => (
+        {markers.map((marker) => (
           <Marker position={marker.geocode} icon={customIcon} draggable={false} autoPan={true}>
             <Popup>
             <div style={{width: '200px', height:'250px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -63,7 +63,7 @@ function MapStatic({position = [-32.81513813534083, -62.158580722506244], zoom =
               </div>
             </Popup>
           </Marker>
-        )) : null}
+        ))}
       </MarkerClusterGroup>
     </MapContainer>
   </div>
