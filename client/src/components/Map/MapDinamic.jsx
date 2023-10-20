@@ -31,7 +31,7 @@ function MapDinamic({handleAddress, handlePosition, positionForm}) {
     
     const map = useMapEvents({
       'click': (e) => {
-        // map.setView(e.latlng, map.getZoom(), {animate: true})
+        map.setView(e.latlng, map.getZoom(), {animate: true})
         setPosition(e.latlng)
         reverseGeocode(e.latlng)
       }
