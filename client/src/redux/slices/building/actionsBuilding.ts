@@ -16,19 +16,24 @@ export const getAllBuildings = async (dispatch: Dispatch) => {
       },
     };
     const { data } = await axios.get(endpoint, config); 
-    dispatch(setAllBuilding(data));
     const dataFiltered: Array<ObjectBuilding> = []
-    data.forEach((building: ObjectBuilding) => {
+    await data.forEach((building: ObjectBuilding) => {
       if(!building.deleted){
         dataFiltered.push(building)
       } 
     })
-    dispatch(setNoDeletedBuildings(dataFiltered))
-  } else {
-
-    const { data } = await axios.get(endpoint); 
-    
     dispatch(setAllBuilding(data));
+    dispatch(setNoDeletedBuildings(dataFiltered));
+  } else {
+    const { data } = await axios.get(endpoint); 
+    const dataFiltered: Array<ObjectBuilding> = []
+    await data.forEach((building: ObjectBuilding) => {
+      if(!building.deleted){
+        dataFiltered.push(building)
+      } 
+    })
+    dispatch(setAllBuilding(data));
+    dispatch(setNoDeletedBuildings(dataFiltered));
 
   }
   } catch (error) {
