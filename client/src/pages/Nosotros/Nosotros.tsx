@@ -22,7 +22,7 @@ function Nosotros() {
       name: "Francisco Hernández",
       role: "Co-Founder",
       image:
-        "https://media.licdn.com/dms/image/C4E03AQGj6MVTB8cCNQ/profile-displayphoto-shrink_800_800/0/1625703877600?e=1701302400&v=beta&t=IYFb9gmcZ2HRdjjp94uqx5ypdDEAJsWQjrj7WE1wVk4",
+        "https://avatars.githubusercontent.com/u/81003906?v=4",
     },
 
     {
@@ -36,7 +36,7 @@ function Nosotros() {
       name: "Manuel Agradi",
       role: "CTO",
       image:
-        "https://media.licdn.com/dms/image/D4D03AQHNUeANUm0r_w/profile-displayphoto-shrink_800_800/0/1674261280331?e=1701302400&v=beta&t=yYM5LlSB0xwibXoiLycBt1vgrmo5oyoeKFEi8qQvrd4",
+        "https://avatars.githubusercontent.com/u/129109204?v=4",
     },
 
     {
